@@ -16,7 +16,7 @@ class GamesManager {
     let rounds = 8
     
     func new(phrase: String) {
-        var game = Game()
+        let game = Game()
         let turn = Turn(phrase: phrase)
         game.turns.append(turn)
         newGames.append(game)
@@ -35,6 +35,12 @@ class GamesManager {
             return
         }
         let turn = Turn(image: image)
+        
+        guard let pngData = UIImagePNGRepresentation(image) else {
+            // generate an error
+            return
+        }
+        NSLog("pngData size: \(pngData.count)")
         
         game.turns.append(turn)
         //TODO - push to server

@@ -1,8 +1,9 @@
 import UIKit
 
-class DrawViewController: UIViewController {
+class DrawViewController: UIViewController, UIScrollViewDelegate {
     var game: Game?
     
+    @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var phraseLabel: UILabel!
     @IBOutlet weak var imageView: DrawableImageView!
     
@@ -11,14 +12,22 @@ class DrawViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        //TODO if game hasn't been set, error out
-        let lastTurn = game?.turns.last
+        if (game == nil) {
+            alert("game is nil", handler: { _ in
+                self.dismiss(animated: false)
+            })
+        }
+        let lastTurn = game!.turns.last
         if (lastTurn == nil) {
-            //TODO error
+            alert("lastTurn was nil", handler: { _ in
+                self.dismiss(animated: false)
+            })
             return
         }
         if (lastTurn?.phrase == nil) {
-            //todo error
+            alert("lastTurn did not have a phrase", handler: { _ in
+                self.dismiss(animated: false)
+            })
             return
         }
         phraseLabel.text = lastTurn!.phrase
@@ -27,18 +36,30 @@ class DrawViewController: UIViewController {
         //TODO unlock the drawing
     }
     
+    
+    func viewForZooming(in scrollView: UIScrollView) -> UIView? {
+        return scrollView.subviews.first!
+    }
+    
     @IBAction func submitTouch(_ sender: UIBarButtonItem) {
-        //TODO: prompt the user: are you sure?
-        gamesManager.draw(game: game!, image: imageView.image!)
-        game = nil
-        //todo lock the drawing
-        //todo loading anim
-        dismiss(animated: true) //todo move this to a callback
+        confirm("Are you ready to submit your drawing?", handler: {confirmed in
+            if (confirmed) {
+                gamesManager.draw(game: self.game!, image: self.imageView.image!)
+                self.game = nil
+                //todo lock the drawing
+                //todo loading anim
+                self.dismiss(animated: true)
+            }
+        })
     }
     
     @IBAction func cancelTouch(_ sender: UIBarButtonItem) {
-        gamesManager.release(game: game!)
-        game = nil
-        dismiss(animated: true)
+        confirm("Are you sure you want to cancel?", handler: {confirmed in
+            if (confirmed) {
+                gamesManager.release(game: self.game!)
+                self.game = nil
+                self.dismiss(animated: true)
+            }
+        })
     }
 }

@@ -3,51 +3,60 @@ import UIKit
 class DrawableImageView: UIImageView {
     var lastPoint = CGPoint.zero
     var swiped = false
+    var multitouching = false
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         swiped = false
-        if let touch = touches.first {
-            lastPoint = touch.location(in: self)
+        if (touches.count != 1) {
+            multitouching = true
+            return
         }
+        multitouching = false
+        lastPoint = touches.first!.location(in: self)
     }
     
     func drawLineFrom(fromPoint: CGPoint, toPoint: CGPoint) {
-        // 1
         UIGraphicsBeginImageContext(frame.size)
         let context = UIGraphicsGetCurrentContext()
-        image?.draw(in: CGRect(x: 0, y: 0, width: frame.size.width, height: frame.size.height))
+        image!.draw(in: CGRect(x: 0, y: 0, width: frame.size.width, height: frame.size.height))
         
-        // 2
         context?.move(to: fromPoint)
         context?.addLine(to: toPoint)
-        
-        // 3
         
         context?.setLineCap(.round)
         context?.setLineWidth(3.0)
         context?.setStrokeColor(UIColor.black.cgColor)
         context?.setBlendMode(.normal)
         
-        // 4
         context?.strokePath()
         
-        // 5
         image = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-        swiped = true
-        if let touch = touches.first {
-            let currentPoint = touch.location(in: self)
-            drawLineFrom(fromPoint: lastPoint, toPoint: currentPoint)
-            
-            // 7
-            lastPoint = currentPoint
+        if (touches.count != 1 || multitouching) {
+            multitouching = true
+            return
         }
+        
+        let touch = touches.first!
+        let currentPoint = touch.location(in: self)
+        if (lastPoint.distance(currentPoint) > 20.0) {
+            multitouching = true
+            return
+        }
+        
+        swiped = true
+        drawLineFrom(fromPoint: lastPoint, toPoint: currentPoint)
+        
+        lastPoint = currentPoint
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        if (touches.count != 1 || multitouching) {
+            return
+        }
         if !swiped {
             // draw a single point
             drawLineFrom(fromPoint: lastPoint, toPoint: lastPoint)
