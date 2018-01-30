@@ -7,35 +7,40 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0CA4EBA1071AE24F545EAEFD /* Pods_telesketch.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F3AFD6CBD504635FCDF4367 /* Pods_telesketch.framework */; };
 		4C6C961B201E796800A059E9 /* NewGameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C6C961A201E796800A059E9 /* NewGameViewController.swift */; };
 		4C6C961E201E7F8300A059E9 /* DrawableImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C6C961D201E7F8300A059E9 /* DrawableImageView.swift */; };
 		4C6C9620201E85C200A059E9 /* PrototypeModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C6C961F201E85C200A059E9 /* PrototypeModels.swift */; };
 		4C6C9622201E8C5800A059E9 /* DrawViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C6C9621201E8C5800A059E9 /* DrawViewController.swift */; };
 		4C6C9624201E8CA300A059E9 /* GamesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C6C9623201E8CA300A059E9 /* GamesManager.swift */; };
+		4C6C9626201E981B00A059E9 /* GuessViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C6C9625201E981B00A059E9 /* GuessViewController.swift */; };
 		4C8C6C77201E6F2600197CBB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C8C6C76201E6F2600197CBB /* AppDelegate.swift */; };
 		4C8C6C79201E6F2600197CBB /* NewGamesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C8C6C78201E6F2600197CBB /* NewGamesViewController.swift */; };
 		4C8C6C7C201E6F2600197CBB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4C8C6C7A201E6F2600197CBB /* Main.storyboard */; };
 		4C8C6C7E201E6F2600197CBB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4C8C6C7D201E6F2600197CBB /* Assets.xcassets */; };
 		4C8C6C81201E6F2600197CBB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4C8C6C7F201E6F2600197CBB /* LaunchScreen.storyboard */; };
+		4CB8B03E20202E3A00D0DD95 /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB8B03D20202E3A00D0DD95 /* UIView.swift */; };
+		AF17E539B9F995B6A080CCDE /* Pods_sketchaphone.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FA7B3E1D9F005AD1BB7C1EA /* Pods_sketchaphone.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		21BCC6768CDBEF17863D9228 /* Pods-sketchaphone.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-sketchaphone.release.xcconfig"; path = "Pods/Target Support Files/Pods-sketchaphone/Pods-sketchaphone.release.xcconfig"; sourceTree = "<group>"; };
 		4C6C961A201E796800A059E9 /* NewGameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewGameViewController.swift; sourceTree = "<group>"; };
 		4C6C961D201E7F8300A059E9 /* DrawableImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawableImageView.swift; sourceTree = "<group>"; };
 		4C6C961F201E85C200A059E9 /* PrototypeModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrototypeModels.swift; sourceTree = "<group>"; };
 		4C6C9621201E8C5800A059E9 /* DrawViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawViewController.swift; sourceTree = "<group>"; };
 		4C6C9623201E8CA300A059E9 /* GamesManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GamesManager.swift; sourceTree = "<group>"; };
-		4C8C6C73201E6F2600197CBB /* telesketch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = telesketch.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		4C6C9625201E981B00A059E9 /* GuessViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuessViewController.swift; sourceTree = "<group>"; };
+		4C8C6C73201E6F2600197CBB /* sketchaphone.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = sketchaphone.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4C8C6C76201E6F2600197CBB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4C8C6C78201E6F2600197CBB /* NewGamesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewGamesViewController.swift; sourceTree = "<group>"; };
 		4C8C6C7B201E6F2600197CBB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		4C8C6C7D201E6F2600197CBB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4C8C6C80201E6F2600197CBB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		4C8C6C82201E6F2600197CBB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		608D9258BE2951DE572EDDD4 /* Pods-telesketch.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-telesketch.release.xcconfig"; path = "Pods/Target Support Files/Pods-telesketch/Pods-telesketch.release.xcconfig"; sourceTree = "<group>"; };
+		4CB8B03D20202E3A00D0DD95 /* UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIView.swift; sourceTree = "<group>"; };
+		7FA7B3E1D9F005AD1BB7C1EA /* Pods_sketchaphone.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_sketchaphone.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8F3AFD6CBD504635FCDF4367 /* Pods_telesketch.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_telesketch.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		A94D6465285FD6EE0EA40719 /* Pods-telesketch.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-telesketch.debug.xcconfig"; path = "Pods/Target Support Files/Pods-telesketch/Pods-telesketch.debug.xcconfig"; sourceTree = "<group>"; };
+		C509E8721A4A7054D2441345 /* Pods-sketchaphone.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-sketchaphone.debug.xcconfig"; path = "Pods/Target Support Files/Pods-sketchaphone/Pods-sketchaphone.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -43,7 +48,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0CA4EBA1071AE24F545EAEFD /* Pods_telesketch.framework in Frameworks */,
+				AF17E539B9F995B6A080CCDE /* Pods_sketchaphone.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -71,7 +76,7 @@
 		4C8C6C74201E6F2600197CBB /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				4C8C6C73201E6F2600197CBB /* telesketch.app */,
+				4C8C6C73201E6F2600197CBB /* sketchaphone.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -79,6 +84,7 @@
 		4C8C6C75201E6F2600197CBB /* sketchaphone */ = {
 			isa = PBXGroup;
 			children = (
+				4CB722F1201EC9E400015EB8 /* Icons */,
 				4C8C6C89201E724200197CBB /* Controllers */,
 				4C8C6C88201E71FE00197CBB /* API */,
 				4C8C6C76201E6F2600197CBB /* AppDelegate.swift */,
@@ -102,18 +108,36 @@
 		4C8C6C89201E724200197CBB /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				4CB8B03C20202E2C00D0DD95 /* Extensions */,
 				4C6C961C201E7F6C00A059E9 /* Elements */,
 				4C8C6C78201E6F2600197CBB /* NewGamesViewController.swift */,
 				4C6C961A201E796800A059E9 /* NewGameViewController.swift */,
 				4C6C9621201E8C5800A059E9 /* DrawViewController.swift */,
+				4C6C9625201E981B00A059E9 /* GuessViewController.swift */,
 			);
 			path = Controllers;
+			sourceTree = "<group>";
+		};
+		4CB722F1201EC9E400015EB8 /* Icons */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Icons;
+			sourceTree = "<group>";
+		};
+		4CB8B03C20202E2C00D0DD95 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				4CB8B03D20202E3A00D0DD95 /* UIView.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 		E7D24680BEFACDAB310E59A1 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
 				8F3AFD6CBD504635FCDF4367 /* Pods_telesketch.framework */,
+				7FA7B3E1D9F005AD1BB7C1EA /* Pods_sketchaphone.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -121,8 +145,8 @@
 		EF82429ACBF2E14987EFC482 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				A94D6465285FD6EE0EA40719 /* Pods-telesketch.debug.xcconfig */,
-				608D9258BE2951DE572EDDD4 /* Pods-telesketch.release.xcconfig */,
+				C509E8721A4A7054D2441345 /* Pods-sketchaphone.debug.xcconfig */,
+				21BCC6768CDBEF17863D9228 /* Pods-sketchaphone.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -130,9 +154,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		4C8C6C72201E6F2600197CBB /* telesketch */ = {
+		4C8C6C72201E6F2600197CBB /* sketchaphone */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 4C8C6C85201E6F2600197CBB /* Build configuration list for PBXNativeTarget "telesketch" */;
+			buildConfigurationList = 4C8C6C85201E6F2600197CBB /* Build configuration list for PBXNativeTarget "sketchaphone" */;
 			buildPhases = (
 				8066BE4787E33A34E48EDA95 /* [CP] Check Pods Manifest.lock */,
 				4C8C6C6F201E6F2600197CBB /* Sources */,
@@ -145,9 +169,9 @@
 			);
 			dependencies = (
 			);
-			name = telesketch;
+			name = sketchaphone;
 			productName = telesketch;
-			productReference = 4C8C6C73201E6F2600197CBB /* telesketch.app */;
+			productReference = 4C8C6C73201E6F2600197CBB /* sketchaphone.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -166,7 +190,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 4C8C6C6E201E6F2600197CBB /* Build configuration list for PBXProject "telesketch" */;
+			buildConfigurationList = 4C8C6C6E201E6F2600197CBB /* Build configuration list for PBXProject "sketchaphone" */;
 			compatibilityVersion = "Xcode 8.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -179,7 +203,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				4C8C6C72201E6F2600197CBB /* telesketch */,
+				4C8C6C72201E6F2600197CBB /* sketchaphone */,
 			);
 		};
 /* End PBXProject section */
@@ -210,7 +234,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-telesketch/Pods-telesketch-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-sketchaphone/Pods-sketchaphone-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		8066BE4787E33A34E48EDA95 /* [CP] Check Pods Manifest.lock */ = {
@@ -224,7 +248,7 @@
 			);
 			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-telesketch-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-sketchaphone-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -237,7 +261,7 @@
 			files = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-telesketch/Pods-telesketch-frameworks.sh",
+				"${SRCROOT}/Pods/Target Support Files/Pods-sketchaphone/Pods-sketchaphone-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Apollo/Apollo.framework",
 				"${BUILT_PRODUCTS_DIR}/Bolts/Bolts.framework",
 				"${BUILT_PRODUCTS_DIR}/FBSDKCoreKit/FBSDKCoreKit.framework",
@@ -264,7 +288,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-telesketch/Pods-telesketch-frameworks.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-sketchaphone/Pods-sketchaphone-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -276,10 +300,12 @@
 			files = (
 				4C6C9622201E8C5800A059E9 /* DrawViewController.swift in Sources */,
 				4C6C9624201E8CA300A059E9 /* GamesManager.swift in Sources */,
+				4C6C9626201E981B00A059E9 /* GuessViewController.swift in Sources */,
 				4C8C6C79201E6F2600197CBB /* NewGamesViewController.swift in Sources */,
 				4C8C6C77201E6F2600197CBB /* AppDelegate.swift in Sources */,
 				4C6C961E201E7F8300A059E9 /* DrawableImageView.swift in Sources */,
 				4C6C9620201E85C200A059E9 /* PrototypeModels.swift in Sources */,
+				4CB8B03E20202E3A00D0DD95 /* UIView.swift in Sources */,
 				4C6C961B201E796800A059E9 /* NewGameViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -415,12 +441,12 @@
 		};
 		4C8C6C86201E6F2600197CBB /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = A94D6465285FD6EE0EA40719 /* Pods-telesketch.debug.xcconfig */;
+			baseConfigurationReference = C509E8721A4A7054D2441345 /* Pods-sketchaphone.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = NTDFC8PLCC;
-				INFOPLIST_FILE = telesketch/Info.plist;
+				INFOPLIST_FILE = sketchaphone/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.michaeleconomy.sketchaphone;
@@ -432,12 +458,12 @@
 		};
 		4C8C6C87201E6F2600197CBB /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 608D9258BE2951DE572EDDD4 /* Pods-telesketch.release.xcconfig */;
+			baseConfigurationReference = 21BCC6768CDBEF17863D9228 /* Pods-sketchaphone.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = NTDFC8PLCC;
-				INFOPLIST_FILE = telesketch/Info.plist;
+				INFOPLIST_FILE = sketchaphone/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.michaeleconomy.sketchaphone;
@@ -450,7 +476,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		4C8C6C6E201E6F2600197CBB /* Build configuration list for PBXProject "telesketch" */ = {
+		4C8C6C6E201E6F2600197CBB /* Build configuration list for PBXProject "sketchaphone" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				4C8C6C83201E6F2600197CBB /* Debug */,
@@ -459,7 +485,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		4C8C6C85201E6F2600197CBB /* Build configuration list for PBXNativeTarget "telesketch" */ = {
+		4C8C6C85201E6F2600197CBB /* Build configuration list for PBXNativeTarget "sketchaphone" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				4C8C6C86201E6F2600197CBB /* Debug */,
