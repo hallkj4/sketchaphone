@@ -2,10 +2,16 @@ import UIKit
 
 var gamesManager = GamesManager()
 
+protocol GameWatcher {
+    func gamesUpdated()
+}
+
 class GamesManager {
     var newGames = [Game]()
     var completedGames = [Game]()
 //    let inProgressGames = [Game]()
+    
+    private var watchers = [GameWatcher]()
     
     let rounds = 8
     
@@ -15,6 +21,7 @@ class GamesManager {
         game.turns.append(turn)
         newGames.append(game)
         //TODO - push to server
+        notifyWatchers()
     }
     
     func draw(game: Game, image: UIImage) {
@@ -29,15 +36,10 @@ class GamesManager {
         }
         let turn = Turn(image: image)
         
-        guard var mutableGame = newGames.first(where: {$0.id == game.id}) else {
-            NSLog("game could not be found")
-            return
-        }
-        
-        mutableGame.turns.append(turn)
+        game.turns.append(turn)
         //TODO - push to server
         
-        checkDone(mutableGame)
+        checkDone(game)
     }
     
     func guess(game: Game, phrase: String) {
@@ -46,20 +48,17 @@ class GamesManager {
             NSLog("Error! game with no turns!")
             return
         }
-        if(lastTurn!.image == nil) {
+        if (lastTurn!.image == nil) {
             NSLog("Error: game's last turn is not a phrase!")
             return
         }
         let turn = Turn(phrase: phrase)
         
-        guard var mutableGame = newGames.first(where: {$0.id == game.id}) else {
-            NSLog("game could not be found")
-            return
-        }
-        mutableGame.turns.append(turn)
+
+        game.turns.append(turn)
         //TODO - push to server
         
-        checkDone(mutableGame)
+        checkDone(game)
     }
     
     //TODO - what should the time limit be on drawing?
@@ -75,10 +74,21 @@ class GamesManager {
         //TODO
     }
     
+    func add(watcher: GameWatcher) {
+        watchers.append(watcher)
+    }
+    
+    private func notifyWatchers() {
+        for watcher in watchers {
+            watcher.gamesUpdated()
+        }
+    }
+    
     private func checkDone(_ game: Game) {
         if (game.turns.count >= rounds) {
             gameFinished(game)
         }
+        notifyWatchers()
     }
     
     private func gameFinished(_ game: Game) {

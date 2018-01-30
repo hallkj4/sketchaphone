@@ -1,13 +1,13 @@
 import Foundation
 import UIKit
 
-struct Game {
+class Game {
     let id = arc4random()
     let creator = User()
     var turns = [Turn]()
 }
 
-struct User {
+class User {
     let id = arc4random()
     let name = "Michael"
 }

@@ -1,6 +1,6 @@
 import UIKit
 
-class NewGamesViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class NewGamesViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, GameWatcher {
     
     @IBOutlet weak var tableView: UITableView!
     
@@ -8,14 +8,13 @@ class NewGamesViewController: UIViewController, UITableViewDataSource, UITableVi
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        gamesManager.add(watcher: self)
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        //reload the games here
+    func gamesUpdated() {
         tableView.reloadData()
     }
+    
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return gamesManager.newGames.count
@@ -63,7 +62,7 @@ class NewGamesViewController: UIViewController, UITableViewDataSource, UITableVi
                 NSLog("new games: tableView.indexPathForSelectedRow was nil")
                 return
             }
-            let controller = segue.destination as! DrawViewController
+            let controller = segue.destination as! GuessViewController
             controller.game = gamesManager.newGames[indexPath.row]
         default:
             NSLog("new games controller: unhandled segue identifier: \(segue.identifier!)")

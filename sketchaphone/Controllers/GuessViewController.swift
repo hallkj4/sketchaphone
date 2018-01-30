@@ -30,6 +30,7 @@ class GuessViewController: UIViewController {
             return
         }
         //TODO: prompt the user: are you sure?
+        gamesManager.guess(game: game!, phrase: textField.text!)
         game = nil
         //todo lock the drawing
         //todo loading anim

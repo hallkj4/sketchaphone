@@ -5,11 +5,9 @@ class DrawableImageView: UIImageView {
     var swiped = false
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        NSLog("touches began")
         swiped = false
         if let touch = touches.first {
             lastPoint = touch.location(in: self)
-            NSLog("lastPoint: \(lastPoint)")
         }
     }
     
