@@ -3,7 +3,12 @@ import UIKit
 class DrawableImageView: UIImageView {
     var lastPoint = CGPoint.zero
     var swiped = false
+    var didDraw = false
     var multitouching = false
+    var color = UIColor.black
+    
+    var undos = [UIImage]()
+    let maxUndos = 10
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         swiped = false
@@ -13,6 +18,45 @@ class DrawableImageView: UIImageView {
         }
         multitouching = false
         lastPoint = touches.first!.location(in: self)
+    }
+    
+    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+        if (multitouching) {
+            return
+        }
+        
+        let touch = touches.first!
+        let currentPoint = touch.location(in: self)
+        if (!didDraw && lastPoint.distance(currentPoint) > 20.0) {
+            multitouching = true
+            return
+        }
+        
+        swiped = true
+        drawLineFrom(fromPoint: lastPoint, toPoint: currentPoint)
+        
+        lastPoint = currentPoint
+    }
+    
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        if (multitouching) {
+            return
+        }
+        if !swiped {
+            // draw a single point
+            drawLineFrom(fromPoint: lastPoint, toPoint: lastPoint)
+        }
+        if (didDraw) {
+            didDraw = false
+            putUndo()
+        }
+    }
+    
+    private func putUndo() {
+        undos.append(image!)
+        if (undos.count > maxUndos) {
+            undos.removeFirst()
+        }
     }
     
     func drawLineFrom(fromPoint: CGPoint, toPoint: CGPoint) {
@@ -25,41 +69,35 @@ class DrawableImageView: UIImageView {
         
         context?.setLineCap(.round)
         context?.setLineWidth(3.0)
-        context?.setStrokeColor(UIColor.black.cgColor)
+        context?.setStrokeColor(color.cgColor)
         context?.setBlendMode(.normal)
         
         context?.strokePath()
         
         image = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
+        didDraw = true
     }
     
-    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-        if (touches.count != 1 || multitouching) {
-            multitouching = true
+    func undo() {
+        if (undos.count <= 1) {
             return
         }
-        
-        let touch = touches.first!
-        let currentPoint = touch.location(in: self)
-        if (lastPoint.distance(currentPoint) > 20.0) {
-            multitouching = true
-            return
+        if (undos.popLast() != nil) {
+            if let image = undos.last {
+                self.image = image
+            }
         }
-        
-        swiped = true
-        drawLineFrom(fromPoint: lastPoint, toPoint: currentPoint)
-        
-        lastPoint = currentPoint
     }
     
-    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        if (touches.count != 1 || multitouching) {
-            return
-        }
-        if !swiped {
-            // draw a single point
-            drawLineFrom(fromPoint: lastPoint, toPoint: lastPoint)
-        }
+    func reset() {
+        undos.removeAll()
+        image = UIImage()
+        putUndo()
+    }
+    
+    func clear() {
+        image = UIImage()
+        putUndo()
     }
 }

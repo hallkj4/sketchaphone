@@ -6,8 +6,32 @@ class DrawViewController: UIViewController, UIScrollViewDelegate {
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var phraseLabel: UILabel!
     @IBOutlet weak var imageView: DrawableImageView!
+    @IBOutlet weak var editBar: UIStackView!
     
     //TODO - erasor
+    
+    let colors: [UIColor] = [.black, .white, .red, .green, .yellow, .blue]
+    var colorButtons = [UIButton]()
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        for color in colors {
+            let button = UIButton()
+            button.backgroundColor = color
+            button.setTitleColor(color.shifted(), for: .normal)
+            button.borderColor = .black
+            button.borderWidth = 1.0
+            if (imageView.color == color) {
+                button.setTitle("\u{2713}", for: .normal)
+            }
+            else {
+                button.setTitle(" ", for: .normal)
+            }
+            button.addTarget(self, action: #selector(colorTouch(sender:)), for: .touchUpInside)
+            colorButtons.append(button)
+            editBar.insertArrangedSubview(button, at: 0)
+        }
+    }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -32,13 +56,33 @@ class DrawViewController: UIViewController, UIScrollViewDelegate {
         }
         phraseLabel.text = lastTurn!.phrase
         
-        imageView.image = UIImage()
+        imageView.reset()
         //TODO unlock the drawing
     }
     
     
     func viewForZooming(in scrollView: UIScrollView) -> UIView? {
         return scrollView.subviews.first!
+    }
+    
+    @objc func colorTouch(sender: UIButton) {
+        imageView.color = sender.backgroundColor!
+        for colorButton in colorButtons {
+            if (colorButton == sender) {
+                colorButton.setTitle("\u{2713}", for: .normal)
+            }
+            else {
+                colorButton.setTitle(" ", for: .normal)
+            }
+        }
+    }
+    
+    @IBAction func undoTouch(_ sender: UIButton) {
+        imageView.undo()
+    }
+    
+    @IBAction func clearClick(_ sender: UIButton) {
+        imageView.clear()
     }
     
     @IBAction func submitTouch(_ sender: UIBarButtonItem) {

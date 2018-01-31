@@ -55,7 +55,7 @@
                                 </items>
                             </navigationBar>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" maximumZoomScale="3" translatesAutoresizingMaskIntoConstraints="NO" id="axC-IE-yHR">
-                                <rect key="frame" x="0.0" y="64" width="320" height="416"/>
+                                <rect key="frame" x="0.0" y="64" width="320" height="376"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="BJf-UH-alO">
                                         <rect key="frame" x="0.0" y="10" width="320" height="390.5"/>
@@ -95,11 +95,33 @@
                                     <outlet property="delegate" destination="tMs-YS-sER" id="ccw-Jq-PNW"/>
                                 </connections>
                             </scrollView>
+                            <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="XH3-TT-jIt">
+                                <rect key="frame" x="10" y="450" width="300" height="30"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rPA-EH-0xk">
+                                        <rect key="frame" x="0.0" y="0.0" width="35" height="30"/>
+                                        <state key="normal" title="undo"/>
+                                        <connections>
+                                            <action selector="undoTouch:" destination="tMs-YS-sER" eventType="touchUpInside" id="ncA-7k-bwu"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Q03-H9-8lv">
+                                        <rect key="frame" x="266" y="0.0" width="34" height="30"/>
+                                        <state key="normal" title="clear"/>
+                                        <connections>
+                                            <action selector="clearClick:" destination="tMs-YS-sER" eventType="touchUpInside" id="HSG-d5-yKc"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="zCq-3a-b38" firstAttribute="bottom" secondItem="XH3-TT-jIt" secondAttribute="bottom" id="06b-eq-EOI"/>
                             <constraint firstItem="FwO-3c-Rrr" firstAttribute="leading" secondItem="zCq-3a-b38" secondAttribute="leading" id="5Qr-iN-8c2"/>
-                            <constraint firstItem="zCq-3a-b38" firstAttribute="bottom" secondItem="axC-IE-yHR" secondAttribute="bottom" id="GKU-Ja-VFO"/>
+                            <constraint firstItem="XH3-TT-jIt" firstAttribute="leading" secondItem="zCq-3a-b38" secondAttribute="leading" constant="10" id="9XM-iv-OIV"/>
+                            <constraint firstItem="zCq-3a-b38" firstAttribute="trailing" secondItem="XH3-TT-jIt" secondAttribute="trailing" constant="10" id="FD1-0p-5Ap"/>
+                            <constraint firstItem="XH3-TT-jIt" firstAttribute="top" secondItem="axC-IE-yHR" secondAttribute="bottom" constant="10" id="GKU-Ja-VFO"/>
                             <constraint firstItem="FwO-3c-Rrr" firstAttribute="top" secondItem="zCq-3a-b38" secondAttribute="top" id="HWC-lc-wXv"/>
                             <constraint firstItem="zCq-3a-b38" firstAttribute="trailing" secondItem="axC-IE-yHR" secondAttribute="trailing" id="Vdx-dD-eJO"/>
                             <constraint firstItem="axC-IE-yHR" firstAttribute="leading" secondItem="zCq-3a-b38" secondAttribute="leading" id="fgP-Sb-khG"/>
@@ -109,6 +131,7 @@
                         <viewLayoutGuide key="safeArea" id="zCq-3a-b38"/>
                     </view>
                     <connections>
+                        <outlet property="editBar" destination="XH3-TT-jIt" id="e0u-QC-ARw"/>
                         <outlet property="imageView" destination="9Uj-kr-5VS" id="TgE-77-tmr"/>
                         <outlet property="phraseLabel" destination="6Zo-eH-dkD" id="Fyd-D6-kwc"/>
                         <outlet property="scrollView" destination="axC-IE-yHR" id="wd3-11-xQT"/>
