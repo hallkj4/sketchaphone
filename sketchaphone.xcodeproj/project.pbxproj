@@ -21,6 +21,8 @@
 		4CB8B03E20202E3A00D0DD95 /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB8B03D20202E3A00D0DD95 /* UIView.swift */; };
 		4CB8B0402020DEB600D0DD95 /* UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB8B03F2020DEB600D0DD95 /* UIViewController.swift */; };
 		4CB8B0422020FB3800D0DD95 /* CGPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB8B0412020FB3800D0DD95 /* CGPoint.swift */; };
+		4CB8B04520217DF900D0DD95 /* logo.svg in Resources */ = {isa = PBXBuildFile; fileRef = 4CB8B04320217DF900D0DD95 /* logo.svg */; };
+		4CB8B04620217DF900D0DD95 /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CB8B04420217DF900D0DD95 /* logo.png */; };
 		AF17E539B9F995B6A080CCDE /* Pods_sketchaphone.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FA7B3E1D9F005AD1BB7C1EA /* Pods_sketchaphone.framework */; };
 /* End PBXBuildFile section */
 
@@ -42,6 +44,8 @@
 		4CB8B03D20202E3A00D0DD95 /* UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIView.swift; sourceTree = "<group>"; };
 		4CB8B03F2020DEB600D0DD95 /* UIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewController.swift; sourceTree = "<group>"; };
 		4CB8B0412020FB3800D0DD95 /* CGPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGPoint.swift; sourceTree = "<group>"; };
+		4CB8B04320217DF900D0DD95 /* logo.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = logo.svg; sourceTree = "<group>"; };
+		4CB8B04420217DF900D0DD95 /* logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo.png; sourceTree = "<group>"; };
 		7FA7B3E1D9F005AD1BB7C1EA /* Pods_sketchaphone.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_sketchaphone.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8F3AFD6CBD504635FCDF4367 /* Pods_telesketch.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_telesketch.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C509E8721A4A7054D2441345 /* Pods-sketchaphone.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-sketchaphone.debug.xcconfig"; path = "Pods/Target Support Files/Pods-sketchaphone/Pods-sketchaphone.debug.xcconfig"; sourceTree = "<group>"; };
@@ -125,6 +129,8 @@
 		4CB722F1201EC9E400015EB8 /* Icons */ = {
 			isa = PBXGroup;
 			children = (
+				4CB8B04420217DF900D0DD95 /* logo.png */,
+				4CB8B04320217DF900D0DD95 /* logo.svg */,
 			);
 			path = Icons;
 			sourceTree = "<group>";
@@ -220,8 +226,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				4C8C6C81201E6F2600197CBB /* LaunchScreen.storyboard in Resources */,
+				4CB8B04620217DF900D0DD95 /* logo.png in Resources */,
 				4C8C6C7E201E6F2600197CBB /* Assets.xcassets in Resources */,
 				4C8C6C7C201E6F2600197CBB /* Main.storyboard in Resources */,
+				4CB8B04520217DF900D0DD95 /* logo.svg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
