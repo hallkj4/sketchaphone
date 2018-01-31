@@ -8,9 +8,7 @@ class DrawViewController: UIViewController, UIScrollViewDelegate {
     @IBOutlet weak var imageView: DrawableImageView!
     @IBOutlet weak var editBar: UIStackView!
     
-    //TODO - erasor
-    
-    let colors: [UIColor] = [.black, .white, .red, .green, .yellow, .blue]
+    let colors: [UIColor] = [.black, .white] //, .red, .green, .yellow, .blue]
     var colorButtons = [UIButton]()
     
     override func viewDidLoad() {
