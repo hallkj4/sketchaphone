@@ -82,7 +82,7 @@ class GuessViewController: UIViewController, UIScrollViewDelegate, UITextFieldDe
             alert("You have to type something.")
             return
         }
-        confirm("Are you ready to submit your guess?", handler: { confirmed in
+        confirm("Are you ready to submit your guess of '\(textField.text!)'?", handler: { confirmed in
             if (confirmed) {
                 self.textField.isEnabled = false
                 gamesManager.guess(game: self.game!, phrase: self.textField.text!)

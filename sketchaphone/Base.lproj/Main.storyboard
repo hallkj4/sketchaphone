@@ -235,6 +235,9 @@
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <outlet property="delegate" destination="hzq-ys-RtZ" id="eef-Zd-cjV"/>
+                                </connections>
                             </textField>
                             <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kR4-mv-L9b">
                                 <rect key="frame" x="0.0" y="20" width="320" height="44"/>
