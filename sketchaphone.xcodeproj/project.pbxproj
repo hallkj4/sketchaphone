@@ -28,6 +28,7 @@
 		4CF33D462022869600D311FF /* CompletedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CF33D452022869600D311FF /* CompletedViewController.swift */; };
 		4CF33D4820228BCD00D311FF /* CompletedGameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CF33D4720228BCD00D311FF /* CompletedGameViewController.swift */; };
 		4CF33D4A2022C51E00D311FF /* UserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CF33D492022C51E00D311FF /* UserManager.swift */; };
+		4CF33D4C2022CADD00D311FF /* NewUserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CF33D4B2022CADD00D311FF /* NewUserViewController.swift */; };
 		AF17E539B9F995B6A080CCDE /* Pods_sketchaphone.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FA7B3E1D9F005AD1BB7C1EA /* Pods_sketchaphone.framework */; };
 /* End PBXBuildFile section */
 
@@ -56,6 +57,7 @@
 		4CF33D452022869600D311FF /* CompletedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompletedViewController.swift; sourceTree = "<group>"; };
 		4CF33D4720228BCD00D311FF /* CompletedGameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompletedGameViewController.swift; sourceTree = "<group>"; };
 		4CF33D492022C51E00D311FF /* UserManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserManager.swift; sourceTree = "<group>"; };
+		4CF33D4B2022CADD00D311FF /* NewUserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewUserViewController.swift; sourceTree = "<group>"; };
 		7FA7B3E1D9F005AD1BB7C1EA /* Pods_sketchaphone.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_sketchaphone.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8F3AFD6CBD504635FCDF4367 /* Pods_telesketch.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_telesketch.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C509E8721A4A7054D2441345 /* Pods-sketchaphone.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-sketchaphone.debug.xcconfig"; path = "Pods/Target Support Files/Pods-sketchaphone/Pods-sketchaphone.debug.xcconfig"; sourceTree = "<group>"; };
@@ -136,6 +138,7 @@
 				4CF33D432022868500D311FF /* InProgressViewController.swift */,
 				4CF33D452022869600D311FF /* CompletedViewController.swift */,
 				4CF33D4720228BCD00D311FF /* CompletedGameViewController.swift */,
+				4CF33D4B2022CADD00D311FF /* NewUserViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -340,6 +343,7 @@
 				4C8C6C77201E6F2600197CBB /* AppDelegate.swift in Sources */,
 				4C6C961E201E7F8300A059E9 /* DrawableImageView.swift in Sources */,
 				4C6C9620201E85C200A059E9 /* PrototypeModels.swift in Sources */,
+				4CF33D4C2022CADD00D311FF /* NewUserViewController.swift in Sources */,
 				4CB8B03E20202E3A00D0DD95 /* UIView.swift in Sources */,
 				4CF33D462022869600D311FF /* CompletedViewController.swift in Sources */,
 				4C6C961B201E796800A059E9 /* NewGameViewController.swift in Sources */,

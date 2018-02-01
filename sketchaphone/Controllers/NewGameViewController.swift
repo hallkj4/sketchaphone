@@ -4,22 +4,12 @@ class NewGameViewController: UIViewController, UITextFieldDelegate {
     
     @IBOutlet weak var textField: UITextField!
     
-    let defaultText = ""
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        textField.text = defaultText
-        textField.textColor = .gray
         textField.isEnabled = true
         textField.becomeFirstResponder()
-    }
-    
-    func textFieldDidBeginEditing(_ textField: UITextField) {
-        if (textField.text == defaultText) {
-            textField.text = ""
-            textField.textColor = .black
-        }
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -32,7 +22,7 @@ class NewGameViewController: UIViewController, UITextFieldDelegate {
     }
     
     private func doNew() {
-        if (textField.text == nil || textField.text == "" || textField.text == defaultText) {
+        if (textField.text == nil || textField.text == "") {
             alert("Please enter a word or phrase to start a new game.")
             return
         }

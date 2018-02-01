@@ -1,6 +1,6 @@
 import UIKit
 
-var gamesManager = GamesManager()
+let gamesManager = GamesManager()
 
 protocol GameWatcher {
     func gamesUpdated()

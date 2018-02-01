@@ -1,9 +1,16 @@
-//
-//  UserManager.swift
-//  sketchaphone
-//
-//  Created by Michael on 1/31/18.
-//  Copyright © 2018 Michael. All rights reserved.
-//
-
 import Foundation
+
+let userManager = UserManager()
+
+class UserManager {
+    var currentUser: User?
+    func set(name: String) {
+        if (currentUser == nil) {
+            currentUser = User(name)
+        }
+        else {
+            currentUser!.name = name
+            //should we rename all of a users games?
+        }
+    }
+}

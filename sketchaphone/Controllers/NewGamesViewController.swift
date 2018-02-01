@@ -11,10 +11,18 @@ class NewGamesViewController: UIViewController, UITableViewDataSource, UITableVi
         gamesManager.add(watcher: self)
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if (userManager.currentUser == nil) {
+            DispatchQueue.main.async(execute: {
+                self.performSegue(withIdentifier: "newUser", sender: nil)
+            })
+        }
+    }
+    
     func gamesUpdated() {
         tableView.reloadData()
     }
-    
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return gamesManager.newGames.count
@@ -48,6 +56,7 @@ class NewGamesViewController: UIViewController, UITableViewDataSource, UITableVi
             return
         }
         switch segue.identifier! {
+        case "newUser": ()
         case "newGame": ()
             //TODO - check on account limits - you can only create X games
         case "draw":

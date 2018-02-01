@@ -3,20 +3,23 @@ import UIKit
 
 class Game {
     let id = arc4random()
-    let creator = User()
+    let creator = User("Michael")
     var turns = [Turn]()
 }
 
 class User {
     let id = arc4random()
-    let name = "Michael"
+    var name: String
+    
+    init(_ name: String) {
+        self.name = name
+    }
 }
 
 struct Turn {
     let phrase: String?
     let image: UIImage?
-    let time = NSDate().timeIntervalSince1970
-    let user = User()
+    let user = User("Michael")
     
     init(phrase: String) {
         self.phrase = phrase
