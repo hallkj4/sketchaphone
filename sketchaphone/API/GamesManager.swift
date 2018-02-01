@@ -8,8 +8,13 @@ protocol GameWatcher {
 
 class GamesManager {
     var newGames = [Game]()
+    var inProgressGames: [Game] {
+        get {
+            return newGames
+        }
+    }
+    
     var completedGames = [Game]()
-//    let inProgressGames = [Game]()
     
     private var watchers = [GameWatcher]()
     

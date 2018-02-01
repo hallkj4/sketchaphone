@@ -15,6 +15,8 @@ class User {
 struct Turn {
     let phrase: String?
     let image: UIImage?
+    let time = NSDate().timeIntervalSince1970
+    let user = User()
     
     init(phrase: String) {
         self.phrase = phrase

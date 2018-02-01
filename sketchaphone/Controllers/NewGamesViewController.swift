@@ -24,7 +24,7 @@ class NewGamesViewController: UIViewController, UITableViewDataSource, UITableVi
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
         let game = gamesManager.newGames[indexPath.row]
         cell.textLabel!.text = "Game created by \(game.creator.name)"
-        cell.detailTextLabel!.text = "turns taken: \(game.turns.count)"
+        cell.detailTextLabel!.text = "Turns taken: \(game.turns.count)"
         return cell
     }
     
