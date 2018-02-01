@@ -188,6 +188,172 @@
             </objects>
             <point key="canvasLocation" x="1504" y="540"/>
         </scene>
+        <!--How to Play-->
+        <scene sceneID="Dtk-F4-VX9">
+            <objects>
+                <viewController id="JPY-2g-Pkk" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="pAz-db-rXa">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="1080"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lu6-jW-VHu">
+                                <rect key="frame" x="0.0" y="20" width="320" height="1011"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="NhS-Fo-hCm">
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="934.5"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="How The Game Works" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Uvt-zL-cM6">
+                                                <rect key="frame" x="60.5" y="0.0" width="199.5" height="23"/>
+                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="19"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DYW-ts-27o">
+                                                <rect key="frame" x="0.0" y="33" width="320" height="203"/>
+                                                <subviews>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NIO-BP-VFh">
+                                                        <rect key="frame" x="0.0" y="0.0" width="320" height="203"/>
+                                                        <string key="text">In sketchaphone players take turns passing messages, but every alternating player must either draw a picture or a phrase or guess what a phrase based on a picture, after everyone has finished, players can view the resulting (and often hilarious) chain of pictures and guesses.   You do not need to be a competent artist to enjoy SketchAPhone, misinterpreted drawing are the funnest part of the game!</string>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                        <nil key="textColor"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                </subviews>
+                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="bottom" secondItem="NIO-BP-VFh" secondAttribute="bottom" id="9gi-J7-pFi"/>
+                                                    <constraint firstItem="NIO-BP-VFh" firstAttribute="top" secondItem="DYW-ts-27o" secondAttribute="top" id="Ehp-S1-3pf"/>
+                                                    <constraint firstItem="NIO-BP-VFh" firstAttribute="leading" secondItem="DYW-ts-27o" secondAttribute="leading" id="acO-Pv-lxu"/>
+                                                    <constraint firstAttribute="trailing" secondItem="NIO-BP-VFh" secondAttribute="trailing" id="rEP-8s-PP6"/>
+                                                </constraints>
+                                            </view>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Getting Started" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pNm-ML-Ofd">
+                                                <rect key="frame" x="89.5" y="246" width="141.5" height="23"/>
+                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="19"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sw3-vU-Hhz">
+                                                <rect key="frame" x="5" y="279" width="310.5" height="128"/>
+                                                <subviews>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VAk-1V-gs8">
+                                                        <rect key="frame" x="0.0" y="0.0" width="310.5" height="128"/>
+                                                        <string key="text">To start playing SketchaPhone, choose "new games" from the bottom tab bar.  There, you will see a list of games you can join.   Tap on one to start playing.  If there are no games, you can start a new one by clicking the +.</string>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                        <nil key="textColor"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                </subviews>
+                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="bottom" secondItem="VAk-1V-gs8" secondAttribute="bottom" id="IR2-xO-uGi"/>
+                                                    <constraint firstAttribute="trailing" secondItem="VAk-1V-gs8" secondAttribute="trailing" id="kx7-Gh-dgE"/>
+                                                    <constraint firstItem="VAk-1V-gs8" firstAttribute="leading" secondItem="sw3-vU-Hhz" secondAttribute="leading" id="lSn-Sg-r5v"/>
+                                                    <constraint firstItem="VAk-1V-gs8" firstAttribute="top" secondItem="sw3-vU-Hhz" secondAttribute="top" id="nfN-i1-xKr"/>
+                                                </constraints>
+                                            </view>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Taking your turn" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ydL-Ue-ZC1">
+                                                <rect key="frame" x="86" y="417" width="148.5" height="23"/>
+                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="19"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Tc0-Lz-Fip">
+                                                <rect key="frame" x="0.0" y="450" width="320" height="142.5"/>
+                                                <subviews>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xVp-bN-mEF">
+                                                        <rect key="frame" x="0.0" y="0.0" width="320" height="142.5"/>
+                                                        <string key="text">One you're in a game, you will either be guessing what a drawing is of, by typing in the box below the picture, or drawing the word or phrase at the top.  After you're done, you'll have to wait for the game to be completed by enough players to see the results.</string>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                        <nil key="textColor"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                </subviews>
+                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <constraints>
+                                                    <constraint firstItem="xVp-bN-mEF" firstAttribute="leading" secondItem="Tc0-Lz-Fip" secondAttribute="leading" id="I01-G6-ePH"/>
+                                                    <constraint firstAttribute="trailing" secondItem="xVp-bN-mEF" secondAttribute="trailing" id="dAu-tN-S3g"/>
+                                                    <constraint firstAttribute="bottom" secondItem="xVp-bN-mEF" secondAttribute="bottom" id="gDM-At-zfq"/>
+                                                    <constraint firstItem="xVp-bN-mEF" firstAttribute="top" secondItem="Tc0-Lz-Fip" secondAttribute="top" id="w3V-rs-lgY"/>
+                                                </constraints>
+                                            </view>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Drawing Tips" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Nvk-vx-f3v">
+                                                <rect key="frame" x="100.5" y="602.5" width="119" height="23"/>
+                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="19"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="h6N-Cy-9Dw">
+                                                <rect key="frame" x="0.0" y="635.5" width="320" height="128"/>
+                                                <subviews>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jQo-d8-U4E">
+                                                        <rect key="frame" x="0.0" y="0.0" width="320" height="128"/>
+                                                        <string key="text">You can zoom in by using too fingers and moving them apart.  While zoomed use two fingers to scroll.  Don't be afraid to clear and undo, but don't try and be Rembrandt here, the game revolves around misinterpretations.</string>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                        <nil key="textColor"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                </subviews>
+                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="trailing" secondItem="jQo-d8-U4E" secondAttribute="trailing" id="6XG-Ke-0aR"/>
+                                                    <constraint firstItem="jQo-d8-U4E" firstAttribute="leading" secondItem="h6N-Cy-9Dw" secondAttribute="leading" id="JhH-hh-8Pc"/>
+                                                    <constraint firstAttribute="bottom" secondItem="jQo-d8-U4E" secondAttribute="bottom" id="P5D-Wn-ik9"/>
+                                                    <constraint firstItem="jQo-d8-U4E" firstAttribute="top" secondItem="h6N-Cy-9Dw" secondAttribute="top" id="dUi-gQ-ka6"/>
+                                                </constraints>
+                                            </view>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Credits" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OBF-LR-IEs">
+                                                <rect key="frame" x="127" y="773.5" width="66.5" height="23"/>
+                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="19"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8Oh-lb-ycZ">
+                                                <rect key="frame" x="0.0" y="806.5" width="320" height="128"/>
+                                                <subviews>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Some of the icons used in this app are from icons8.com thanks!  App otherwise designed and developed by Michael Economy." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dk5-hf-7Q4">
+                                                        <rect key="frame" x="0.0" y="0.0" width="320" height="128"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                        <nil key="textColor"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                </subviews>
+                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <constraints>
+                                                    <constraint firstItem="dk5-hf-7Q4" firstAttribute="leading" secondItem="8Oh-lb-ycZ" secondAttribute="leading" id="GpM-Ic-5tU"/>
+                                                    <constraint firstAttribute="trailing" secondItem="dk5-hf-7Q4" secondAttribute="trailing" id="b9T-ox-DUY"/>
+                                                    <constraint firstAttribute="bottom" secondItem="dk5-hf-7Q4" secondAttribute="bottom" id="hP2-76-5nw"/>
+                                                    <constraint firstItem="dk5-hf-7Q4" firstAttribute="top" secondItem="8Oh-lb-ycZ" secondAttribute="top" id="nLX-xY-eLz"/>
+                                                </constraints>
+                                            </view>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="NhS-Fo-hCm" secondAttribute="trailing" id="bc6-pR-2An"/>
+                                    <constraint firstAttribute="bottom" secondItem="NhS-Fo-hCm" secondAttribute="bottom" id="hI8-Cf-PfJ"/>
+                                    <constraint firstItem="NhS-Fo-hCm" firstAttribute="leading" secondItem="lu6-jW-VHu" secondAttribute="leading" id="x5d-q3-OZg"/>
+                                    <constraint firstItem="NhS-Fo-hCm" firstAttribute="width" secondItem="lu6-jW-VHu" secondAttribute="width" id="xZT-L1-h3N"/>
+                                    <constraint firstItem="NhS-Fo-hCm" firstAttribute="top" secondItem="lu6-jW-VHu" secondAttribute="top" id="ysA-dE-bX5"/>
+                                </constraints>
+                            </scrollView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="lu6-jW-VHu" firstAttribute="leading" secondItem="gGD-az-fzU" secondAttribute="leading" id="N8z-rg-rRK"/>
+                            <constraint firstItem="gGD-az-fzU" firstAttribute="trailing" secondItem="lu6-jW-VHu" secondAttribute="trailing" id="ZbE-a1-RK2"/>
+                            <constraint firstItem="gGD-az-fzU" firstAttribute="bottom" secondItem="lu6-jW-VHu" secondAttribute="bottom" id="gAt-Qj-WIe"/>
+                            <constraint firstItem="lu6-jW-VHu" firstAttribute="top" secondItem="gGD-az-fzU" secondAttribute="top" id="qLc-nR-Axt"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="gGD-az-fzU"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="How to Play" image="rules" id="gK4-Y6-0lo"/>
+                    <size key="freeformSize" width="320" height="1080"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="tC4-RV-PCo" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="446" y="2093"/>
+        </scene>
         <!--Completed Game View Controller-->
         <scene sceneID="dFV-tY-O4j">
             <objects>
@@ -419,6 +585,7 @@
                         <segue destination="y1u-es-ysh" kind="relationship" relationship="viewControllers" id="ooO-Jc-o7S"/>
                         <segue destination="9js-Xe-GjT" kind="relationship" relationship="viewControllers" id="K00-pM-Jg4"/>
                         <segue destination="heO-ie-tJR" kind="relationship" relationship="viewControllers" id="xyI-PZ-equ"/>
+                        <segue destination="JPY-2g-Pkk" kind="relationship" relationship="viewControllers" id="Aee-RO-Jqg"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Eja-wB-LLI" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -590,5 +757,6 @@
         <image name="draw" width="34" height="34"/>
         <image name="hourglass" width="33" height="33"/>
         <image name="medal" width="32" height="32"/>
+        <image name="rules" width="33" height="33"/>
     </resources>
 </document>
