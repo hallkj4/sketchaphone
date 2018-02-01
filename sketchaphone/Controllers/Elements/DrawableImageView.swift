@@ -68,7 +68,11 @@ class DrawableImageView: UIImageView {
         context?.addLine(to: toPoint)
         
         context?.setLineCap(.round)
-        context?.setLineWidth(3.0)
+        var width: CGFloat = 3.0
+        if (color == .white) {
+            width = 20.0
+        }
+        context?.setLineWidth(width)
         context?.setStrokeColor(color.cgColor)
         context?.setBlendMode(.normal)
         
