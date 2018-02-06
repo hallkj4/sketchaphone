@@ -77,5 +77,10 @@ class NewGamesViewController: UIViewController, UITableViewDataSource, UITableVi
             NSLog("new games controller: unhandled segue identifier: \(segue.identifier!)")
         }
     }
+    
+    
+    @IBAction func unwindSegue(segue:UIStoryboardSegue) {
+        
+    }
 }
 

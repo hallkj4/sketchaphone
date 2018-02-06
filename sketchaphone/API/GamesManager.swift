@@ -89,6 +89,11 @@ class GamesManager {
         watchers.append(watcher)
     }
     
+    func flag(game: Game, turn: Turn?, reason: String) {
+        //TODO - tell the server
+        //TODO - remove from the lists
+    }
+    
     private func notifyWatchers() {
         for watcher in watchers {
             watcher.gamesUpdated()

@@ -8,7 +8,7 @@ class CompletedGameViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         for view in stackView.arrangedSubviews {
-            stackView.removeArrangedSubview(view)
+            view.removeFromSuperview()
         }
         
         if (game == nil) {
@@ -44,5 +44,20 @@ class CompletedGameViewController: UIViewController {
     
     @IBAction func backTouch(_ sender: UIBarButtonItem) {
         dismiss(animated: true)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if (segue.identifier == nil) {
+            NSLog("nil segue from Completed Game View")
+            return
+        }
+        switch segue.identifier! {
+        case "flag":
+            let controller = segue.destination as! FlagViewController
+            controller.game = game
+            controller.turn = nil
+        default:
+            NSLog("Completed Game View: unhandled segue identifier: \(segue.identifier!)")
+        }
     }
 }

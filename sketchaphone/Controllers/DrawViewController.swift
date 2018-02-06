@@ -1,6 +1,6 @@
 import UIKit
 
-class DrawViewController: UIViewController, UIScrollViewDelegate {
+class DrawViewController: LoadingViewController, UIScrollViewDelegate {
     var game: Game?
     
     @IBOutlet weak var scrollView: UIScrollView!
@@ -41,21 +41,20 @@ class DrawViewController: UIViewController, UIScrollViewDelegate {
         }
         let lastTurn = game!.turns.last
         if (lastTurn == nil) {
-            alert("lastTurn was nil", handler: { _ in
+            alert("Error: lastTurn was nil", handler: { _ in
                 self.dismiss(animated: false)
             })
             return
         }
-        if (lastTurn?.phrase == nil) {
-            alert("lastTurn did not have a phrase", handler: { _ in
+        if (lastTurn!.phrase == nil) {
+            alert("Error: lastTurn did not have a phrase", handler: { _ in
                 self.dismiss(animated: false)
             })
             return
         }
-        phraseLabel.text = lastTurn!.phrase
+        phraseLabel.text = "Draw this: \(lastTurn!.phrase!)"
         
         imageView.reset()
-        //TODO unlock the drawing
     }
     
     
@@ -88,8 +87,8 @@ class DrawViewController: UIViewController, UIScrollViewDelegate {
             if (confirmed) {
                 gamesManager.draw(game: self.game!, image: self.imageView.image!)
                 self.game = nil
-                //todo lock the drawing
                 //todo loading anim
+                //TODO callback
                 self.dismiss(animated: true)
             }
         })
@@ -103,5 +102,20 @@ class DrawViewController: UIViewController, UIScrollViewDelegate {
                 self.dismiss(animated: true)
             }
         })
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if (segue.identifier == nil) {
+            NSLog("nil segue from draw View")
+            return
+        }
+        switch segue.identifier! {
+        case "flag":
+            let controller = segue.destination as! FlagViewController
+            controller.game = game
+            controller.turn = game!.turns.last
+        default:
+            NSLog("draw View: unhandled segue identifier: \(segue.identifier!)")
+        }
     }
 }

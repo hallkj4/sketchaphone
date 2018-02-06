@@ -1,5 +1,5 @@
 import UIKit
-class NewUserViewController: UIViewController, UITextFieldDelegate {
+class NewUserViewController: LoadingViewController, UITextFieldDelegate {
     
     @IBOutlet weak var textField: UITextField!
     
@@ -24,10 +24,12 @@ class NewUserViewController: UIViewController, UITextFieldDelegate {
         }
         confirm("Setting name to '\(textField.text!)', are you sure?", handler: { confirmed in
             if (confirmed) {
+                //TODO lock the ui
                 self.textField.isEnabled = false
                 userManager.set(name: self.textField.text!)
                 //TODO - loading animation
                 self.dismiss(animated: true) //TODO put this in a callback
+                //todo unlock the ui
             }
         })
     }

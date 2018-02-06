@@ -1,6 +1,6 @@
 import UIKit
 
-class GuessViewController: UIViewController, UIScrollViewDelegate, UITextFieldDelegate {
+class GuessViewController: LoadingViewController, UIScrollViewDelegate, UITextFieldDelegate {
     var game: Game?
     
     let defaultText = "Describe the picture..."
@@ -98,5 +98,20 @@ class GuessViewController: UIViewController, UIScrollViewDelegate, UITextFieldDe
         gamesManager.release(game: game!)//TODO callback
         game = nil
         dismiss(animated: true)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if (segue.identifier == nil) {
+            NSLog("nil segue from guess View")
+            return
+        }
+        switch segue.identifier! {
+        case "flag":
+            let controller = segue.destination as! FlagViewController
+            controller.game = game
+            controller.turn = game!.turns.last
+        default:
+            NSLog("guess View: unhandled segue identifier: \(segue.identifier!)")
+        }
     }
 }
