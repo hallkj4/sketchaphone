@@ -1,6 +1,7 @@
+import GoogleMobileAds
 import UIKit
 
-class DrawViewController: LoadingViewController, UIScrollViewDelegate {
+class DrawViewController: LoadingViewController, UIScrollViewDelegate, GADInterstitialDelegate {
     var game: Game?
     
     @IBOutlet weak var scrollView: UIScrollView!
@@ -8,10 +9,13 @@ class DrawViewController: LoadingViewController, UIScrollViewDelegate {
     @IBOutlet weak var imageView: DrawableImageView!
     @IBOutlet weak var editBar: UIStackView!
     
+    var interstitial: GADInterstitial!
+    
     let colors: [UIColor] = [.black, .white] //, .red, .green, .yellow, .blue]
     var colorButtons = [UIButton]()
     
     override func viewDidLoad() {
+        
         super.viewDidLoad()
         for color in colors {
             let button = UIButton()
@@ -33,11 +37,8 @@ class DrawViewController: LoadingViewController, UIScrollViewDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
         if (game == nil) {
-            alert("game is nil", handler: { _ in
-                self.dismiss(animated: false)
-            })
+            return
         }
         let lastTurn = game!.turns.last
         if (lastTurn == nil) {
@@ -54,9 +55,25 @@ class DrawViewController: LoadingViewController, UIScrollViewDelegate {
         }
         phraseLabel.text = "Draw this: \(lastTurn!.phrase!)"
         
+        createAndLoadInterstitial()
         imageView.reset()
     }
     
+    func createAndLoadInterstitial() {
+        interstitial = GADInterstitial(adUnitID: "ca-app-pub-3940256099942544/4411468910")
+        //TODO - use this for prod ca-app-pub-6287206061979264/9009711661
+        interstitial.delegate = self
+        let request = GADRequest()
+        interstitial.load(request)
+    }
+    
+    func interstitialDidDismissScreen(_ ad: GADInterstitial) {
+        dismiss(animated: true)
+    }
+    func interstitial(_ ad: GADInterstitial, didFailToReceiveAdWithError error: GADRequestError) {
+        NSLog("interstitial:didFailToReceiveAdWithError: \(error.localizedDescription)")
+        dismiss(animated: true)
+    }
     
     func viewForZooming(in scrollView: UIScrollView) -> UIView? {
         return scrollView.subviews.first!
@@ -89,7 +106,11 @@ class DrawViewController: LoadingViewController, UIScrollViewDelegate {
                 self.game = nil
                 //todo loading anim
                 //TODO callback
-                self.dismiss(animated: true)
+                if (self.interstitial.isReady) {
+                    self.interstitial.present(fromRootViewController: self)
+                } else {
+                    NSLog("Ad wasn't ready")
+                }
             }
         })
     }

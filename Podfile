@@ -12,5 +12,6 @@ target 'sketchaphone' do
   pod 'Apollo'
   pod 'Kingfisher'
   pod 'SQLite.swift'
+  pod 'Google-Mobile-Ads-SDK'
 end
 
