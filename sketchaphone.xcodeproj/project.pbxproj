@@ -32,6 +32,9 @@
 		4CF33D4E202A657E00D311FF /* FlagViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CF33D4D202A657E00D311FF /* FlagViewController.swift */; };
 		4CF33D50202A6B2900D311FF /* LoadingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CF33D4F202A6B2900D311FF /* LoadingViewController.swift */; };
 		4CF33D52202A792800D311FF /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CF33D51202A792800D311FF /* SettingsViewController.swift */; };
+		4CF33D54202E790300D311FF /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CF33D53202E790300D311FF /* StoreKit.framework */; };
+		4CF33D56202E80BB00D311FF /* InAppPurchaseBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CF33D55202E80BB00D311FF /* InAppPurchaseBase.swift */; };
+		4CF33D58202EA7BE00D311FF /* InAppPurchaseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CF33D57202EA7BE00D311FF /* InAppPurchaseModel.swift */; };
 		AF17E539B9F995B6A080CCDE /* Pods_sketchaphone.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FA7B3E1D9F005AD1BB7C1EA /* Pods_sketchaphone.framework */; };
 /* End PBXBuildFile section */
 
@@ -64,6 +67,9 @@
 		4CF33D4D202A657E00D311FF /* FlagViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlagViewController.swift; sourceTree = "<group>"; };
 		4CF33D4F202A6B2900D311FF /* LoadingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingViewController.swift; sourceTree = "<group>"; };
 		4CF33D51202A792800D311FF /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		4CF33D53202E790300D311FF /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+		4CF33D55202E80BB00D311FF /* InAppPurchaseBase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InAppPurchaseBase.swift; sourceTree = "<group>"; };
+		4CF33D57202EA7BE00D311FF /* InAppPurchaseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InAppPurchaseModel.swift; sourceTree = "<group>"; };
 		7FA7B3E1D9F005AD1BB7C1EA /* Pods_sketchaphone.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_sketchaphone.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8F3AFD6CBD504635FCDF4367 /* Pods_telesketch.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_telesketch.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C509E8721A4A7054D2441345 /* Pods-sketchaphone.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-sketchaphone.debug.xcconfig"; path = "Pods/Target Support Files/Pods-sketchaphone/Pods-sketchaphone.debug.xcconfig"; sourceTree = "<group>"; };
@@ -75,6 +81,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				AF17E539B9F995B6A080CCDE /* Pods_sketchaphone.framework in Frameworks */,
+				4CF33D54202E790300D311FF /* StoreKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -118,6 +125,8 @@
 				4C8C6C7D201E6F2600197CBB /* Assets.xcassets */,
 				4C8C6C7F201E6F2600197CBB /* LaunchScreen.storyboard */,
 				4C8C6C82201E6F2600197CBB /* Info.plist */,
+				4CF33D55202E80BB00D311FF /* InAppPurchaseBase.swift */,
+				4CF33D57202EA7BE00D311FF /* InAppPurchaseModel.swift */,
 			);
 			path = sketchaphone;
 			sourceTree = "<group>";
@@ -175,6 +184,7 @@
 		E7D24680BEFACDAB310E59A1 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4CF33D53202E790300D311FF /* StoreKit.framework */,
 				8F3AFD6CBD504635FCDF4367 /* Pods_telesketch.framework */,
 				7FA7B3E1D9F005AD1BB7C1EA /* Pods_sketchaphone.framework */,
 			);
@@ -226,6 +236,11 @@
 					4C8C6C72201E6F2600197CBB = {
 						CreatedOnToolsVersion = 9.2;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.InAppPurchase = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -341,6 +356,7 @@
 			files = (
 				4CF33D442022868500D311FF /* InProgressViewController.swift in Sources */,
 				4CB8B0422020FB3800D0DD95 /* CGPoint.swift in Sources */,
+				4CF33D56202E80BB00D311FF /* InAppPurchaseBase.swift in Sources */,
 				4CF33D4820228BCD00D311FF /* CompletedGameViewController.swift in Sources */,
 				4CB8B04A20218CD700D0DD95 /* UIColor.swift in Sources */,
 				4CF33D4E202A657E00D311FF /* FlagViewController.swift in Sources */,
@@ -355,6 +371,7 @@
 				4C8C6C77201E6F2600197CBB /* AppDelegate.swift in Sources */,
 				4C6C961E201E7F8300A059E9 /* DrawableImageView.swift in Sources */,
 				4C6C9620201E85C200A059E9 /* PrototypeModels.swift in Sources */,
+				4CF33D58202EA7BE00D311FF /* InAppPurchaseModel.swift in Sources */,
 				4CF33D4C2022CADD00D311FF /* NewUserViewController.swift in Sources */,
 				4CB8B03E20202E3A00D0DD95 /* UIView.swift in Sources */,
 				4CF33D462022869600D311FF /* CompletedViewController.swift in Sources */,
