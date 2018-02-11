@@ -150,7 +150,7 @@
                                     <outlet property="delegate" destination="tMs-YS-sER" id="ccw-Jq-PNW"/>
                                 </connections>
                             </scrollView>
-                            <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="XH3-TT-jIt">
+                            <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="XH3-TT-jIt">
                                 <rect key="frame" x="10" y="450" width="300" height="30"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rPA-EH-0xk">
@@ -371,7 +371,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="6sH-xa-SVT">
-                                <rect key="frame" x="10" y="74" width="300" height="190"/>
+                                <rect key="frame" x="10" y="74" width="300" height="251"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="CKh-i6-Uos">
                                         <rect key="frame" x="20" y="0.0" width="260" height="30"/>
@@ -403,22 +403,34 @@
                                             <action selector="removeAdsTouch" destination="lr0-jv-hZo" eventType="touchUpInside" id="HPm-1f-eI0"/>
                                         </connections>
                                     </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Ads removed!" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gLW-LD-Get">
+                                        <rect key="frame" x="97.5" y="80" width="105.5" height="20.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2yj-jP-7bo">
-                                        <rect key="frame" x="56" y="80" width="188" height="30"/>
+                                        <rect key="frame" x="56" y="110.5" width="188" height="30"/>
                                         <state key="normal" title="Add Colors to your Drawing"/>
                                         <connections>
                                             <action selector="addColorsTouch" destination="lr0-jv-hZo" eventType="touchUpInside" id="wCg-T2-6hH"/>
                                         </connections>
                                     </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Colors enabled!" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="j0s-ah-hrG">
+                                        <rect key="frame" x="90" y="150.5" width="120" height="20.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tRU-Gq-sTU">
-                                        <rect key="frame" x="53" y="120" width="194" height="30"/>
-                                        <state key="normal" title="Remove ads, and add colors"/>
+                                        <rect key="frame" x="11" y="181" width="278" height="30"/>
+                                        <state key="normal" title="DISCOUNT: Remove ads, and add colors"/>
                                         <connections>
                                             <action selector="purchaseAllTouch" destination="lr0-jv-hZo" eventType="touchUpInside" id="D3i-uA-1nv"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="f5P-A1-hYz">
-                                        <rect key="frame" x="85.5" y="160" width="129" height="30"/>
+                                        <rect key="frame" x="85.5" y="221" width="129" height="30"/>
                                         <state key="normal" title="Restore Purchases"/>
                                         <connections>
                                             <action selector="restorePurchasesTouch" destination="lr0-jv-hZo" eventType="touchUpInside" id="sE8-3U-8IK"/>
@@ -449,7 +461,13 @@
                     </view>
                     <tabBarItem key="tabBarItem" title="Settings" image="gears" id="kz7-9T-fKN"/>
                     <connections>
+                        <outlet property="colorsLabel" destination="j0s-ah-hrG" id="yYf-hd-3cZ"/>
                         <outlet property="nameField" destination="vXC-pS-l5N" id="wdq-Vk-EUs"/>
+                        <outlet property="noAdsLabel" destination="gLW-LD-Get" id="JNe-zf-gyo"/>
+                        <outlet property="purchaseAllButton" destination="tRU-Gq-sTU" id="It9-xB-paw"/>
+                        <outlet property="purchaseColorsButton" destination="2yj-jP-7bo" id="HQR-UW-6Vv"/>
+                        <outlet property="purchaseNoAdsButton" destination="eoR-4G-uTY" id="PgZ-sq-3y9"/>
+                        <outlet property="restorePurchasesButton" destination="f5P-A1-hYz" id="vTn-TG-UhW"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="VtJ-dP-MgD" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1036,6 +1054,6 @@
         <image name="rules" width="33" height="33"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="j0Q-fi-y9w"/>
+        <segue reference="bYq-59-xeO"/>
     </inferredMetricsTieBreakers>
 </document>

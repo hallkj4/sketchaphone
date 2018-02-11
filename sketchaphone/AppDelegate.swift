@@ -1,11 +1,3 @@
-//
-//  AppDelegate.swift
-//  telesketch
-//
-//  Created by Michael on 1/28/18.
-//  Copyright © 2018 Michael. All rights reserved.
-//
-
 import UIKit
 import GoogleMobileAds
 
@@ -18,7 +10,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
         GADMobileAds.configure(withApplicationID: "ca-app-pub-6287206061979264~8980376790")
-        
+        inAppPurchaseModel.ready()
         return true
     }
 

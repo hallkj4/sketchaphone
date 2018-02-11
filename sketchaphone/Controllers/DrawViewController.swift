@@ -11,13 +11,28 @@ class DrawViewController: LoadingViewController, UIScrollViewDelegate, GADInters
     
     var interstitial: GADInterstitial!
     
-    let colors: [UIColor] = [.black, .white] //, .red, .green, .yellow, .blue]
+    var colors: [UIColor]?
+    let limitedColors: [UIColor] = [.black, .white]
+    let fullColors : [UIColor] = [.black, .white, .red, .orange, .yellow, .green, .blue, .cyan]
     var colorButtons = [UIButton]()
     
     override func viewDidLoad() {
         
         super.viewDidLoad()
-        for color in colors {
+    }
+    
+    private func setUpColors() {
+        let correctColors = inAppPurchaseModel.hasPurchasedColors() ? fullColors : limitedColors
+        
+        if (colors != nil && colors! == correctColors) {
+            return
+        }
+        colors = correctColors
+        while let button = colorButtons.popLast() {
+            button.removeFromSuperview()
+        }
+        
+        for color in colors! {
             let button = UIButton()
             button.backgroundColor = color
             button.setTitleColor(color.shifted(), for: .normal)
@@ -55,11 +70,15 @@ class DrawViewController: LoadingViewController, UIScrollViewDelegate, GADInters
         }
         phraseLabel.text = "Draw this: \(lastTurn!.phrase!)"
         
+        setUpColors()
         createAndLoadInterstitial()
         imageView.reset()
     }
     
     func createAndLoadInterstitial() {
+        if (inAppPurchaseModel.hasPurchasedNoAds()) {
+            return
+        }
         interstitial = GADInterstitial(adUnitID: "ca-app-pub-3940256099942544/4411468910")
         //TODO - use this for prod ca-app-pub-6287206061979264/9009711661
         interstitial.delegate = self
@@ -106,10 +125,15 @@ class DrawViewController: LoadingViewController, UIScrollViewDelegate, GADInters
                 self.game = nil
                 //todo loading anim
                 //TODO callback
-                if (self.interstitial.isReady) {
+                if (inAppPurchaseModel.hasPurchasedNoAds()) {
+                    self.dismiss(animated: true)
+                }
+                else if (self.interstitial.isReady) {
                     self.interstitial.present(fromRootViewController: self)
-                } else {
+                }
+                else {
                     NSLog("Ad wasn't ready")
+                    self.dismiss(animated: true)
                 }
             }
         })

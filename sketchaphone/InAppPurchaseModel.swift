@@ -1,18 +1,21 @@
 import StoreKit
 
-let inAppPurchaseModel = InAppPurchaseModel()
-
+var inAppPurchaseModel = InAppPurchaseModel()
 class InAppPurchaseModel {
     
-    let noAdsIdentifier = "noads1"
-    let colorsIdentifier = "colors1"
-    let allIdentifier = "colorsAndNoAds1"
+    private let noAdsIdentifier = "noads1"
+    private let colorsIdentifier = "colors1"
+    private let allIdentifier = "colorsAndNoAds1"
     
-    let inAppPurchaseBase: InAppPurchaseBase
+    private let inAppPurchaseBase: InAppPurchaseBase
     
     init() {
         let productIds: Set = [noAdsIdentifier, colorsIdentifier, allIdentifier]
         inAppPurchaseBase = InAppPurchaseBase(productIds: productIds)
+    }
+    
+    func ready() {
+        
     }
     
     func add(delegate: InAppPurchaseDelegate) {
@@ -21,6 +24,18 @@ class InAppPurchaseModel {
     
     func remove(delegate: InAppPurchaseDelegate) {
         inAppPurchaseBase.remove(delegate: delegate)
+    }
+    
+    func noAdsPrice() -> String? {
+        return inAppPurchaseBase.getPrice(productId: noAdsIdentifier)
+    }
+    
+    func colorsPrice() -> String? {
+        return inAppPurchaseBase.getPrice(productId: colorsIdentifier)
+    }
+    
+    func allPrice() -> String? {
+        return inAppPurchaseBase.getPrice(productId: allIdentifier)
     }
     
     func purchaseNoAds() {
@@ -32,7 +47,7 @@ class InAppPurchaseModel {
     }
     
     func purchaseAll() {
-        inAppPurchaseBase.purchase(productId: colorsIdentifier)
+        inAppPurchaseBase.purchase(productId: allIdentifier)
     }
     
     func hasPurchasedAll() -> Bool {
@@ -54,6 +69,6 @@ class InAppPurchaseModel {
     }
     
     func restorePurchases() {
-        //TODO
+        inAppPurchaseBase.restorePurchases()
     }
 }
