@@ -7,9 +7,9 @@ target 'sketchaphone' do
 
   pod 'FacebookCore'
   pod 'FacebookLogin'
-  pod 'FacebookShare'
   
-  pod 'Apollo'
+  pod 'AWSAppSync'
+  
   pod 'Kingfisher'
   pod 'SQLite.swift'
   pod 'Google-Mobile-Ads-SDK'

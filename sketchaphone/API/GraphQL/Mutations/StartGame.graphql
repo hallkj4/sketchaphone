@@ -1,0 +1,5 @@
+mutation startGame($phrase: String!) {
+    startGame(phrase: $phrase) {
+        id
+    }
+}

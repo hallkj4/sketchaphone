@@ -25,19 +25,19 @@ class NewGamesViewController: UIViewController, UITableViewDataSource, UITableVi
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return gamesManager.newGames.count
+        return gamesManager.openGames.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        let game = gamesManager.newGames[indexPath.row]
-        cell.textLabel!.text = "Game created by \(game.creator.name)"
-        cell.detailTextLabel!.text = "Turns taken: \(game.turns.count)"
+        let game = gamesManager.openGames[indexPath.row]
+        cell.textLabel!.text = "Turns taken: \(game.turns.count)"
+        cell.detailTextLabel!.text = "TODO"
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let game = gamesManager.newGames[indexPath.row]
+        let game = gamesManager.openGames[indexPath.row]
         gamesManager.lock(game: game)
         
         //TODO - callback

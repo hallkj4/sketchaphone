@@ -1,0 +1,7 @@
+fragment OpenGameDetailed on Game {
+    ...GameDetailed
+    ...on OpenGame {
+        lockedAt
+        lockedById
+    }
+}

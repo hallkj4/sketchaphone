@@ -1,5 +1,6 @@
 import UIKit
 import GoogleMobileAds
+import AWSAppSync
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -11,6 +12,26 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         GADMobileAds.configure(withApplicationID: "ca-app-pub-6287206061979264~8980376790")
         inAppPurchaseModel.ready()
+        
+        let credentialsProvider = AWSCognitoCredentialsProvider(regionType: CognitoIdentityRegion,
+                                                                identityPoolId: CognitoIdentityPoolId)
+        // You can choose your database location, accessible by SDK
+        let databaseURL = URL(fileURLWithPath:NSTemporaryDirectory()).appendingPathComponent(database_name)
+        
+        do {
+            // Initialize the AWS AppSync configuration
+            let appSyncConfig = try AWSAppSyncClientConfiguration(url: AppSyncEndpointURL,
+                                                                  serviceRegion: AppSyncRegion,
+                                                                  credentialsProvider: credentialsProvider,
+                                                                  databaseURL:databaseURL)
+            // Initialize the AppSync client
+            appSyncClient = try AWSAppSyncClient(appSyncConfig: appSyncConfig)
+            // Set id as the cache key for objects
+            appSyncClient?.apolloClient?.cacheKeyForObject = { $0["id"] }
+        } catch {
+            NSLog("Error initializing appsync client. \(error)")
+        }
+        
         return true
     }
 

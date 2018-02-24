@@ -1,0 +1,10 @@
+query userCompletedTurns($userId: ID!, $limit: Int, $nextToken: String) {
+    userCompletedTurns(userId: $userId, limit: $limit, nextToken: $nextToken) {
+        turns {
+            game {
+                ...GameDetailed
+            }
+        }
+        nextToken
+    }
+}

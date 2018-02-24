@@ -1,0 +1,5 @@
+mutation releaseGame($id: ID!) {
+    releaseGame(id: $id) {
+        id
+    }
+}

@@ -1,0 +1,8 @@
+query completedGames($limit: Int, $nextToken: String) {
+    completedGames(limit: $limit, nextToken: $nextToken) {
+        games {
+            ...GameDetailed
+        }
+        nextToken
+    }
+}

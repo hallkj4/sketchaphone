@@ -1,7 +1,9 @@
 PODS:
-  - Apollo (0.7.0):
-    - Apollo/Core (= 0.7.0)
-  - Apollo/Core (0.7.0)
+  - AWSAppSync (2.6.7):
+    - AWSCore (= 2.6.6)
+    - ReachabilitySwift (~> 4.0.0)
+    - SQLite.swift (= 0.11.4)
+  - AWSCore (2.6.6)
   - Bolts (1.8.4):
     - Bolts/AppLinks (= 1.8.4)
     - Bolts/Tasks (= 1.8.4)
@@ -16,45 +18,38 @@ PODS:
     - FacebookCore (~> 0.3)
     - FBSDKCoreKit (~> 4.27)
     - FBSDKLoginKit (~> 4.27)
-  - FacebookShare (0.3.0):
-    - Bolts (~> 1.8)
-    - FacebookCore (~> 0.3)
-    - FBSDKCoreKit (~> 4.27)
-    - FBSDKShareKit (~> 4.27)
   - FBSDKCoreKit (4.29.0):
     - Bolts (~> 1.7)
   - FBSDKLoginKit (4.29.0):
     - FBSDKCoreKit
-  - FBSDKShareKit (4.29.0):
-    - FBSDKCoreKit
   - Google-Mobile-Ads-SDK (7.27.0)
   - Kingfisher (4.5.0)
+  - ReachabilitySwift (4.0.0)
   - SQLite.swift (0.11.4):
     - SQLite.swift/standard (= 0.11.4)
   - SQLite.swift/standard (0.11.4)
 
 DEPENDENCIES:
-  - Apollo
+  - AWSAppSync
   - FacebookCore
   - FacebookLogin
-  - FacebookShare
   - Google-Mobile-Ads-SDK
   - Kingfisher
   - SQLite.swift
 
 SPEC CHECKSUMS:
-  Apollo: d6649ac06168660e70c6226c4eadfc0770791ba5
+  AWSAppSync: 42495c1e726a17ab1f5300f2cc199180e6810267
+  AWSCore: 64619e45b47678afab53ca0f9b4fa380ebee6f0b
   Bolts: 8a7995239dbe724f9cba2248b766d48b7ebdd322
   FacebookCore: 3ffa190a3f1f96cec0e44d3fc221bc322c595ffa
   FacebookLogin: 0af839ea858faef99550d16596b87b4a8e8906e6
-  FacebookShare: 0469964297ebd75f052be2c5083389a4208e82b7
   FBSDKCoreKit: 6f139173dc63a1deaff4430a55f2fe5bb222d2af
   FBSDKLoginKit: 56a057ca6822535ea0faa25f57a7c41edb697fd4
-  FBSDKShareKit: 18a2cd118aef11dd657fe7e8b64bae5c719088b2
   Google-Mobile-Ads-SDK: 83f7f890e638ce8f1debd440ea363338c9f6be3b
   Kingfisher: 26ae0473102b77b575da51960c932431e3745407
+  ReachabilitySwift: e67b2cab4d5386053673d8a7421b5981e5f08259
   SQLite.swift: 3e3bee21da701b5b9f87c4a672cb54f233505692
 
-PODFILE CHECKSUM: 09cb37a5b31547f7ab1c7f2f7ad9030bf4c59ac4
+PODFILE CHECKSUM: 90852cd3df2c01edd3cf356cc4db6780cf4109f9
 
 COCOAPODS: 1.3.1

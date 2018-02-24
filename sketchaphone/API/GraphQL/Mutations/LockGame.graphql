@@ -1,0 +1,5 @@
+mutation lockGame($id: ID!) {
+    lockGame(id: $id) {
+        ...GameDetailed
+    }
+}

@@ -1,0 +1,5 @@
+mutation flagGame($gameId: ID!, $reason: String!){
+    flagGame(gameId: $gameId, reason: $reason){
+        gameId
+    }
+}

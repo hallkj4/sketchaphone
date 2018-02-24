@@ -1,4 +1,4 @@
-import UIKit
+import AWSAppSync
 
 let gamesManager = GamesManager()
 
@@ -7,24 +7,20 @@ protocol GameWatcher {
 }
 
 class GamesManager {
-    var newGames = [Game]()
-    var inProgressGames: [Game] {
-        get {
-            return newGames
-        }
-    }
+    var openGames = [OpenGamesQuery.Data.OpenGame]()
+    var inProgressGames = [Game]()
     
     var completedGames = [Game]()
     
     private var watchers = [GameWatcher]()
     
-    let rounds = 8
+    let rounds = 9
     
     func new(phrase: String) {
         let game = Game()
         let turn = Turn(phrase: phrase)
         game.turns.append(turn)
-        newGames.append(game)
+        //TODO - should go to in progress first.
         //TODO - push to server
         notifyWatchers()
     }
@@ -108,11 +104,21 @@ class GamesManager {
     }
     
     private func gameFinished(_ game: Game) {
-        guard let index = newGames.index(where: {$0.id == game.id}) else {
-            NSLog("game could not be found!")
-            return
-        }
-        newGames.remove(at: index)
-        completedGames.append(game)
+        //TODO HOW SHOULD client handle?
+    }
+    
+    func fetchOpenGames() {
+        appSyncClient!.fetch(query: OpenGamesQuery(), resultHandler: { (result, error) in
+            if let error = error as? AWSAppSyncClientError {
+                print("Error occurred: \(error.localizedDescription )")
+                return
+            }
+            guard let newOpenGames = result?.data?.openGames else {
+                NSLog("open games was null")
+                return
+            }
+            self.openGames = newOpenGames
+            self.notifyWatchers()
+        })
     }
 }

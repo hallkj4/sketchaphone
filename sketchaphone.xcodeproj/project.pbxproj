@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4C0A0812203FA19F009FED9F /* GameDetailed.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 4C0A0811203FA19F009FED9F /* GameDetailed.graphql */; };
+		4C0A08142040B84A009FED9F /* schema.json in Resources */ = {isa = PBXBuildFile; fileRef = 4C0A08132040B849009FED9F /* schema.json */; };
+		4C0A08162040B8ED009FED9F /* OpenGames.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 4C0A08152040B8ED009FED9F /* OpenGames.graphql */; };
+		4C0A08182040B9AA009FED9F /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C0A08172040B9A9009FED9F /* API.swift */; };
+		4C0A081A2040C467009FED9F /* AppSyncConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C0A08192040C467009FED9F /* AppSyncConstants.swift */; };
 		4C6C961B201E796800A059E9 /* NewGameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C6C961A201E796800A059E9 /* NewGameViewController.swift */; };
 		4C6C961E201E7F8300A059E9 /* DrawableImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C6C961D201E7F8300A059E9 /* DrawableImageView.swift */; };
 		4C6C9620201E85C200A059E9 /* PrototypeModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C6C961F201E85C200A059E9 /* PrototypeModels.swift */; };
@@ -24,6 +29,17 @@
 		4CB8B04520217DF900D0DD95 /* logo.svg in Resources */ = {isa = PBXBuildFile; fileRef = 4CB8B04320217DF900D0DD95 /* logo.svg */; };
 		4CB8B04620217DF900D0DD95 /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CB8B04420217DF900D0DD95 /* logo.png */; };
 		4CB8B04A20218CD700D0DD95 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB8B04920218CD700D0DD95 /* UIColor.swift */; };
+		4CC9B4452040DD670079D202 /* OpenGameDetailed.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 4CC9B4442040DD670079D202 /* OpenGameDetailed.graphql */; };
+		4CC9B4472040DD890079D202 /* UserBasic.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 4CC9B4462040DD890079D202 /* UserBasic.graphql */; };
+		4CC9B4492040DE460079D202 /* InProgressTurns.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 4CC9B4482040DE460079D202 /* InProgressTurns.graphql */; };
+		4CC9B44B2040DE760079D202 /* CompletedGames.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 4CC9B44A2040DE760079D202 /* CompletedGames.graphql */; };
+		4CC9B44D2040DEFC0079D202 /* UserCompletedTurns.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 4CC9B44C2040DEFC0079D202 /* UserCompletedTurns.graphql */; };
+		4CC9B44F2040DF890079D202 /* StartGame.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 4CC9B44E2040DF890079D202 /* StartGame.graphql */; };
+		4CC9B4512040DFC10079D202 /* TakeTurn.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 4CC9B4502040DFC10079D202 /* TakeTurn.graphql */; };
+		4CC9B4532040E0740079D202 /* LockGame.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 4CC9B4522040E0740079D202 /* LockGame.graphql */; };
+		4CC9B4552040E0BC0079D202 /* ReleaseGame.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 4CC9B4542040E0BC0079D202 /* ReleaseGame.graphql */; };
+		4CC9B4572040E0EC0079D202 /* SetName.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 4CC9B4562040E0EC0079D202 /* SetName.graphql */; };
+		4CC9B4592040E1210079D202 /* FlagGame.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 4CC9B4582040E1210079D202 /* FlagGame.graphql */; };
 		4CF33D442022868500D311FF /* InProgressViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CF33D432022868500D311FF /* InProgressViewController.swift */; };
 		4CF33D462022869600D311FF /* CompletedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CF33D452022869600D311FF /* CompletedViewController.swift */; };
 		4CF33D4820228BCD00D311FF /* CompletedGameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CF33D4720228BCD00D311FF /* CompletedGameViewController.swift */; };
@@ -40,6 +56,11 @@
 
 /* Begin PBXFileReference section */
 		21BCC6768CDBEF17863D9228 /* Pods-sketchaphone.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-sketchaphone.release.xcconfig"; path = "Pods/Target Support Files/Pods-sketchaphone/Pods-sketchaphone.release.xcconfig"; sourceTree = "<group>"; };
+		4C0A0811203FA19F009FED9F /* GameDetailed.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = GameDetailed.graphql; sourceTree = "<group>"; };
+		4C0A08132040B849009FED9F /* schema.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = schema.json; sourceTree = "<group>"; };
+		4C0A08152040B8ED009FED9F /* OpenGames.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = OpenGames.graphql; sourceTree = "<group>"; };
+		4C0A08172040B9A9009FED9F /* API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
+		4C0A08192040C467009FED9F /* AppSyncConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSyncConstants.swift; sourceTree = "<group>"; };
 		4C6C961A201E796800A059E9 /* NewGameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewGameViewController.swift; sourceTree = "<group>"; };
 		4C6C961D201E7F8300A059E9 /* DrawableImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawableImageView.swift; sourceTree = "<group>"; };
 		4C6C961F201E85C200A059E9 /* PrototypeModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrototypeModels.swift; sourceTree = "<group>"; };
@@ -59,6 +80,17 @@
 		4CB8B04320217DF900D0DD95 /* logo.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = logo.svg; sourceTree = "<group>"; };
 		4CB8B04420217DF900D0DD95 /* logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo.png; sourceTree = "<group>"; };
 		4CB8B04920218CD700D0DD95 /* UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
+		4CC9B4442040DD670079D202 /* OpenGameDetailed.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = OpenGameDetailed.graphql; sourceTree = "<group>"; };
+		4CC9B4462040DD890079D202 /* UserBasic.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = UserBasic.graphql; sourceTree = "<group>"; };
+		4CC9B4482040DE460079D202 /* InProgressTurns.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = InProgressTurns.graphql; sourceTree = "<group>"; };
+		4CC9B44A2040DE760079D202 /* CompletedGames.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = CompletedGames.graphql; sourceTree = "<group>"; };
+		4CC9B44C2040DEFC0079D202 /* UserCompletedTurns.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = UserCompletedTurns.graphql; sourceTree = "<group>"; };
+		4CC9B44E2040DF890079D202 /* StartGame.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = StartGame.graphql; sourceTree = "<group>"; };
+		4CC9B4502040DFC10079D202 /* TakeTurn.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = TakeTurn.graphql; sourceTree = "<group>"; };
+		4CC9B4522040E0740079D202 /* LockGame.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = LockGame.graphql; sourceTree = "<group>"; };
+		4CC9B4542040E0BC0079D202 /* ReleaseGame.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = ReleaseGame.graphql; sourceTree = "<group>"; };
+		4CC9B4562040E0EC0079D202 /* SetName.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = SetName.graphql; sourceTree = "<group>"; };
+		4CC9B4582040E1210079D202 /* FlagGame.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = FlagGame.graphql; sourceTree = "<group>"; };
 		4CF33D432022868500D311FF /* InProgressViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InProgressViewController.swift; sourceTree = "<group>"; };
 		4CF33D452022869600D311FF /* CompletedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompletedViewController.swift; sourceTree = "<group>"; };
 		4CF33D4720228BCD00D311FF /* CompletedGameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompletedGameViewController.swift; sourceTree = "<group>"; };
@@ -71,7 +103,6 @@
 		4CF33D55202E80BB00D311FF /* InAppPurchaseBase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InAppPurchaseBase.swift; sourceTree = "<group>"; };
 		4CF33D57202EA7BE00D311FF /* InAppPurchaseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InAppPurchaseModel.swift; sourceTree = "<group>"; };
 		7FA7B3E1D9F005AD1BB7C1EA /* Pods_sketchaphone.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_sketchaphone.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		8F3AFD6CBD504635FCDF4367 /* Pods_telesketch.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_telesketch.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C509E8721A4A7054D2441345 /* Pods-sketchaphone.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-sketchaphone.debug.xcconfig"; path = "Pods/Target Support Files/Pods-sketchaphone/Pods-sketchaphone.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -88,6 +119,51 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4C0A080D203FA110009FED9F /* GraphQL */ = {
+			isa = PBXGroup;
+			children = (
+				4C0A08132040B849009FED9F /* schema.json */,
+				4C0A0810203FA184009FED9F /* Fragments */,
+				4C0A080F203FA164009FED9F /* Mutations */,
+				4C0A080E203FA155009FED9F /* Queries */,
+			);
+			path = GraphQL;
+			sourceTree = "<group>";
+		};
+		4C0A080E203FA155009FED9F /* Queries */ = {
+			isa = PBXGroup;
+			children = (
+				4C0A08152040B8ED009FED9F /* OpenGames.graphql */,
+				4CC9B4482040DE460079D202 /* InProgressTurns.graphql */,
+				4CC9B44A2040DE760079D202 /* CompletedGames.graphql */,
+				4CC9B44C2040DEFC0079D202 /* UserCompletedTurns.graphql */,
+			);
+			path = Queries;
+			sourceTree = "<group>";
+		};
+		4C0A080F203FA164009FED9F /* Mutations */ = {
+			isa = PBXGroup;
+			children = (
+				4CC9B44E2040DF890079D202 /* StartGame.graphql */,
+				4CC9B4502040DFC10079D202 /* TakeTurn.graphql */,
+				4CC9B4522040E0740079D202 /* LockGame.graphql */,
+				4CC9B4542040E0BC0079D202 /* ReleaseGame.graphql */,
+				4CC9B4562040E0EC0079D202 /* SetName.graphql */,
+				4CC9B4582040E1210079D202 /* FlagGame.graphql */,
+			);
+			path = Mutations;
+			sourceTree = "<group>";
+		};
+		4C0A0810203FA184009FED9F /* Fragments */ = {
+			isa = PBXGroup;
+			children = (
+				4C0A0811203FA19F009FED9F /* GameDetailed.graphql */,
+				4CC9B4442040DD670079D202 /* OpenGameDetailed.graphql */,
+				4CC9B4462040DD890079D202 /* UserBasic.graphql */,
+			);
+			path = Fragments;
+			sourceTree = "<group>";
+		};
 		4C6C961C201E7F6C00A059E9 /* Elements */ = {
 			isa = PBXGroup;
 			children = (
@@ -134,9 +210,12 @@
 		4C8C6C88201E71FE00197CBB /* API */ = {
 			isa = PBXGroup;
 			children = (
+				4C0A080D203FA110009FED9F /* GraphQL */,
 				4C6C961F201E85C200A059E9 /* PrototypeModels.swift */,
 				4C6C9623201E8CA300A059E9 /* GamesManager.swift */,
 				4CF33D492022C51E00D311FF /* UserManager.swift */,
+				4C0A08172040B9A9009FED9F /* API.swift */,
+				4C0A08192040C467009FED9F /* AppSyncConstants.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -185,7 +264,6 @@
 			isa = PBXGroup;
 			children = (
 				4CF33D53202E790300D311FF /* StoreKit.framework */,
-				8F3AFD6CBD504635FCDF4367 /* Pods_telesketch.framework */,
 				7FA7B3E1D9F005AD1BB7C1EA /* Pods_sketchaphone.framework */,
 			);
 			name = Frameworks;
@@ -208,6 +286,7 @@
 			buildConfigurationList = 4C8C6C85201E6F2600197CBB /* Build configuration list for PBXNativeTarget "sketchaphone" */;
 			buildPhases = (
 				8066BE4787E33A34E48EDA95 /* [CP] Check Pods Manifest.lock */,
+				4CC9B45A2040E2290079D202 /* Generate AWS Apollo GraphQL API */,
 				4C8C6C6F201E6F2600197CBB /* Sources */,
 				4C8C6C70201E6F2600197CBB /* Frameworks */,
 				4C8C6C71201E6F2600197CBB /* Resources */,
@@ -267,11 +346,25 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4CC9B4532040E0740079D202 /* LockGame.graphql in Resources */,
+				4CC9B4592040E1210079D202 /* FlagGame.graphql in Resources */,
+				4C0A08142040B84A009FED9F /* schema.json in Resources */,
+				4CC9B44D2040DEFC0079D202 /* UserCompletedTurns.graphql in Resources */,
+				4CC9B44F2040DF890079D202 /* StartGame.graphql in Resources */,
+				4CC9B44B2040DE760079D202 /* CompletedGames.graphql in Resources */,
+				4CC9B4552040E0BC0079D202 /* ReleaseGame.graphql in Resources */,
+				4CC9B4452040DD670079D202 /* OpenGameDetailed.graphql in Resources */,
+				4CC9B4572040E0EC0079D202 /* SetName.graphql in Resources */,
 				4C8C6C81201E6F2600197CBB /* LaunchScreen.storyboard in Resources */,
 				4CB8B04620217DF900D0DD95 /* logo.png in Resources */,
+				4C0A0812203FA19F009FED9F /* GameDetailed.graphql in Resources */,
 				4C8C6C7E201E6F2600197CBB /* Assets.xcassets in Resources */,
+				4CC9B4512040DFC10079D202 /* TakeTurn.graphql in Resources */,
+				4C0A08162040B8ED009FED9F /* OpenGames.graphql in Resources */,
 				4C8C6C7C201E6F2600197CBB /* Main.storyboard in Resources */,
 				4CB8B04520217DF900D0DD95 /* logo.svg in Resources */,
+				4CC9B4472040DD890079D202 /* UserBasic.graphql in Resources */,
+				4CC9B4492040DE460079D202 /* InProgressTurns.graphql in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -292,6 +385,20 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-sketchaphone/Pods-sketchaphone-resources.sh\"\n";
 			showEnvVarsInLog = 0;
+		};
+		4CC9B45A2040E2290079D202 /* Generate AWS Apollo GraphQL API */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Generate AWS Apollo GraphQL API";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "cd \"${SRCROOT}/${TARGET_NAME}\"\naws-appsync-codegen generate $(find . -name '*.graphql') --schema API/GraphQL/schema.json --output API/API.swift";
 		};
 		8066BE4787E33A34E48EDA95 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -318,28 +425,28 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-sketchaphone/Pods-sketchaphone-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/Apollo/Apollo.framework",
+				"${BUILT_PRODUCTS_DIR}/AWSAppSync/AWSAppSync.framework",
+				"${BUILT_PRODUCTS_DIR}/AWSCore/AWSCore.framework",
 				"${BUILT_PRODUCTS_DIR}/Bolts/Bolts.framework",
 				"${BUILT_PRODUCTS_DIR}/FBSDKCoreKit/FBSDKCoreKit.framework",
 				"${BUILT_PRODUCTS_DIR}/FBSDKLoginKit/FBSDKLoginKit.framework",
-				"${BUILT_PRODUCTS_DIR}/FBSDKShareKit/FBSDKShareKit.framework",
 				"${BUILT_PRODUCTS_DIR}/FacebookCore/FacebookCore.framework",
 				"${BUILT_PRODUCTS_DIR}/FacebookLogin/FacebookLogin.framework",
-				"${BUILT_PRODUCTS_DIR}/FacebookShare/FacebookShare.framework",
 				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
+				"${BUILT_PRODUCTS_DIR}/ReachabilitySwift/Reachability.framework",
 				"${BUILT_PRODUCTS_DIR}/SQLite.swift/SQLite.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Apollo.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AWSAppSync.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AWSCore.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Bolts.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKCoreKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKLoginKit.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKShareKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FacebookCore.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FacebookLogin.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FacebookShare.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Reachability.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SQLite.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -369,10 +476,12 @@
 				4CB8B0402020DEB600D0DD95 /* UIViewController.swift in Sources */,
 				4CF33D50202A6B2900D311FF /* LoadingViewController.swift in Sources */,
 				4C8C6C77201E6F2600197CBB /* AppDelegate.swift in Sources */,
+				4C0A08182040B9AA009FED9F /* API.swift in Sources */,
 				4C6C961E201E7F8300A059E9 /* DrawableImageView.swift in Sources */,
 				4C6C9620201E85C200A059E9 /* PrototypeModels.swift in Sources */,
 				4CF33D58202EA7BE00D311FF /* InAppPurchaseModel.swift in Sources */,
 				4CF33D4C2022CADD00D311FF /* NewUserViewController.swift in Sources */,
+				4C0A081A2040C467009FED9F /* AppSyncConstants.swift in Sources */,
 				4CB8B03E20202E3A00D0DD95 /* UIView.swift in Sources */,
 				4CF33D462022869600D311FF /* CompletedViewController.swift in Sources */,
 				4C6C961B201E796800A059E9 /* NewGameViewController.swift in Sources */,

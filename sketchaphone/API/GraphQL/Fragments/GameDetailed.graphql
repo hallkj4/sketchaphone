@@ -1,0 +1,19 @@
+fragment GameDetailed on Game {
+    id
+    turns {
+        order
+        user {
+            ...UserBasic
+        }
+        phrase
+        drawing {
+            key
+            bucket
+            region
+        }
+    }
+    flags {
+        userId
+        reason
+    }
+}

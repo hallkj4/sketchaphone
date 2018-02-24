@@ -1,0 +1,5 @@
+mutation setName($name: String!) {
+    setName(name: $name) {
+        id
+    }
+}
