@@ -14,7 +14,6 @@
 		4C0A081A2040C467009FED9F /* AppSyncConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C0A08192040C467009FED9F /* AppSyncConstants.swift */; };
 		4C6C961B201E796800A059E9 /* NewGameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C6C961A201E796800A059E9 /* NewGameViewController.swift */; };
 		4C6C961E201E7F8300A059E9 /* DrawableImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C6C961D201E7F8300A059E9 /* DrawableImageView.swift */; };
-		4C6C9620201E85C200A059E9 /* PrototypeModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C6C961F201E85C200A059E9 /* PrototypeModels.swift */; };
 		4C6C9622201E8C5800A059E9 /* DrawViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C6C9621201E8C5800A059E9 /* DrawViewController.swift */; };
 		4C6C9624201E8CA300A059E9 /* GamesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C6C9623201E8CA300A059E9 /* GamesManager.swift */; };
 		4C6C9626201E981B00A059E9 /* GuessViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C6C9625201E981B00A059E9 /* GuessViewController.swift */; };
@@ -40,6 +39,7 @@
 		4CC9B4552040E0BC0079D202 /* ReleaseGame.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 4CC9B4542040E0BC0079D202 /* ReleaseGame.graphql */; };
 		4CC9B4572040E0EC0079D202 /* SetName.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 4CC9B4562040E0EC0079D202 /* SetName.graphql */; };
 		4CC9B4592040E1210079D202 /* FlagGame.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 4CC9B4582040E1210079D202 /* FlagGame.graphql */; };
+		4CC9B45D2040F77F0079D202 /* NilDataError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CC9B45C2040F77F0079D202 /* NilDataError.swift */; };
 		4CF33D442022868500D311FF /* InProgressViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CF33D432022868500D311FF /* InProgressViewController.swift */; };
 		4CF33D462022869600D311FF /* CompletedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CF33D452022869600D311FF /* CompletedViewController.swift */; };
 		4CF33D4820228BCD00D311FF /* CompletedGameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CF33D4720228BCD00D311FF /* CompletedGameViewController.swift */; };
@@ -63,7 +63,6 @@
 		4C0A08192040C467009FED9F /* AppSyncConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSyncConstants.swift; sourceTree = "<group>"; };
 		4C6C961A201E796800A059E9 /* NewGameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewGameViewController.swift; sourceTree = "<group>"; };
 		4C6C961D201E7F8300A059E9 /* DrawableImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawableImageView.swift; sourceTree = "<group>"; };
-		4C6C961F201E85C200A059E9 /* PrototypeModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrototypeModels.swift; sourceTree = "<group>"; };
 		4C6C9621201E8C5800A059E9 /* DrawViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawViewController.swift; sourceTree = "<group>"; };
 		4C6C9623201E8CA300A059E9 /* GamesManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GamesManager.swift; sourceTree = "<group>"; };
 		4C6C9625201E981B00A059E9 /* GuessViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuessViewController.swift; sourceTree = "<group>"; };
@@ -91,6 +90,7 @@
 		4CC9B4542040E0BC0079D202 /* ReleaseGame.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = ReleaseGame.graphql; sourceTree = "<group>"; };
 		4CC9B4562040E0EC0079D202 /* SetName.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = SetName.graphql; sourceTree = "<group>"; };
 		4CC9B4582040E1210079D202 /* FlagGame.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = FlagGame.graphql; sourceTree = "<group>"; };
+		4CC9B45C2040F77F0079D202 /* NilDataError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NilDataError.swift; sourceTree = "<group>"; };
 		4CF33D432022868500D311FF /* InProgressViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InProgressViewController.swift; sourceTree = "<group>"; };
 		4CF33D452022869600D311FF /* CompletedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompletedViewController.swift; sourceTree = "<group>"; };
 		4CF33D4720228BCD00D311FF /* CompletedGameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompletedGameViewController.swift; sourceTree = "<group>"; };
@@ -211,11 +211,11 @@
 			isa = PBXGroup;
 			children = (
 				4C0A080D203FA110009FED9F /* GraphQL */,
-				4C6C961F201E85C200A059E9 /* PrototypeModels.swift */,
 				4C6C9623201E8CA300A059E9 /* GamesManager.swift */,
 				4CF33D492022C51E00D311FF /* UserManager.swift */,
 				4C0A08172040B9A9009FED9F /* API.swift */,
 				4C0A08192040C467009FED9F /* AppSyncConstants.swift */,
+				4CC9B45C2040F77F0079D202 /* NilDataError.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -465,6 +465,7 @@
 				4CB8B0422020FB3800D0DD95 /* CGPoint.swift in Sources */,
 				4CF33D56202E80BB00D311FF /* InAppPurchaseBase.swift in Sources */,
 				4CF33D4820228BCD00D311FF /* CompletedGameViewController.swift in Sources */,
+				4CC9B45D2040F77F0079D202 /* NilDataError.swift in Sources */,
 				4CB8B04A20218CD700D0DD95 /* UIColor.swift in Sources */,
 				4CF33D4E202A657E00D311FF /* FlagViewController.swift in Sources */,
 				4CF33D52202A792800D311FF /* SettingsViewController.swift in Sources */,
@@ -478,7 +479,6 @@
 				4C8C6C77201E6F2600197CBB /* AppDelegate.swift in Sources */,
 				4C0A08182040B9AA009FED9F /* API.swift in Sources */,
 				4C6C961E201E7F8300A059E9 /* DrawableImageView.swift in Sources */,
-				4C6C9620201E85C200A059E9 /* PrototypeModels.swift in Sources */,
 				4CF33D58202EA7BE00D311FF /* InAppPurchaseModel.swift in Sources */,
 				4CF33D4C2022CADD00D311FF /* NewUserViewController.swift in Sources */,
 				4C0A081A2040C467009FED9F /* AppSyncConstants.swift in Sources */,

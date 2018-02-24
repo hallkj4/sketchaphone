@@ -65,14 +65,14 @@ class NewGamesViewController: UIViewController, UITableViewDataSource, UITableVi
                 return
             }
             let controller = segue.destination as! DrawViewController
-            controller.game = gamesManager.newGames[indexPath.row]
+            controller.game = gamesManager.openGames[indexPath.row]
         case "guess":
             guard let indexPath = tableView.indexPathForSelectedRow else {
                 NSLog("new games: tableView.indexPathForSelectedRow was nil")
                 return
             }
             let controller = segue.destination as! GuessViewController
-            controller.game = gamesManager.newGames[indexPath.row]
+            controller.game = gamesManager.openGames[indexPath.row]
         default:
             NSLog("new games controller: unhandled segue identifier: \(segue.identifier!)")
         }

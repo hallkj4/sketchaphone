@@ -2,7 +2,7 @@ import GoogleMobileAds
 import UIKit
 
 class DrawViewController: LoadingViewController, UIScrollViewDelegate, GADInterstitialDelegate {
-    var game: Game?
+    var game: OpenGameDetailed?
     
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var phraseLabel: UILabel!

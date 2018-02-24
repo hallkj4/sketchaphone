@@ -1,5 +1,5 @@
 mutation takeTurn($gameId: ID!, $phrase: String, $drawing: S3ObjectInput) {
     takeTurn(gameId: $gameId, phrase: $phrase, drawing: $drawing) {
-        id
+        ...OpenGameDetailed
     }
 }
