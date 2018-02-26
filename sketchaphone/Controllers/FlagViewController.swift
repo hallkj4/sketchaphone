@@ -1,7 +1,7 @@
 import UIKit
 class FlagViewController: LoadingViewController {
-    var game: Game?
-    var turn: Turn?
+    var game: GameDetailed?
+    var turn: GameDetailed.Turn?
     
     @IBOutlet weak var textField: UITextView!
     
@@ -17,12 +17,13 @@ class FlagViewController: LoadingViewController {
             alert("Reason cannot be blank")
             return
         }
-        gamesManager.flag(game: game!, turn: turn, reason: textField.text)
-        //TODO callback
-        //TODO saving animation
         startLoading()
-        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(4), execute: {
+        gamesManager.flag(game: game!, reason: textField.text, callback: {(error) in
             self.stopLoading()
+            if let error = error {
+                self.alert("Error occurred: \(error.localizedDescription)")
+                return
+            }
             self.performSegue(withIdentifier: "backToNewGames", sender: self)
         })
     }

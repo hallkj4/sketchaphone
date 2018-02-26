@@ -1,9 +1,8 @@
 import UIKit
 
-class NewGameViewController: UIViewController, UITextFieldDelegate {
+class NewGameViewController: LoadingViewController, UITextFieldDelegate {
     
     @IBOutlet weak var textField: UITextField!
-    
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -29,9 +28,15 @@ class NewGameViewController: UIViewController, UITextFieldDelegate {
         confirm("Are you sure you want to start a new game with the phrase '\(textField.text!)'", handler: { confirmed in
             if (confirmed) {
                 self.textField.isEnabled = false
-                gamesManager.new(phrase: self.textField.text!)
-                //TODO - loading animation
-                self.dismiss(animated: true) //TODO put this in a callback
+                self.startLoading()
+                gamesManager.new(phrase: self.textField.text!, callback: {(error) in
+                    self.stopLoading()
+                    if let error = error {
+                        self.alert("game could not be created: \(error.localizedDescription)")
+                        return
+                    }
+                    self.dismiss(animated: true)
+                })
             }
         })
     }

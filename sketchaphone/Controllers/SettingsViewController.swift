@@ -93,8 +93,13 @@ class SettingsViewController: LoadingViewController, UITextFieldDelegate, InAppP
             return false
         }
         self.view.endEditing(true)
-        userManager.set(name: nameField.text!)
-        //TODO callback / loading screen
+        startLoading()
+        userManager.set(name: nameField.text!, callback: {(error) in
+            self.stopLoading()
+            if let error = error {
+                self.alert("error setting name, please edit to try again: \(error.localizedDescription)")
+            }
+        })
         return true
     }
     

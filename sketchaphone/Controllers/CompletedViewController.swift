@@ -21,9 +21,9 @@ class CompletedViewController: UIViewController, UITableViewDataSource, GameWatc
         let game = gamesManager.completedGames[indexPath.row]
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        
-        cell.textLabel!.text = "Game created by \(game.creator.name)"
-        cell.detailTextLabel!.text = "Turns taken: \(game.turns.count)"
+        var firstTurn = game.turns.first
+        cell.textLabel!.text = "Game created by \(firstTurn?.user.name ?? "unknown")"
+        cell.detailTextLabel!.text = "Starting phrase: \(firstTurn?.phrase ?? "unknown")"
         
         return cell
     }

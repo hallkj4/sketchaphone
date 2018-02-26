@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0700"
+   LastUpgradeVersion = "0930"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "CFE516C3CBB34A562F415B47C90BB5A7"
+               BlueprintIdentifier = "32AD61BC602797567D232882B9F7EDFB"
                BuildableName = "Pods_sketchaphone.framework"
                BlueprintName = "Pods-sketchaphone"
                ReferencedContainer = "container:Pods.xcodeproj">
@@ -47,7 +47,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "CFE516C3CBB34A562F415B47C90BB5A7"
+            BlueprintIdentifier = "32AD61BC602797567D232882B9F7EDFB"
             BuildableName = "Pods_sketchaphone.framework"
             BlueprintName = "Pods-sketchaphone"
             ReferencedContainer = "container:Pods.xcodeproj">

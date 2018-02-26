@@ -1,6 +1,6 @@
 import UIKit
 
-class NewGamesViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, GameWatcher {
+class NewGamesViewController: LoadingViewController, UITableViewDataSource, UITableViewDelegate, GameWatcher {
     
     @IBOutlet weak var tableView: UITableView!
     
@@ -38,16 +38,25 @@ class NewGamesViewController: UIViewController, UITableViewDataSource, UITableVi
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let game = gamesManager.openGames[indexPath.row]
-        gamesManager.lock(game: game)
-        
-        //TODO - callback
-        //TODO loading animation
-        //TODO verify turn count
-        if (game.turns.count % 2 == 1) {
-            performSegue(withIdentifier: "draw", sender: nil)
-            return
-        }
-        performSegue(withIdentifier: "guess", sender: nil)
+        startLoading()
+        gamesManager.lock(game: game, callback: {(game, error) in
+            self.stopLoading()
+            if let error = error {
+                self.alert("could not lock game: \(error.localizedDescription)")
+                return
+            }
+            
+            guard let game = game else {
+                self.alert("no game was passed, but no error either!")
+                return
+            }
+            
+            if (game.turns.count % 2 == 1) {
+                self.performSegue(withIdentifier: "draw", sender: nil)
+                return
+            }
+            self.performSegue(withIdentifier: "guess", sender: nil)
+        })
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

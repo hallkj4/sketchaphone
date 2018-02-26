@@ -993,7 +993,9 @@ public final class ReleaseGameMutation: GraphQLMutation {
 
 public final class SetNameMutation: GraphQLMutation {
   public static let operationString =
-    "mutation setName($name: String!) {\n  setName(name: $name) {\n    __typename\n    id\n  }\n}"
+    "mutation setName($name: String!) {\n  setName(name: $name) {\n    __typename\n    ...UserBasic\n  }\n}"
+
+  public static var requestString: String { return operationString.appending(UserBasic.fragmentString) }
 
   public var name: String
 
@@ -1036,7 +1038,9 @@ public final class SetNameMutation: GraphQLMutation {
 
       public static let selections: [GraphQLSelection] = [
         GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+        GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
         GraphQLField("id", type: .nonNull(.scalar(GraphQLID.self))),
+        GraphQLField("name", type: .nonNull(.scalar(String.self))),
       ]
 
       public var snapshot: Snapshot
@@ -1045,8 +1049,8 @@ public final class SetNameMutation: GraphQLMutation {
         self.snapshot = snapshot
       }
 
-      public init(id: GraphQLID) {
-        self.init(snapshot: ["__typename": "User", "id": id])
+      public init(id: GraphQLID, name: String) {
+        self.init(snapshot: ["__typename": "User", "id": id, "name": name])
       }
 
       public var __typename: String {
@@ -1064,6 +1068,37 @@ public final class SetNameMutation: GraphQLMutation {
         }
         set {
           snapshot.updateValue(newValue, forKey: "id")
+        }
+      }
+
+      public var name: String {
+        get {
+          return snapshot["name"]! as! String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "name")
+        }
+      }
+
+      public var fragments: Fragments {
+        get {
+          return Fragments(snapshot: snapshot)
+        }
+        set {
+          snapshot += newValue.snapshot
+        }
+      }
+
+      public struct Fragments {
+        public var snapshot: Snapshot
+
+        public var userBasic: UserBasic {
+          get {
+            return UserBasic(snapshot: snapshot)
+          }
+          set {
+            snapshot += newValue.snapshot
+          }
         }
       }
     }

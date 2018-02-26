@@ -40,6 +40,8 @@
 		4CC9B4572040E0EC0079D202 /* SetName.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 4CC9B4562040E0EC0079D202 /* SetName.graphql */; };
 		4CC9B4592040E1210079D202 /* FlagGame.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 4CC9B4582040E1210079D202 /* FlagGame.graphql */; };
 		4CC9B45D2040F77F0079D202 /* NilDataError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CC9B45C2040F77F0079D202 /* NilDataError.swift */; };
+		4CC9B45F204246BD0079D202 /* GenericError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CC9B45E204246BD0079D202 /* GenericError.swift */; };
+		4CC9B46320435B580079D202 /* TurnImages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CC9B46220435B580079D202 /* TurnImages.swift */; };
 		4CF33D442022868500D311FF /* InProgressViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CF33D432022868500D311FF /* InProgressViewController.swift */; };
 		4CF33D462022869600D311FF /* CompletedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CF33D452022869600D311FF /* CompletedViewController.swift */; };
 		4CF33D4820228BCD00D311FF /* CompletedGameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CF33D4720228BCD00D311FF /* CompletedGameViewController.swift */; };
@@ -91,6 +93,8 @@
 		4CC9B4562040E0EC0079D202 /* SetName.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = SetName.graphql; sourceTree = "<group>"; };
 		4CC9B4582040E1210079D202 /* FlagGame.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = FlagGame.graphql; sourceTree = "<group>"; };
 		4CC9B45C2040F77F0079D202 /* NilDataError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NilDataError.swift; sourceTree = "<group>"; };
+		4CC9B45E204246BD0079D202 /* GenericError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericError.swift; sourceTree = "<group>"; };
+		4CC9B46220435B580079D202 /* TurnImages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TurnImages.swift; sourceTree = "<group>"; };
 		4CF33D432022868500D311FF /* InProgressViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InProgressViewController.swift; sourceTree = "<group>"; };
 		4CF33D452022869600D311FF /* CompletedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompletedViewController.swift; sourceTree = "<group>"; };
 		4CF33D4720228BCD00D311FF /* CompletedGameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompletedGameViewController.swift; sourceTree = "<group>"; };
@@ -216,6 +220,8 @@
 				4C0A08172040B9A9009FED9F /* API.swift */,
 				4C0A08192040C467009FED9F /* AppSyncConstants.swift */,
 				4CC9B45C2040F77F0079D202 /* NilDataError.swift */,
+				4CC9B45E204246BD0079D202 /* GenericError.swift */,
+				4CC9B46220435B580079D202 /* TurnImages.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -427,6 +433,7 @@
 				"${SRCROOT}/Pods/Target Support Files/Pods-sketchaphone/Pods-sketchaphone-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/AWSAppSync/AWSAppSync.framework",
 				"${BUILT_PRODUCTS_DIR}/AWSCore/AWSCore.framework",
+				"${BUILT_PRODUCTS_DIR}/AWSS3/AWSS3.framework",
 				"${BUILT_PRODUCTS_DIR}/Bolts/Bolts.framework",
 				"${BUILT_PRODUCTS_DIR}/FBSDKCoreKit/FBSDKCoreKit.framework",
 				"${BUILT_PRODUCTS_DIR}/FBSDKLoginKit/FBSDKLoginKit.framework",
@@ -440,6 +447,7 @@
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AWSAppSync.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AWSCore.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AWSS3.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Bolts.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKCoreKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKLoginKit.framework",
@@ -474,6 +482,7 @@
 				4CF33D4A2022C51E00D311FF /* UserManager.swift in Sources */,
 				4C6C9626201E981B00A059E9 /* GuessViewController.swift in Sources */,
 				4C8C6C79201E6F2600197CBB /* NewGamesViewController.swift in Sources */,
+				4CC9B45F204246BD0079D202 /* GenericError.swift in Sources */,
 				4CB8B0402020DEB600D0DD95 /* UIViewController.swift in Sources */,
 				4CF33D50202A6B2900D311FF /* LoadingViewController.swift in Sources */,
 				4C8C6C77201E6F2600197CBB /* AppDelegate.swift in Sources */,
@@ -482,6 +491,7 @@
 				4CF33D58202EA7BE00D311FF /* InAppPurchaseModel.swift in Sources */,
 				4CF33D4C2022CADD00D311FF /* NewUserViewController.swift in Sources */,
 				4C0A081A2040C467009FED9F /* AppSyncConstants.swift in Sources */,
+				4CC9B46320435B580079D202 /* TurnImages.swift in Sources */,
 				4CB8B03E20202E3A00D0DD95 /* UIView.swift in Sources */,
 				4CF33D462022869600D311FF /* CompletedViewController.swift in Sources */,
 				4C6C961B201E796800A059E9 /* NewGameViewController.swift in Sources */,

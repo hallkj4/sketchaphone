@@ -22,9 +22,20 @@ class InProgressViewController: UIViewController, UITableViewDataSource, GameWat
         let game = gamesManager.inProgressGames[indexPath.row]
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+        guard let turnByYouIndex = game.turns.index(where: {$0.user.id == userManager.currentUser?.id}) else {
+            cell.textLabel!.text = "error: turn by you could not be found"
+            return cell
+        }
         
-        cell.textLabel!.text = "Game created by \(game.creator.name)"
-        cell.detailTextLabel!.text = "Turns taken: \(game.turns.count)"
+        let turnByYou = game.turns[turnByYouIndex]
+        guard let phrase = turnByYou.phrase ?? game.turns[turnByYouIndex - 1].phrase else {
+            cell.textLabel!.text = "no phrases found!"
+            return cell
+        }
+
+        cell.textLabel!.text = phrase
+        cell.detailTextLabel!.text = "Turns: \(game.turns.count)"
+        //TODO show some timestamps maybe
         
         return cell
     }

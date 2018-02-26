@@ -24,12 +24,16 @@ class NewUserViewController: LoadingViewController, UITextFieldDelegate {
         }
         confirm("Setting name to '\(textField.text!)', are you sure?", handler: { confirmed in
             if (confirmed) {
-                //TODO lock the ui
                 self.textField.isEnabled = false
-                userManager.set(name: self.textField.text!)
-                //TODO - loading animation
-                self.dismiss(animated: true) //TODO put this in a callback
-                //todo unlock the ui
+                self.startLoading()
+                userManager.set(name: self.textField.text!, callback: {(error) in
+                    self.stopLoading()
+                    if let error = error {
+                        self.alert("could not set name: \(error.localizedDescription)")
+                        return
+                    }
+                    self.dismiss(animated: true)
+                })
             }
         })
     }

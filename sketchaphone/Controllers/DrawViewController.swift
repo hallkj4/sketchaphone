@@ -121,20 +121,29 @@ class DrawViewController: LoadingViewController, UIScrollViewDelegate, GADInters
     @IBAction func submitTouch(_ sender: UIBarButtonItem) {
         confirm("Are you ready to submit your drawing?", handler: {confirmed in
             if (confirmed) {
-                gamesManager.draw(game: self.game!, image: self.imageView.image!)
-                self.game = nil
-                //todo loading anim
-                //TODO callback
-                if (inAppPurchaseModel.hasPurchasedNoAds()) {
-                    self.dismiss(animated: true)
-                }
-                else if (self.interstitial.isReady) {
-                    self.interstitial.present(fromRootViewController: self)
-                }
-                else {
+                self.startLoading()
+                gamesManager.draw(game: self.game!, image: self.imageView.image!, callback: {(error, completed) in
+                    self.stopLoading()
+                    if let error = error {
+                        self.alert("drawing could not be saved: \(error)")
+                        return
+                    }
+                    self.game = nil
+                    
+                    if (inAppPurchaseModel.hasPurchasedNoAds()) {
+                        self.dismiss(animated: true)
+                        return
+                    }
+                    if (self.interstitial.isReady) {
+                        self.interstitial.present(fromRootViewController: self)
+                        return
+                    }
+                    
+                    //TODO -check if the drawing is done...
+                    
                     NSLog("Ad wasn't ready")
                     self.dismiss(animated: true)
-                }
+                })
             }
         })
     }
@@ -157,8 +166,7 @@ class DrawViewController: LoadingViewController, UIScrollViewDelegate, GADInters
         switch segue.identifier! {
         case "flag":
             let controller = segue.destination as! FlagViewController
-            controller.game = game
-            controller.turn = game!.turns.last
+            controller.game = game?.fragments.gameDetailed
         default:
             NSLog("draw View: unhandled segue identifier: \(segue.identifier!)")
         }

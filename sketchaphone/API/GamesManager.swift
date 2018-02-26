@@ -1,4 +1,5 @@
 import AWSAppSync
+import AWSS3
 
 let gamesManager = GamesManager()
 
@@ -11,8 +12,10 @@ class GamesManager {
     var inProgressGames = [OpenGameDetailed]()
     
     var completedGames = [GameDetailed]()
+    var myCompletedGames = [GameDetailed]()
     
     var completedGamesNextToken: String?
+    var myCompletedGamesNextToken: String?
     
     private var watchers = [GameWatcher]()
     
@@ -20,7 +23,7 @@ class GamesManager {
     
     let maxGames = 8
     
-    func new(phrase: String, callback: @escaping (Error) -> Void) {
+    func new(phrase: String, callback: @escaping (Error?) -> Void) {
         appSyncClient?.perform(mutation: StartGameMutation(phrase: phrase), resultHandler: { (result, error) in
             if let error = error {
                 NSLog("unexpected error type" + error.localizedDescription)
@@ -34,71 +37,129 @@ class GamesManager {
                 return
             }
             self.inProgressGames.append(newGame)
+            callback(nil)
             self.notifyWatchers()
         })
     }
     
-    func draw(game: OpenGameDetailed, image: UIImage) {
-        //TODO
-//        let drawing = S3ObjectInput(bucket: , key: , region: )
-//        TakeTurnMutation(gameId: game.id, drawing: drawing)
-//        let lastTurn = game.turns.last
-//        if (lastTurn == nil) {
-//            NSLog("Error! game with no turns!")
-//            return
-//        }
-//        if(lastTurn!.phrase == nil) {
-//            NSLog("Error: game's last turn is not a phrase!")
-//            return
-//        }
-//        let turn = Turn(image: image)
-//
-//        guard let pngData = UIImagePNGRepresentation(image) else {
-//            // generate an error
-//            return
-//        }
-//        NSLog("pngData size: \(pngData.count)")
-//
-//        //TODO - push to server
-//
-//        checkDone(game)
+    func draw(game: OpenGameDetailed, image: UIImage, callback: @escaping (Error?, Bool) -> Void) {
+        let lastTurn = game.turns.last
+        if (lastTurn == nil) {
+            callback(GenericError("Error! game with no turns!"), false)
+            return
+        }
+        if(lastTurn!.phrase == nil) {
+            callback(GenericError("Error: game's last turn is not a phrase!"), false)
+            return
+        }
+        
+        uploadDrawing(image: image, callback: {(drawing, error) in
+            if let error = error {
+                callback(error, false)
+                return
+            }
+            appSyncClient!.perform(mutation: TakeTurnMutation(gameId: game.id, drawing: drawing), resultHandler: {(result, error) in
+                if let error = error {
+                    NSLog("unexpected error type" + error.localizedDescription)
+                    callback(error, false)
+                    return
+                }
+                
+                guard let newGame = result?.data?.takeTurn else {
+                    NSLog("game data was not sent")
+                    callback(NilDataError(), false)
+                    return
+                }
+                if let index = self.openGames.index(where: {$0.id == newGame.id}) {
+                    self.openGames.remove(at: index)
+                }
+                if (newGame.turns.count >= self.numRounds) {
+                    self.completedGames.append(newGame.fragments.gameDetailed)
+                    self.myCompletedGames.append(newGame.fragments.gameDetailed)
+                    callback(nil, true)
+                }
+                else {
+                    self.inProgressGames.append(newGame.fragments.openGameDetailed)
+                    callback(nil, false)
+                }
+                self.notifyWatchers()
+            })
+        })
+        
+    }
+    
+    private func uploadDrawing(image: UIImage, callback: @escaping (S3ObjectInput?, Error?) -> Void) {
+        
+        guard let uploadRequest = AWSS3TransferManagerUploadRequest() else {
+            callback(nil, GenericError("couldn't create AWSS3TransferManagerUploadRequest"))
+            return
+        }
+        uploadRequest.key = "\(UUID().uuidString).png"
+        uploadRequest.bucket = S3BUCKET
+        uploadRequest.contentType = "image/png"
+        do {
+            try uploadRequest.body = writeToFile(key: uploadRequest.key!, image: image)
+        }
+        catch {
+            callback(nil, GenericError("couldn't write png to file system: \(error.localizedDescription)"))
+            return
+        }
+        
+        AWSS3TransferManager.default().upload(uploadRequest).continueWith(block: {(task) in
+            if let error = task.error {
+                callback(nil, error)
+                return nil
+            }
+            callback(S3ObjectInput(bucket: S3BUCKET, key: uploadRequest.key!, region: AWSRegionString), nil)
+            return nil
+        })
+    }
+    
+    private func writeToFile(key: String, image: UIImage) throws -> URL {
+        //TODO does this need to be async?
+        guard let pngData = UIImagePNGRepresentation(image) else {
+            throw GenericError("couldn't make PNG data from image")
+        }
+        let filePath = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent(key)
+        try pngData.write(to: filePath)
+        return filePath
     }
     
     
-    //todo callback should know if the game was completed...
-    func guess(game: OpenGameDetailed, phrase: String, callback: @escaping (Error) -> Void) {
-        
+    func guess(game: OpenGameDetailed, phrase: String, callback: @escaping (Error?, Bool) -> Void) {
         let lastTurn = game.turns.last
         if (lastTurn == nil) {
-            NSLog("Error! game with no turns!")
+            callback(GenericError("Error! game with no turns!"), false)
             return
         }
         if (lastTurn!.drawing == nil) {
-            NSLog("Error: game's last turn is not a phrase!")
+            callback(GenericError("Error: game's last turn is not a phrase!"), false)
             return
         }
         
         appSyncClient!.perform(mutation: TakeTurnMutation(gameId: game.id, phrase: phrase), resultHandler: {(result, error) in
             if let error = error {
                 NSLog("unexpected error type" + error.localizedDescription)
-                callback(error)
+                callback(error, false)
                 return
             }
             
             guard let newGame = result?.data?.takeTurn else {
                 NSLog("game data was not sent")
-                callback(NilDataError())
+                callback(NilDataError(), false)
                 return
             }
             if let index = self.openGames.index(where: {$0.id == newGame.id}) {
                 self.openGames.remove(at: index)
             }
             if (newGame.turns.count >= self.numRounds) {
-                
                 self.completedGames.append(newGame.fragments.gameDetailed)
+                self.myCompletedGames.append(newGame.fragments.gameDetailed)
+                callback(nil, true)
             }
             else {
                 self.inProgressGames.append(newGame.fragments.openGameDetailed)
+                callback(nil, false)
             }
             self.notifyWatchers()
         })
@@ -197,7 +258,7 @@ class GamesManager {
         })
     }
     
-    func fetchCompletedGames(nextPage: Bool = false) {
+    func fetchAllCompletedGames(nextPage: Bool = false) {
         var nextToken: String? = nil
         if (nextPage) {
             nextToken = completedGamesNextToken
@@ -218,6 +279,33 @@ class GamesManager {
             }
             self.completedGames = gamesRaw.map{$0.fragments.gameDetailed}
             self.completedGamesNextToken = result?.data?.completedGames.nextToken
+            
+            self.notifyWatchers()
+        })
+    }
+    
+    
+    func fetchMyCompletedGames(nextPage: Bool = false) {
+        var nextToken: String? = nil
+        if (nextPage) {
+            nextToken = myCompletedGamesNextToken
+        }
+        else {
+            myCompletedGames.removeAll()
+        }
+        myCompletedGamesNextToken = nil
+        
+        appSyncClient!.fetch(query: UserCompletedTurnsQuery(userId: userManager.currentUser!.id, nextToken: nextToken) , resultHandler: { (result, error) in
+            if let error = error as? AWSAppSyncClientError {
+                print("Error occurred: \(error.localizedDescription )")
+                return
+            }
+            guard let turnsRaw = result?.data?.userCompletedTurns.turns else {
+                NSLog("completed turns was null")
+                return
+            }
+            self.myCompletedGames = turnsRaw.map{$0.game.fragments.gameDetailed}
+            self.myCompletedGamesNextToken = result?.data?.userCompletedTurns.nextToken
             
             self.notifyWatchers()
         })

@@ -1,7 +1,8 @@
 import UIKit
+import Kingfisher
 
 class CompletedGameViewController: UIViewController {
-    var game: Game?
+    var game: GameDetailed?
     
     @IBOutlet weak var stackView: UIStackView!
     
@@ -36,7 +37,7 @@ class CompletedGameViewController: UIViewController {
                 stackView.addArrangedSubview(label)
                 
                 let imageView = UIImageView()
-                imageView.image = turn.image
+                imageView.kf.setImage(with: turn.imageURL())
                 stackView.addArrangedSubview(imageView)
             }
         }

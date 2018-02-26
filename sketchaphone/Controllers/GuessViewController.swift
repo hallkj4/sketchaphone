@@ -1,7 +1,8 @@
 import UIKit
+import Kingfisher
 
 class GuessViewController: LoadingViewController, UIScrollViewDelegate, UITextFieldDelegate {
-    var game: Game?
+    var game: OpenGameDetailed?
     
     let defaultText = "Describe the picture..."
     
@@ -19,26 +20,27 @@ class GuessViewController: LoadingViewController, UIScrollViewDelegate, UITextFi
         super.viewWillAppear(animated)
         scrollView.zoomScale = 1.0
         
-        if (game == nil) {
+        guard let game = game else {
             alert("game is nil", handler: { _ in
                 self.dismiss(animated: false)
             })
+            return
         }
         
-        let lastTurn = game!.turns.last
-        if (lastTurn == nil) {
+        guard let lastTurn = game.turns.last else {
             alert("lastTurn is nil", handler: { _ in
                 self.dismiss(animated: false)
             })
             return
         }
-        if (lastTurn?.image == nil) {
+        
+        guard let imageURL = lastTurn.imageURL() else {
             alert("lastTurn did not have an image", handler: { _ in
                 self.dismiss(animated: false)
             })
             return
         }
-        imageView.image = lastTurn!.image
+        imageView.kf.setImage(with: imageURL)
         textField.textColor = .gray
         textField.text = defaultText
         textField.isEnabled = true
@@ -84,11 +86,22 @@ class GuessViewController: LoadingViewController, UIScrollViewDelegate, UITextFi
         }
         confirm("Are you ready to submit your guess of '\(textField.text!)'?", handler: { confirmed in
             if (confirmed) {
-                self.textField.isEnabled = false
-                gamesManager.guess(game: self.game!, phrase: self.textField.text!)
-                self.game = nil
-                //todo loading anim
-                self.dismiss(animated: true) //todo move this to a callback
+                self.startLoading()
+                gamesManager.guess(game: self.game!, phrase: self.textField.text!, callback: {
+                    (error, didFinish) in
+                    self.stopLoading()
+                    if let error = error {
+                        self.alert("error occured saving guess: \(error.localizedDescription)")
+                        return
+                    }
+                    
+                    if (didFinish) {
+                        //TODO segue to the completedgame controller
+                    }
+                    
+                    self.game = nil
+                    self.dismiss(animated: true)
+                })
             }
         })
         
@@ -108,8 +121,7 @@ class GuessViewController: LoadingViewController, UIScrollViewDelegate, UITextFi
         switch segue.identifier! {
         case "flag":
             let controller = segue.destination as! FlagViewController
-            controller.game = game
-            controller.turn = game!.turns.last
+            controller.game = game?.fragments.gameDetailed
         default:
             NSLog("guess View: unhandled segue identifier: \(segue.identifier!)")
         }
