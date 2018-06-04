@@ -42,6 +42,7 @@
 		4CC9B45D2040F77F0079D202 /* NilDataError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CC9B45C2040F77F0079D202 /* NilDataError.swift */; };
 		4CC9B45F204246BD0079D202 /* GenericError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CC9B45E204246BD0079D202 /* GenericError.swift */; };
 		4CC9B46320435B580079D202 /* TurnImages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CC9B46220435B580079D202 /* TurnImages.swift */; };
+		4CC9B4692045C97C0079D202 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CC9B4682045C97C0079D202 /* LoginViewController.swift */; };
 		4CF33D442022868500D311FF /* InProgressViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CF33D432022868500D311FF /* InProgressViewController.swift */; };
 		4CF33D462022869600D311FF /* CompletedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CF33D452022869600D311FF /* CompletedViewController.swift */; };
 		4CF33D4820228BCD00D311FF /* CompletedGameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CF33D4720228BCD00D311FF /* CompletedGameViewController.swift */; };
@@ -95,6 +96,7 @@
 		4CC9B45C2040F77F0079D202 /* NilDataError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NilDataError.swift; sourceTree = "<group>"; };
 		4CC9B45E204246BD0079D202 /* GenericError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericError.swift; sourceTree = "<group>"; };
 		4CC9B46220435B580079D202 /* TurnImages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TurnImages.swift; sourceTree = "<group>"; };
+		4CC9B4682045C97C0079D202 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		4CF33D432022868500D311FF /* InProgressViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InProgressViewController.swift; sourceTree = "<group>"; };
 		4CF33D452022869600D311FF /* CompletedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompletedViewController.swift; sourceTree = "<group>"; };
 		4CF33D4720228BCD00D311FF /* CompletedGameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompletedGameViewController.swift; sourceTree = "<group>"; };
@@ -241,6 +243,7 @@
 				4CF33D4B2022CADD00D311FF /* NewUserViewController.swift */,
 				4CF33D4D202A657E00D311FF /* FlagViewController.swift */,
 				4CF33D51202A792800D311FF /* SettingsViewController.swift */,
+				4CC9B4682045C97C0079D202 /* LoginViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -432,6 +435,7 @@
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-sketchaphone/Pods-sketchaphone-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/AWSAppSync/AWSAppSync.framework",
+				"${BUILT_PRODUCTS_DIR}/AWSCognitoIdentityProvider/AWSCognitoIdentityProvider.framework",
 				"${BUILT_PRODUCTS_DIR}/AWSCore/AWSCore.framework",
 				"${BUILT_PRODUCTS_DIR}/AWSS3/AWSS3.framework",
 				"${BUILT_PRODUCTS_DIR}/Bolts/Bolts.framework",
@@ -446,6 +450,7 @@
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AWSAppSync.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AWSCognitoIdentityProvider.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AWSCore.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AWSS3.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Bolts.framework",
@@ -469,6 +474,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4CC9B4692045C97C0079D202 /* LoginViewController.swift in Sources */,
 				4CF33D442022868500D311FF /* InProgressViewController.swift in Sources */,
 				4CB8B0422020FB3800D0DD95 /* CGPoint.swift in Sources */,
 				4CF33D56202E80BB00D311FF /* InAppPurchaseBase.swift in Sources */,

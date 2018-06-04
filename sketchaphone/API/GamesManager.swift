@@ -229,9 +229,19 @@ class GamesManager {
     }
     
     func fetchOpenGames() {
+        NSLog("fetching open games")
         appSyncClient!.fetch(query: OpenGamesQuery(), resultHandler: { (result, error) in
             if let error = error as? AWSAppSyncClientError {
-                print("Error occurred: \(error.localizedDescription )")
+                NSLog("Error occurred: \(error.localizedDescription )")
+                if let body = error.body {
+                    NSLog("Error body: \(String(data: body, encoding: String.Encoding.utf8) ?? "nil"))")
+                }
+                else {
+                    NSLog("Error body: nil")
+                }
+                NSLog("Error failureReason: \(error.failureReason ?? "nil")")
+                NSLog("Error errorDescription: \(error.errorDescription ?? "nil")")
+                NSLog("Error recoverySuggestion: \(error.recoverySuggestion ?? "nil")")
                 return
             }
             guard let newOpenGames = result?.data?.openGames else {
@@ -239,11 +249,13 @@ class GamesManager {
                 return
             }
             self.openGames = newOpenGames.map({$0.fragments.openGameDetailed})
+            NSLog("got \(self.openGames.count) open games")
             self.notifyWatchers()
         })
     }
     
     func fetchInProgressGames() {
+        NSLog("fetching inprogress games")
         appSyncClient!.fetch(query: InProgressTurnsQuery(), resultHandler: { (result, error) in
             if let error = error as? AWSAppSyncClientError {
                 print("Error occurred: \(error.localizedDescription )")
@@ -254,6 +266,7 @@ class GamesManager {
                 return
             }
             self.inProgressGames = inProgressTurns.map({$0.game.fragments.openGameDetailed})
+            NSLog("got \(self.inProgressGames.count) inProgress games")
             self.notifyWatchers()
         })
     }

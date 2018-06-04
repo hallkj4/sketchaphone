@@ -8,6 +8,7 @@ class InProgressViewController: UIViewController, UITableViewDataSource, GameWat
     override func viewDidLoad() {
         super.viewDidLoad()
         gamesManager.add(watcher: self)
+        gamesManager.fetchInProgressGames()
     }
     
     func gamesUpdated() {

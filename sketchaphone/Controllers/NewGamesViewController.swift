@@ -1,4 +1,6 @@
 import UIKit
+//import AWSAuthCore
+//import AWSAuthUI
 
 class NewGamesViewController: LoadingViewController, UITableViewDataSource, UITableViewDelegate, GameWatcher {
     
@@ -9,15 +11,40 @@ class NewGamesViewController: LoadingViewController, UITableViewDataSource, UITa
     override func viewDidLoad() {
         super.viewDidLoad()
         gamesManager.add(watcher: self)
+        
+        gamesManager.fetchOpenGames()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        if (userManager.currentUser == nil) {
-            DispatchQueue.main.async(execute: {
-                self.performSegue(withIdentifier: "newUser", sender: nil)
-            })
-        }
+//        if (userManager.currentUser == nil) {
+//            DispatchQueue.main.async(execute: {
+//                self.performSegue(withIdentifier: "newUser", sender: nil)
+//            })
+//        }
+//        AWSSignInManager.sharedInstance().logout(completionHandler: {_,_ in })
+//        if !AWSSignInManager.sharedInstance().isLoggedIn {
+//            AWSAuthUIViewController.presentViewController(with: self.navigationController!, configuration: nil, completionHandler: { (provider: AWSSignInProvider, error: Error?) in
+//
+//                if error != nil {
+//                    NSLog("Error occurred: \(String(describing: error))")
+//                }
+//                else {
+//                    // Sign in successful.
+//                }
+//            })
+//        }
+//        else {
+//            NSLog("identityId: \(credentialsProvider!.identityId ?? "unknown")")
+//            credentialsProvider!.getIdentityId().continueWith(block: {(task) in
+//                if let error = task.error {
+//                    NSLog("error getting identityId: \(error.localizedDescription)")
+//                    return nil
+//                }
+//                NSLog("identityId: \(credentialsProvider!.identityId ?? "unknown")")
+//                return nil
+//            })
+//        }
     }
     
     func gamesUpdated() {
@@ -66,6 +93,7 @@ class NewGamesViewController: LoadingViewController, UITableViewDataSource, UITa
         }
         switch segue.identifier! {
         case "newUser": ()
+        case "login": ()
         case "newGame": ()
             //TODO - check on account limits - you can only create X games
         case "draw":

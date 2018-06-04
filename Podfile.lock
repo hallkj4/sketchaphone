@@ -3,6 +3,8 @@ PODS:
     - AWSCore (= 2.6.6)
     - ReachabilitySwift (~> 4.0.0)
     - SQLite.swift (= 0.11.4)
+  - AWSCognitoIdentityProvider (2.6.6):
+    - AWSCore (= 2.6.6)
   - AWSCore (2.6.6)
   - AWSS3 (2.6.6):
     - AWSCore (= 2.6.6)
@@ -20,12 +22,12 @@ PODS:
     - FacebookCore (~> 0.3)
     - FBSDKCoreKit (~> 4.27)
     - FBSDKLoginKit (~> 4.27)
-  - FBSDKCoreKit (4.30.0):
+  - FBSDKCoreKit (4.31.0):
     - Bolts (~> 1.7)
-  - FBSDKLoginKit (4.30.0):
+  - FBSDKLoginKit (4.31.0):
     - FBSDKCoreKit
   - Google-Mobile-Ads-SDK (7.29.0)
-  - Kingfisher (4.6.2)
+  - Kingfisher (4.6.3)
   - ReachabilitySwift (4.0.0)
   - SQLite.swift (0.11.4):
     - SQLite.swift/standard (= 0.11.4)
@@ -33,6 +35,7 @@ PODS:
 
 DEPENDENCIES:
   - AWSAppSync
+  - AWSCognitoIdentityProvider
   - AWSS3
   - FacebookCore
   - FacebookLogin
@@ -42,18 +45,19 @@ DEPENDENCIES:
 
 SPEC CHECKSUMS:
   AWSAppSync: 42495c1e726a17ab1f5300f2cc199180e6810267
+  AWSCognitoIdentityProvider: 123faad1d1e8361f2c76132f552008d5c4928541
   AWSCore: 64619e45b47678afab53ca0f9b4fa380ebee6f0b
   AWSS3: 44c99957a049703e06b474f4b1898da215f2d922
   Bolts: ac6567323eac61e203f6a9763667d0f711be34c8
   FacebookCore: 3ffa190a3f1f96cec0e44d3fc221bc322c595ffa
   FacebookLogin: 0af839ea858faef99550d16596b87b4a8e8906e6
-  FBSDKCoreKit: 7c4bba2877781a131ab5d54c0a78c405d4307b62
-  FBSDKLoginKit: fe7a7e82373dc5daad92e1623219e86224ab1fb1
+  FBSDKCoreKit: 54db4c581123745d25a9f7c1608020b3aeabd118
+  FBSDKLoginKit: 95a252ddffd6919c0f132a02292f0824616d8709
   Google-Mobile-Ads-SDK: 375bbb821b3df2106c37b74f6b0a97576ddc5f6b
-  Kingfisher: 55b9c395bf8d3949676ad3861111923990ab68cf
+  Kingfisher: 98e6d5b5e807645743e8ed5ececd25d688d38452
   ReachabilitySwift: e67b2cab4d5386053673d8a7421b5981e5f08259
   SQLite.swift: 3e3bee21da701b5b9f87c4a672cb54f233505692
 
-PODFILE CHECKSUM: ce96619a347fb6777d728a344ba8f9fb298ac809
+PODFILE CHECKSUM: 23ef7c6de0a5c691e6a375c1114632c5d6d595f2
 
 COCOAPODS: 1.4.0

@@ -117,11 +117,28 @@ class SettingsViewController: LoadingViewController, UITextFieldDelegate, InAppP
         startLoading()
         inAppPurchaseModel.purchaseAll()
     }
+    
     @IBAction func restorePurchasesTouch() {
         startLoading()
         inAppPurchaseModel.restorePurchases()
     }
     
+    @IBAction func signOutTouch() {
+        let user = pool?.currentUser()
+        user?.signOut()
+        user?.getDetails().continueOnSuccessWith(block: { (task) -> Any? in
+            guard task.result != nil else {
+                return nil
+            }
+            task.result?.mfaOptions?.forEach({(option) in
+                NSLog("mfaOption: \(option.attributeName ?? "nil")")
+            })
+            task.result?.userAttributes?.forEach({ (attribute) in
+                NSLog("attribute: \(attribute.name ?? "nil" ):\(attribute.value ?? "nil") ")
+            })
+            return nil
+        })
+    }
     
     func inAppPurchaseDelegate() {
         DispatchQueue.main.async(execute: {
