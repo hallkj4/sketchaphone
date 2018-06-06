@@ -1,8 +1,8 @@
 import UIKit
 
 extension UIViewController {
-    func alert(_ error: String, handler: ((UIAlertAction) -> Void)? = nil) {
-        let alert = UIAlertController(title: "Alert", message: error, preferredStyle: .alert)
+    func alert(_ error: String, title: String = "Alert", handler: ((UIAlertAction) -> Void)? = nil) {
+        let alert = UIAlertController(title: title, message: error, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: handler))
         present(alert, animated: true, completion: nil)
     }

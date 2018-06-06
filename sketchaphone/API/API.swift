@@ -136,27 +136,20 @@ public final class FlagGameMutation: GraphQLMutation {
   }
 }
 
-public final class LockGameMutation: GraphQLMutation {
+public final class JoinGameMutation: GraphQLMutation {
   public static let operationString =
-    "mutation lockGame($id: ID!) {\n  lockGame(id: $id) {\n    __typename\n    ...OpenGameDetailed\n  }\n}"
+    "mutation joinGame {\n  joinGame {\n    __typename\n    ...OpenGameDetailed\n  }\n}"
 
   public static var requestString: String { return operationString.appending(OpenGameDetailed.fragmentString).appending(GameDetailed.fragmentString).appending(UserBasic.fragmentString) }
 
-  public var id: GraphQLID
-
-  public init(id: GraphQLID) {
-    self.id = id
-  }
-
-  public var variables: GraphQLMap? {
-    return ["id": id]
+  public init() {
   }
 
   public struct Data: GraphQLSelectionSet {
     public static let possibleTypes = ["Mutation"]
 
     public static let selections: [GraphQLSelection] = [
-      GraphQLField("lockGame", arguments: ["id": GraphQLVariable("id")], type: .nonNull(.object(LockGame.selections))),
+      GraphQLField("joinGame", type: .object(JoinGame.selections)),
     ]
 
     public var snapshot: Snapshot
@@ -165,34 +158,31 @@ public final class LockGameMutation: GraphQLMutation {
       self.snapshot = snapshot
     }
 
-    public init(lockGame: LockGame) {
-      self.init(snapshot: ["__typename": "Mutation", "lockGame": lockGame.snapshot])
+    public init(joinGame: JoinGame? = nil) {
+      self.init(snapshot: ["__typename": "Mutation", "joinGame": joinGame.flatMap { $0.snapshot }])
     }
 
-    public var lockGame: LockGame {
+    public var joinGame: JoinGame? {
       get {
-        return LockGame(snapshot: snapshot["lockGame"]! as! Snapshot)
+        return (snapshot["joinGame"] as? Snapshot).flatMap { JoinGame(snapshot: $0) }
       }
       set {
-        snapshot.updateValue(newValue.snapshot, forKey: "lockGame")
+        snapshot.updateValue(newValue?.snapshot, forKey: "joinGame")
       }
     }
 
-    public struct LockGame: GraphQLSelectionSet {
-      public static let possibleTypes = ["OpenGame", "CompletedGame"]
+    public struct JoinGame: GraphQLSelectionSet {
+      public static let possibleTypes = ["OpenGame"]
 
       public static let selections: [GraphQLSelection] = [
-        GraphQLTypeCase(
-          variants: ["OpenGame": AsOpenGame.selections],
-          default: [
-            GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
-            GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
-            GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
-            GraphQLField("id", type: .nonNull(.scalar(GraphQLID.self))),
-            GraphQLField("turns", type: .nonNull(.list(.nonNull(.object(Turn.selections))))),
-            GraphQLField("flags", type: .nonNull(.list(.nonNull(.object(Flag.selections))))),
-          ]
-        )
+        GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+        GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+        GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+        GraphQLField("id", type: .nonNull(.scalar(GraphQLID.self))),
+        GraphQLField("turns", type: .nonNull(.list(.nonNull(.object(Turn.selections))))),
+        GraphQLField("flags", type: .nonNull(.list(.nonNull(.object(Flag.selections))))),
+        GraphQLField("lockedAt", type: .scalar(String.self)),
+        GraphQLField("lockedById", type: .scalar(GraphQLID.self)),
       ]
 
       public var snapshot: Snapshot
@@ -201,12 +191,8 @@ public final class LockGameMutation: GraphQLMutation {
         self.snapshot = snapshot
       }
 
-      public static func makeCompletedGame(id: GraphQLID, turns: [Turn], flags: [Flag]) -> LockGame {
-        return LockGame(snapshot: ["__typename": "CompletedGame", "id": id, "turns": turns.map { $0.snapshot }, "flags": flags.map { $0.snapshot }])
-      }
-
-      public static func makeOpenGame(id: GraphQLID, turns: [AsOpenGame.Turn], flags: [AsOpenGame.Flag], lockedAt: String? = nil, lockedById: GraphQLID? = nil) -> LockGame {
-        return LockGame(snapshot: ["__typename": "OpenGame", "id": id, "turns": turns.map { $0.snapshot }, "flags": flags.map { $0.snapshot }, "lockedAt": lockedAt, "lockedById": lockedById])
+      public init(id: GraphQLID, turns: [Turn], flags: [Flag], lockedAt: String? = nil, lockedById: GraphQLID? = nil) {
+        self.init(snapshot: ["__typename": "OpenGame", "id": id, "turns": turns.map { $0.snapshot }, "flags": flags.map { $0.snapshot }, "lockedAt": lockedAt, "lockedById": lockedById])
       }
 
       public var __typename: String {
@@ -242,6 +228,24 @@ public final class LockGameMutation: GraphQLMutation {
         }
         set {
           snapshot.updateValue(newValue.map { $0.snapshot }, forKey: "flags")
+        }
+      }
+
+      public var lockedAt: String? {
+        get {
+          return snapshot["lockedAt"] as? String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "lockedAt")
+        }
+      }
+
+      public var lockedById: GraphQLID? {
+        get {
+          return snapshot["lockedById"] as? GraphQLID
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "lockedById")
         }
       }
 
@@ -520,413 +524,22 @@ public final class LockGameMutation: GraphQLMutation {
           }
         }
       }
-
-      public var asOpenGame: AsOpenGame? {
-        get {
-          if !AsOpenGame.possibleTypes.contains(__typename) { return nil }
-          return AsOpenGame(snapshot: snapshot)
-        }
-        set {
-          guard let newValue = newValue else { return }
-          snapshot = newValue.snapshot
-        }
-      }
-
-      public struct AsOpenGame: GraphQLSelectionSet {
-        public static let possibleTypes = ["OpenGame"]
-
-        public static let selections: [GraphQLSelection] = [
-          GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
-          GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
-          GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
-          GraphQLField("id", type: .nonNull(.scalar(GraphQLID.self))),
-          GraphQLField("turns", type: .nonNull(.list(.nonNull(.object(Turn.selections))))),
-          GraphQLField("flags", type: .nonNull(.list(.nonNull(.object(Flag.selections))))),
-          GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
-          GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
-          GraphQLField("id", type: .nonNull(.scalar(GraphQLID.self))),
-          GraphQLField("turns", type: .nonNull(.list(.nonNull(.object(Turn.selections))))),
-          GraphQLField("flags", type: .nonNull(.list(.nonNull(.object(Flag.selections))))),
-          GraphQLField("lockedAt", type: .scalar(String.self)),
-          GraphQLField("lockedById", type: .scalar(GraphQLID.self)),
-        ]
-
-        public var snapshot: Snapshot
-
-        public init(snapshot: Snapshot) {
-          self.snapshot = snapshot
-        }
-
-        public init(id: GraphQLID, turns: [Turn], flags: [Flag], lockedAt: String? = nil, lockedById: GraphQLID? = nil) {
-          self.init(snapshot: ["__typename": "OpenGame", "id": id, "turns": turns.map { $0.snapshot }, "flags": flags.map { $0.snapshot }, "lockedAt": lockedAt, "lockedById": lockedById])
-        }
-
-        public var __typename: String {
-          get {
-            return snapshot["__typename"]! as! String
-          }
-          set {
-            snapshot.updateValue(newValue, forKey: "__typename")
-          }
-        }
-
-        public var id: GraphQLID {
-          get {
-            return snapshot["id"]! as! GraphQLID
-          }
-          set {
-            snapshot.updateValue(newValue, forKey: "id")
-          }
-        }
-
-        public var turns: [Turn] {
-          get {
-            return (snapshot["turns"] as! [Snapshot]).map { Turn(snapshot: $0) }
-          }
-          set {
-            snapshot.updateValue(newValue.map { $0.snapshot }, forKey: "turns")
-          }
-        }
-
-        public var flags: [Flag] {
-          get {
-            return (snapshot["flags"] as! [Snapshot]).map { Flag(snapshot: $0) }
-          }
-          set {
-            snapshot.updateValue(newValue.map { $0.snapshot }, forKey: "flags")
-          }
-        }
-
-        public var lockedAt: String? {
-          get {
-            return snapshot["lockedAt"] as? String
-          }
-          set {
-            snapshot.updateValue(newValue, forKey: "lockedAt")
-          }
-        }
-
-        public var lockedById: GraphQLID? {
-          get {
-            return snapshot["lockedById"] as? GraphQLID
-          }
-          set {
-            snapshot.updateValue(newValue, forKey: "lockedById")
-          }
-        }
-
-        public var fragments: Fragments {
-          get {
-            return Fragments(snapshot: snapshot)
-          }
-          set {
-            snapshot += newValue.snapshot
-          }
-        }
-
-        public struct Fragments {
-          public var snapshot: Snapshot
-
-          public var openGameDetailed: OpenGameDetailed {
-            get {
-              return OpenGameDetailed(snapshot: snapshot)
-            }
-            set {
-              snapshot += newValue.snapshot
-            }
-          }
-
-          public var gameDetailed: GameDetailed {
-            get {
-              return GameDetailed(snapshot: snapshot)
-            }
-            set {
-              snapshot += newValue.snapshot
-            }
-          }
-        }
-
-        public struct Turn: GraphQLSelectionSet {
-          public static let possibleTypes = ["OpenTurn", "CompletedTurn"]
-
-          public static let selections: [GraphQLSelection] = [
-            GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
-            GraphQLField("order", type: .nonNull(.scalar(Int.self))),
-            GraphQLField("user", type: .nonNull(.object(User.selections))),
-            GraphQLField("phrase", type: .scalar(String.self)),
-            GraphQLField("drawing", type: .object(Drawing.selections)),
-            GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
-            GraphQLField("order", type: .nonNull(.scalar(Int.self))),
-            GraphQLField("user", type: .nonNull(.object(User.selections))),
-            GraphQLField("phrase", type: .scalar(String.self)),
-            GraphQLField("drawing", type: .object(Drawing.selections)),
-          ]
-
-          public var snapshot: Snapshot
-
-          public init(snapshot: Snapshot) {
-            self.snapshot = snapshot
-          }
-
-          public static func makeOpenTurn(order: Int, user: User, phrase: String? = nil, drawing: Drawing? = nil) -> Turn {
-            return Turn(snapshot: ["__typename": "OpenTurn", "order": order, "user": user.snapshot, "phrase": phrase, "drawing": drawing.flatMap { $0.snapshot }])
-          }
-
-          public static func makeCompletedTurn(order: Int, user: User, phrase: String? = nil, drawing: Drawing? = nil) -> Turn {
-            return Turn(snapshot: ["__typename": "CompletedTurn", "order": order, "user": user.snapshot, "phrase": phrase, "drawing": drawing.flatMap { $0.snapshot }])
-          }
-
-          public var __typename: String {
-            get {
-              return snapshot["__typename"]! as! String
-            }
-            set {
-              snapshot.updateValue(newValue, forKey: "__typename")
-            }
-          }
-
-          public var order: Int {
-            get {
-              return snapshot["order"]! as! Int
-            }
-            set {
-              snapshot.updateValue(newValue, forKey: "order")
-            }
-          }
-
-          public var user: User {
-            get {
-              return User(snapshot: snapshot["user"]! as! Snapshot)
-            }
-            set {
-              snapshot.updateValue(newValue.snapshot, forKey: "user")
-            }
-          }
-
-          public var phrase: String? {
-            get {
-              return snapshot["phrase"] as? String
-            }
-            set {
-              snapshot.updateValue(newValue, forKey: "phrase")
-            }
-          }
-
-          public var drawing: Drawing? {
-            get {
-              return (snapshot["drawing"] as? Snapshot).flatMap { Drawing(snapshot: $0) }
-            }
-            set {
-              snapshot.updateValue(newValue?.snapshot, forKey: "drawing")
-            }
-          }
-
-          public struct User: GraphQLSelectionSet {
-            public static let possibleTypes = ["User"]
-
-            public static let selections: [GraphQLSelection] = [
-              GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
-              GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
-              GraphQLField("id", type: .nonNull(.scalar(GraphQLID.self))),
-              GraphQLField("name", type: .nonNull(.scalar(String.self))),
-              GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
-            ]
-
-            public var snapshot: Snapshot
-
-            public init(snapshot: Snapshot) {
-              self.snapshot = snapshot
-            }
-
-            public init(id: GraphQLID, name: String) {
-              self.init(snapshot: ["__typename": "User", "id": id, "name": name])
-            }
-
-            public var __typename: String {
-              get {
-                return snapshot["__typename"]! as! String
-              }
-              set {
-                snapshot.updateValue(newValue, forKey: "__typename")
-              }
-            }
-
-            public var id: GraphQLID {
-              get {
-                return snapshot["id"]! as! GraphQLID
-              }
-              set {
-                snapshot.updateValue(newValue, forKey: "id")
-              }
-            }
-
-            public var name: String {
-              get {
-                return snapshot["name"]! as! String
-              }
-              set {
-                snapshot.updateValue(newValue, forKey: "name")
-              }
-            }
-
-            public var fragments: Fragments {
-              get {
-                return Fragments(snapshot: snapshot)
-              }
-              set {
-                snapshot += newValue.snapshot
-              }
-            }
-
-            public struct Fragments {
-              public var snapshot: Snapshot
-
-              public var userBasic: UserBasic {
-                get {
-                  return UserBasic(snapshot: snapshot)
-                }
-                set {
-                  snapshot += newValue.snapshot
-                }
-              }
-            }
-          }
-
-          public struct Drawing: GraphQLSelectionSet {
-            public static let possibleTypes = ["S3Object"]
-
-            public static let selections: [GraphQLSelection] = [
-              GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
-              GraphQLField("key", type: .nonNull(.scalar(String.self))),
-              GraphQLField("bucket", type: .nonNull(.scalar(String.self))),
-              GraphQLField("region", type: .nonNull(.scalar(String.self))),
-              GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
-              GraphQLField("key", type: .nonNull(.scalar(String.self))),
-              GraphQLField("bucket", type: .nonNull(.scalar(String.self))),
-              GraphQLField("region", type: .nonNull(.scalar(String.self))),
-            ]
-
-            public var snapshot: Snapshot
-
-            public init(snapshot: Snapshot) {
-              self.snapshot = snapshot
-            }
-
-            public init(key: String, bucket: String, region: String) {
-              self.init(snapshot: ["__typename": "S3Object", "key": key, "bucket": bucket, "region": region])
-            }
-
-            public var __typename: String {
-              get {
-                return snapshot["__typename"]! as! String
-              }
-              set {
-                snapshot.updateValue(newValue, forKey: "__typename")
-              }
-            }
-
-            public var key: String {
-              get {
-                return snapshot["key"]! as! String
-              }
-              set {
-                snapshot.updateValue(newValue, forKey: "key")
-              }
-            }
-
-            public var bucket: String {
-              get {
-                return snapshot["bucket"]! as! String
-              }
-              set {
-                snapshot.updateValue(newValue, forKey: "bucket")
-              }
-            }
-
-            public var region: String {
-              get {
-                return snapshot["region"]! as! String
-              }
-              set {
-                snapshot.updateValue(newValue, forKey: "region")
-              }
-            }
-          }
-        }
-
-        public struct Flag: GraphQLSelectionSet {
-          public static let possibleTypes = ["Flag"]
-
-          public static let selections: [GraphQLSelection] = [
-            GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
-            GraphQLField("userId", type: .nonNull(.scalar(GraphQLID.self))),
-            GraphQLField("reason", type: .nonNull(.scalar(String.self))),
-            GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
-            GraphQLField("userId", type: .nonNull(.scalar(GraphQLID.self))),
-            GraphQLField("reason", type: .nonNull(.scalar(String.self))),
-          ]
-
-          public var snapshot: Snapshot
-
-          public init(snapshot: Snapshot) {
-            self.snapshot = snapshot
-          }
-
-          public init(userId: GraphQLID, reason: String) {
-            self.init(snapshot: ["__typename": "Flag", "userId": userId, "reason": reason])
-          }
-
-          public var __typename: String {
-            get {
-              return snapshot["__typename"]! as! String
-            }
-            set {
-              snapshot.updateValue(newValue, forKey: "__typename")
-            }
-          }
-
-          public var userId: GraphQLID {
-            get {
-              return snapshot["userId"]! as! GraphQLID
-            }
-            set {
-              snapshot.updateValue(newValue, forKey: "userId")
-            }
-          }
-
-          public var reason: String {
-            get {
-              return snapshot["reason"]! as! String
-            }
-            set {
-              snapshot.updateValue(newValue, forKey: "reason")
-            }
-          }
-        }
-      }
     }
   }
 }
 
 public final class ReleaseGameMutation: GraphQLMutation {
   public static let operationString =
-    "mutation releaseGame($id: ID!) {\n  releaseGame(id: $id) {\n    __typename\n    id\n  }\n}"
+    "mutation releaseGame {\n  releaseGame {\n    __typename\n    id\n  }\n}"
 
-  public var id: GraphQLID
-
-  public init(id: GraphQLID) {
-    self.id = id
-  }
-
-  public var variables: GraphQLMap? {
-    return ["id": id]
+  public init() {
   }
 
   public struct Data: GraphQLSelectionSet {
     public static let possibleTypes = ["Mutation"]
 
     public static let selections: [GraphQLSelection] = [
-      GraphQLField("releaseGame", arguments: ["id": GraphQLVariable("id")], type: .nonNull(.object(ReleaseGame.selections))),
+      GraphQLField("releaseGame", type: .nonNull(.object(ReleaseGame.selections))),
     ]
 
     public var snapshot: Snapshot
@@ -985,6 +598,398 @@ public final class ReleaseGameMutation: GraphQLMutation {
         }
         set {
           snapshot.updateValue(newValue, forKey: "id")
+        }
+      }
+    }
+  }
+}
+
+public final class RenewLockMutation: GraphQLMutation {
+  public static let operationString =
+    "mutation renewLock {\n  renewLock {\n    __typename\n    ...OpenGameDetailed\n  }\n}"
+
+  public static var requestString: String { return operationString.appending(OpenGameDetailed.fragmentString).appending(GameDetailed.fragmentString).appending(UserBasic.fragmentString) }
+
+  public init() {
+  }
+
+  public struct Data: GraphQLSelectionSet {
+    public static let possibleTypes = ["Mutation"]
+
+    public static let selections: [GraphQLSelection] = [
+      GraphQLField("renewLock", type: .nonNull(.object(RenewLock.selections))),
+    ]
+
+    public var snapshot: Snapshot
+
+    public init(snapshot: Snapshot) {
+      self.snapshot = snapshot
+    }
+
+    public init(renewLock: RenewLock) {
+      self.init(snapshot: ["__typename": "Mutation", "renewLock": renewLock.snapshot])
+    }
+
+    public var renewLock: RenewLock {
+      get {
+        return RenewLock(snapshot: snapshot["renewLock"]! as! Snapshot)
+      }
+      set {
+        snapshot.updateValue(newValue.snapshot, forKey: "renewLock")
+      }
+    }
+
+    public struct RenewLock: GraphQLSelectionSet {
+      public static let possibleTypes = ["OpenGame"]
+
+      public static let selections: [GraphQLSelection] = [
+        GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+        GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+        GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+        GraphQLField("id", type: .nonNull(.scalar(GraphQLID.self))),
+        GraphQLField("turns", type: .nonNull(.list(.nonNull(.object(Turn.selections))))),
+        GraphQLField("flags", type: .nonNull(.list(.nonNull(.object(Flag.selections))))),
+        GraphQLField("lockedAt", type: .scalar(String.self)),
+        GraphQLField("lockedById", type: .scalar(GraphQLID.self)),
+      ]
+
+      public var snapshot: Snapshot
+
+      public init(snapshot: Snapshot) {
+        self.snapshot = snapshot
+      }
+
+      public init(id: GraphQLID, turns: [Turn], flags: [Flag], lockedAt: String? = nil, lockedById: GraphQLID? = nil) {
+        self.init(snapshot: ["__typename": "OpenGame", "id": id, "turns": turns.map { $0.snapshot }, "flags": flags.map { $0.snapshot }, "lockedAt": lockedAt, "lockedById": lockedById])
+      }
+
+      public var __typename: String {
+        get {
+          return snapshot["__typename"]! as! String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "__typename")
+        }
+      }
+
+      public var id: GraphQLID {
+        get {
+          return snapshot["id"]! as! GraphQLID
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "id")
+        }
+      }
+
+      public var turns: [Turn] {
+        get {
+          return (snapshot["turns"] as! [Snapshot]).map { Turn(snapshot: $0) }
+        }
+        set {
+          snapshot.updateValue(newValue.map { $0.snapshot }, forKey: "turns")
+        }
+      }
+
+      public var flags: [Flag] {
+        get {
+          return (snapshot["flags"] as! [Snapshot]).map { Flag(snapshot: $0) }
+        }
+        set {
+          snapshot.updateValue(newValue.map { $0.snapshot }, forKey: "flags")
+        }
+      }
+
+      public var lockedAt: String? {
+        get {
+          return snapshot["lockedAt"] as? String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "lockedAt")
+        }
+      }
+
+      public var lockedById: GraphQLID? {
+        get {
+          return snapshot["lockedById"] as? GraphQLID
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "lockedById")
+        }
+      }
+
+      public var fragments: Fragments {
+        get {
+          return Fragments(snapshot: snapshot)
+        }
+        set {
+          snapshot += newValue.snapshot
+        }
+      }
+
+      public struct Fragments {
+        public var snapshot: Snapshot
+
+        public var openGameDetailed: OpenGameDetailed {
+          get {
+            return OpenGameDetailed(snapshot: snapshot)
+          }
+          set {
+            snapshot += newValue.snapshot
+          }
+        }
+
+        public var gameDetailed: GameDetailed {
+          get {
+            return GameDetailed(snapshot: snapshot)
+          }
+          set {
+            snapshot += newValue.snapshot
+          }
+        }
+      }
+
+      public struct Turn: GraphQLSelectionSet {
+        public static let possibleTypes = ["OpenTurn", "CompletedTurn"]
+
+        public static let selections: [GraphQLSelection] = [
+          GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+          GraphQLField("order", type: .nonNull(.scalar(Int.self))),
+          GraphQLField("user", type: .nonNull(.object(User.selections))),
+          GraphQLField("phrase", type: .scalar(String.self)),
+          GraphQLField("drawing", type: .object(Drawing.selections)),
+        ]
+
+        public var snapshot: Snapshot
+
+        public init(snapshot: Snapshot) {
+          self.snapshot = snapshot
+        }
+
+        public static func makeOpenTurn(order: Int, user: User, phrase: String? = nil, drawing: Drawing? = nil) -> Turn {
+          return Turn(snapshot: ["__typename": "OpenTurn", "order": order, "user": user.snapshot, "phrase": phrase, "drawing": drawing.flatMap { $0.snapshot }])
+        }
+
+        public static func makeCompletedTurn(order: Int, user: User, phrase: String? = nil, drawing: Drawing? = nil) -> Turn {
+          return Turn(snapshot: ["__typename": "CompletedTurn", "order": order, "user": user.snapshot, "phrase": phrase, "drawing": drawing.flatMap { $0.snapshot }])
+        }
+
+        public var __typename: String {
+          get {
+            return snapshot["__typename"]! as! String
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "__typename")
+          }
+        }
+
+        public var order: Int {
+          get {
+            return snapshot["order"]! as! Int
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "order")
+          }
+        }
+
+        public var user: User {
+          get {
+            return User(snapshot: snapshot["user"]! as! Snapshot)
+          }
+          set {
+            snapshot.updateValue(newValue.snapshot, forKey: "user")
+          }
+        }
+
+        public var phrase: String? {
+          get {
+            return snapshot["phrase"] as? String
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "phrase")
+          }
+        }
+
+        public var drawing: Drawing? {
+          get {
+            return (snapshot["drawing"] as? Snapshot).flatMap { Drawing(snapshot: $0) }
+          }
+          set {
+            snapshot.updateValue(newValue?.snapshot, forKey: "drawing")
+          }
+        }
+
+        public struct User: GraphQLSelectionSet {
+          public static let possibleTypes = ["User"]
+
+          public static let selections: [GraphQLSelection] = [
+            GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+            GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+            GraphQLField("id", type: .nonNull(.scalar(GraphQLID.self))),
+            GraphQLField("name", type: .nonNull(.scalar(String.self))),
+          ]
+
+          public var snapshot: Snapshot
+
+          public init(snapshot: Snapshot) {
+            self.snapshot = snapshot
+          }
+
+          public init(id: GraphQLID, name: String) {
+            self.init(snapshot: ["__typename": "User", "id": id, "name": name])
+          }
+
+          public var __typename: String {
+            get {
+              return snapshot["__typename"]! as! String
+            }
+            set {
+              snapshot.updateValue(newValue, forKey: "__typename")
+            }
+          }
+
+          public var id: GraphQLID {
+            get {
+              return snapshot["id"]! as! GraphQLID
+            }
+            set {
+              snapshot.updateValue(newValue, forKey: "id")
+            }
+          }
+
+          public var name: String {
+            get {
+              return snapshot["name"]! as! String
+            }
+            set {
+              snapshot.updateValue(newValue, forKey: "name")
+            }
+          }
+
+          public var fragments: Fragments {
+            get {
+              return Fragments(snapshot: snapshot)
+            }
+            set {
+              snapshot += newValue.snapshot
+            }
+          }
+
+          public struct Fragments {
+            public var snapshot: Snapshot
+
+            public var userBasic: UserBasic {
+              get {
+                return UserBasic(snapshot: snapshot)
+              }
+              set {
+                snapshot += newValue.snapshot
+              }
+            }
+          }
+        }
+
+        public struct Drawing: GraphQLSelectionSet {
+          public static let possibleTypes = ["S3Object"]
+
+          public static let selections: [GraphQLSelection] = [
+            GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+            GraphQLField("key", type: .nonNull(.scalar(String.self))),
+            GraphQLField("bucket", type: .nonNull(.scalar(String.self))),
+            GraphQLField("region", type: .nonNull(.scalar(String.self))),
+          ]
+
+          public var snapshot: Snapshot
+
+          public init(snapshot: Snapshot) {
+            self.snapshot = snapshot
+          }
+
+          public init(key: String, bucket: String, region: String) {
+            self.init(snapshot: ["__typename": "S3Object", "key": key, "bucket": bucket, "region": region])
+          }
+
+          public var __typename: String {
+            get {
+              return snapshot["__typename"]! as! String
+            }
+            set {
+              snapshot.updateValue(newValue, forKey: "__typename")
+            }
+          }
+
+          public var key: String {
+            get {
+              return snapshot["key"]! as! String
+            }
+            set {
+              snapshot.updateValue(newValue, forKey: "key")
+            }
+          }
+
+          public var bucket: String {
+            get {
+              return snapshot["bucket"]! as! String
+            }
+            set {
+              snapshot.updateValue(newValue, forKey: "bucket")
+            }
+          }
+
+          public var region: String {
+            get {
+              return snapshot["region"]! as! String
+            }
+            set {
+              snapshot.updateValue(newValue, forKey: "region")
+            }
+          }
+        }
+      }
+
+      public struct Flag: GraphQLSelectionSet {
+        public static let possibleTypes = ["Flag"]
+
+        public static let selections: [GraphQLSelection] = [
+          GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+          GraphQLField("userId", type: .nonNull(.scalar(GraphQLID.self))),
+          GraphQLField("reason", type: .nonNull(.scalar(String.self))),
+        ]
+
+        public var snapshot: Snapshot
+
+        public init(snapshot: Snapshot) {
+          self.snapshot = snapshot
+        }
+
+        public init(userId: GraphQLID, reason: String) {
+          self.init(snapshot: ["__typename": "Flag", "userId": userId, "reason": reason])
+        }
+
+        public var __typename: String {
+          get {
+            return snapshot["__typename"]! as! String
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "__typename")
+          }
+        }
+
+        public var userId: GraphQLID {
+          get {
+            return snapshot["userId"]! as! GraphQLID
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "userId")
+          }
+        }
+
+        public var reason: String {
+          get {
+            return snapshot["reason"]! as! String
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "reason")
+          }
         }
       }
     }
@@ -1879,29 +1884,27 @@ public final class StartGameMutation: GraphQLMutation {
 
 public final class TakeTurnMutation: GraphQLMutation {
   public static let operationString =
-    "mutation takeTurn($gameId: ID!, $phrase: String, $drawing: S3ObjectInput) {\n  takeTurn(gameId: $gameId, phrase: $phrase, drawing: $drawing) {\n    __typename\n    ...OpenGameDetailed\n  }\n}"
+    "mutation takeTurn($phrase: String, $drawing: S3ObjectInput) {\n  takeTurn(phrase: $phrase, drawing: $drawing) {\n    __typename\n    ...OpenGameDetailed\n  }\n}"
 
   public static var requestString: String { return operationString.appending(OpenGameDetailed.fragmentString).appending(GameDetailed.fragmentString).appending(UserBasic.fragmentString) }
 
-  public var gameId: GraphQLID
   public var phrase: String?
   public var drawing: S3ObjectInput?
 
-  public init(gameId: GraphQLID, phrase: String? = nil, drawing: S3ObjectInput? = nil) {
-    self.gameId = gameId
+  public init(phrase: String? = nil, drawing: S3ObjectInput? = nil) {
     self.phrase = phrase
     self.drawing = drawing
   }
 
   public var variables: GraphQLMap? {
-    return ["gameId": gameId, "phrase": phrase, "drawing": drawing]
+    return ["phrase": phrase, "drawing": drawing]
   }
 
   public struct Data: GraphQLSelectionSet {
     public static let possibleTypes = ["Mutation"]
 
     public static let selections: [GraphQLSelection] = [
-      GraphQLField("takeTurn", arguments: ["gameId": GraphQLVariable("gameId"), "phrase": GraphQLVariable("phrase"), "drawing": GraphQLVariable("drawing")], type: .nonNull(.object(TakeTurn.selections))),
+      GraphQLField("takeTurn", arguments: ["phrase": GraphQLVariable("phrase"), "drawing": GraphQLVariable("drawing")], type: .nonNull(.object(TakeTurn.selections))),
     ]
 
     public var snapshot: Snapshot

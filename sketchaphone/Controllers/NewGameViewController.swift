@@ -6,6 +6,7 @@ class NewGameViewController: LoadingViewController, UITextFieldDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        self.navigationController?.setNavigationBarHidden(false, animated: true)
         
         textField.isEnabled = true
         textField.becomeFirstResponder()
@@ -30,18 +31,18 @@ class NewGameViewController: LoadingViewController, UITextFieldDelegate {
                 self.textField.isEnabled = false
                 self.startLoading()
                 gamesManager.new(phrase: self.textField.text!, callback: {(error) in
-                    self.stopLoading()
-                    if let error = error {
-                        self.alert("game could not be created: \(error.localizedDescription)")
-                        return
-                    }
-                    self.dismiss(animated: true)
+                    DispatchQueue.main.async(execute: {
+                        self.stopLoading()
+                        if let error = error {
+                            self.alert("game could not be created: \(error.localizedDescription)")
+                            return
+                        }
+                        self.alert("Your game was created!", title: "Success", handler: { _ in
+                            self.navigationController?.popViewController(animated: true)
+                        })
+                    })
                 })
             }
         })
-    }
-    
-    @IBAction func cancelTouch(_ sender: UIBarButtonItem) {
-        dismiss(animated: true)
     }
 }

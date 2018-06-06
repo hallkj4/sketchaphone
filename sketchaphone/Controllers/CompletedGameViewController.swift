@@ -8,13 +8,14 @@ class CompletedGameViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        self.navigationController?.setNavigationBarHidden(false, animated: true)
         for view in stackView.arrangedSubviews {
             view.removeFromSuperview()
         }
         
         if (game == nil) {
             alert("Game not found.", handler: { _ in
-                self.dismiss(animated: true)
+                self.navigationController?.popViewController(animated: true)
             })
             return
         }
@@ -41,10 +42,6 @@ class CompletedGameViewController: UIViewController {
                 stackView.addArrangedSubview(imageView)
             }
         }
-    }
-    
-    @IBAction func backTouch(_ sender: UIBarButtonItem) {
-        dismiss(animated: true)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

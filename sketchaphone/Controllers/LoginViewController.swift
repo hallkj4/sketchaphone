@@ -4,12 +4,16 @@ import AWSCognitoIdentityProvider
 
 class LoginViewController: LoadingViewController {
     
+    @IBOutlet weak var nameField: UITextField!
+    @IBOutlet weak var emailField: UITextField!
+    @IBOutlet weak var passwordField: UITextField!
+    
     var passwordAuthenticationCompletion: AWSTaskCompletionSource<AWSCognitoIdentityPasswordAuthenticationDetails>?
     
     
     @IBAction func loginTouch() {
         startLoading()
-        let authDetails = AWSCognitoIdentityPasswordAuthenticationDetails(username: "michaeleconomy@gmail.com", password: "sketchyphone1")
+        let authDetails = AWSCognitoIdentityPasswordAuthenticationDetails(username: emailField.text ?? "", password: passwordField.text ?? "")
         self.passwordAuthenticationCompletion?.set(result: authDetails)
     }
 }
@@ -30,6 +34,7 @@ extension LoginViewController: AWSCognitoIdentityPasswordAuthentication {
             else {
                 NSLog("success??")
                 self.dismiss(animated: true, completion: {
+                    //TODO
 //                    self.usernameInput?.text = nil
 //                    self.passwordInput?.text = nil
                 })

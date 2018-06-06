@@ -78,9 +78,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         do {
             // Initialize the AWS AppSync configuration
-            let appSyncConfig = try AWSAppSyncClientConfiguration(url: AppSyncEndpointURL, serviceRegion: AWSRegion,
-                                                                  credentialsProvider: credentialsProvider!,
-                                                                  databaseURL:databaseURL)
+            let appSyncConfig = try AWSAppSyncClientConfiguration(url: AppSyncEndpointURL, serviceRegion: AWSRegion, credentialsProvider: credentialsProvider!, databaseURL:databaseURL)
             
             // Initialize the AppSync client
             appSyncClient = try AWSAppSyncClient(appSyncConfig: appSyncConfig)
@@ -91,10 +89,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         catch {
             NSLog("Error initializing appsync client. Error: %@", error as NSError)
         }
-        
-        appSyncClient?.fetch(query: OpenGamesQuery(), resultHandler: {(results, error) in
-            NSLog("error: %@", error as NSError? ?? "nil")
-        })
+
+        //COMMENTED OUT RECENTLY
+//        appSyncClient?.fetch(query: OpenGamesQuery(), resultHandler: {(results, error) in
+//            NSLog("error: %@", error as NSError? ?? "nil")
+//        })
         
         return true
     }
@@ -102,10 +101,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 }
 
 extension AppDelegate: AWSCognitoIdentityInteractiveAuthenticationDelegate {
-
     func startPasswordAuthentication() -> AWSCognitoIdentityPasswordAuthentication {
+        NSLog("startPasswordAuthentication called")
         let tabController = self.window?.rootViewController as! UITabBarController
-
 
         let loginViewController = self.storyboard?.instantiateViewController(withIdentifier: "LoginViewController") as! LoginViewController
 

@@ -1,0 +1,5 @@
+mutation renewLock {
+    renewLock {
+        ...OpenGameDetailed
+    }
+}

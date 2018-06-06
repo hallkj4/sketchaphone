@@ -1,13 +1,15 @@
 PODS:
-  - AWSAppSync (2.6.7):
-    - AWSCore (= 2.6.6)
+  - AWSAppSync (2.6.16):
+    - AWSCore (~> 2.6.6)
     - ReachabilitySwift (~> 4.0.0)
     - SQLite.swift (= 0.11.4)
-  - AWSCognitoIdentityProvider (2.6.6):
-    - AWSCore (= 2.6.6)
-  - AWSCore (2.6.6)
-  - AWSS3 (2.6.6):
-    - AWSCore (= 2.6.6)
+  - AWSCognitoIdentityProvider (2.6.21):
+    - AWSCognitoIdentityProviderASF (= 1.0.1)
+    - AWSCore (= 2.6.21)
+  - AWSCognitoIdentityProviderASF (1.0.1)
+  - AWSCore (2.6.21)
+  - AWSS3 (2.6.21):
+    - AWSCore (= 2.6.21)
   - Bolts (1.9.0):
     - Bolts/AppLinks (= 1.9.0)
     - Bolts/Tasks (= 1.9.0)
@@ -22,12 +24,12 @@ PODS:
     - FacebookCore (~> 0.3)
     - FBSDKCoreKit (~> 4.27)
     - FBSDKLoginKit (~> 4.27)
-  - FBSDKCoreKit (4.31.0):
+  - FBSDKCoreKit (4.33.0):
     - Bolts (~> 1.7)
-  - FBSDKLoginKit (4.31.0):
+  - FBSDKLoginKit (4.33.0):
     - FBSDKCoreKit
-  - Google-Mobile-Ads-SDK (7.29.0)
-  - Kingfisher (4.6.3)
+  - Google-Mobile-Ads-SDK (7.31.0)
+  - Kingfisher (4.8.0)
   - ReachabilitySwift (4.0.0)
   - SQLite.swift (0.11.4):
     - SQLite.swift/standard (= 0.11.4)
@@ -43,21 +45,39 @@ DEPENDENCIES:
   - Kingfisher
   - SQLite.swift
 
+SPEC REPOS:
+  https://github.com/CocoaPods/Specs.git:
+    - AWSAppSync
+    - AWSCognitoIdentityProvider
+    - AWSCognitoIdentityProviderASF
+    - AWSCore
+    - AWSS3
+    - Bolts
+    - FacebookCore
+    - FacebookLogin
+    - FBSDKCoreKit
+    - FBSDKLoginKit
+    - Google-Mobile-Ads-SDK
+    - Kingfisher
+    - ReachabilitySwift
+    - SQLite.swift
+
 SPEC CHECKSUMS:
-  AWSAppSync: 42495c1e726a17ab1f5300f2cc199180e6810267
-  AWSCognitoIdentityProvider: 123faad1d1e8361f2c76132f552008d5c4928541
-  AWSCore: 64619e45b47678afab53ca0f9b4fa380ebee6f0b
-  AWSS3: 44c99957a049703e06b474f4b1898da215f2d922
+  AWSAppSync: eb2758d2a60518b6c814c119de511dbae1b3fa97
+  AWSCognitoIdentityProvider: 1f724c5e43528580cd9f60f0a1290888793ed473
+  AWSCognitoIdentityProviderASF: f94f1a502e72ef3d0a1de93e10bf7a79c8698118
+  AWSCore: a1ff1d32ea7af235fe64be301c204b34cb1f9f83
+  AWSS3: e6b042fdbf092ffd49bf7998b3fd5be729949ee7
   Bolts: ac6567323eac61e203f6a9763667d0f711be34c8
   FacebookCore: 3ffa190a3f1f96cec0e44d3fc221bc322c595ffa
   FacebookLogin: 0af839ea858faef99550d16596b87b4a8e8906e6
-  FBSDKCoreKit: 54db4c581123745d25a9f7c1608020b3aeabd118
-  FBSDKLoginKit: 95a252ddffd6919c0f132a02292f0824616d8709
-  Google-Mobile-Ads-SDK: 375bbb821b3df2106c37b74f6b0a97576ddc5f6b
-  Kingfisher: 98e6d5b5e807645743e8ed5ececd25d688d38452
+  FBSDKCoreKit: 572b047a7e029bc44542bcf8a59414e7ff2b543e
+  FBSDKLoginKit: 88cb456349cfb3b554427ce4f8b43729d85dfb40
+  Google-Mobile-Ads-SDK: 6e529e748b45507a2ca904e0b5a52669ba3920c4
+  Kingfisher: 976d828df2b24834c6a3f2fc4d82cdbd26552be1
   ReachabilitySwift: e67b2cab4d5386053673d8a7421b5981e5f08259
   SQLite.swift: 3e3bee21da701b5b9f87c4a672cb54f233505692
 
 PODFILE CHECKSUM: 23ef7c6de0a5c691e6a375c1114632c5d6d595f2
 
-COCOAPODS: 1.4.0
+COCOAPODS: 1.5.0

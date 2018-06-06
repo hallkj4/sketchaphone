@@ -1,5 +1,5 @@
-mutation releaseGame($id: ID!) {
-    releaseGame(id: $id) {
+mutation releaseGame {
+    releaseGame {
         id
     }
 }

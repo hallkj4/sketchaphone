@@ -19,18 +19,21 @@ class FlagViewController: LoadingViewController {
         }
         startLoading()
         gamesManager.flag(game: game!, reason: textField.text, callback: {(error) in
-            self.stopLoading()
-            if let error = error {
-                self.alert("Error occurred: \(error.localizedDescription)")
-                return
-            }
-            self.performSegue(withIdentifier: "backToNewGames", sender: self)
+            DispatchQueue.main.async(execute: {
+                self.stopLoading()
+                if let error = error {
+                    self.alert("Error occurred: \(error.localizedDescription)")
+                    return
+                }
+               // go back to home
+                self.navigationController?.popToViewController(self.navigationController!.viewControllers.first!, animated: true)
+            })
         })
     }
     
     
     @IBAction func cancelTouch(_ sender: UIBarButtonItem) {
-        dismiss(animated: true)
+        self.navigationController?.popViewController(animated: true)
     }
 }
 

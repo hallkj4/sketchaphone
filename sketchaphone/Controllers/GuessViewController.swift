@@ -2,8 +2,6 @@ import UIKit
 import Kingfisher
 
 class GuessViewController: LoadingViewController, UIScrollViewDelegate, UITextFieldDelegate {
-    var game: OpenGameDetailed?
-    
     let defaultText = "Describe the picture..."
     
     @IBOutlet weak var scrollView: UIScrollView!
@@ -18,25 +16,26 @@ class GuessViewController: LoadingViewController, UIScrollViewDelegate, UITextFi
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        self.navigationController?.setNavigationBarHidden(false, animated: true)
         scrollView.zoomScale = 1.0
         
-        guard let game = game else {
+        guard let game = gamesManager.currentGame else {
             alert("game is nil", handler: { _ in
-                self.dismiss(animated: false)
+                self.navigationController?.popToViewController(self.navigationController!.viewControllers.first!, animated: true)
             })
             return
         }
         
         guard let lastTurn = game.turns.last else {
             alert("lastTurn is nil", handler: { _ in
-                self.dismiss(animated: false)
+                self.navigationController?.popToViewController(self.navigationController!.viewControllers.first!, animated: true)
             })
             return
         }
         
         guard let imageURL = lastTurn.imageURL() else {
             alert("lastTurn did not have an image", handler: { _ in
-                self.dismiss(animated: false)
+                self.navigationController?.popToViewController(self.navigationController!.viewControllers.first!, animated: true)
             })
             return
         }
@@ -87,20 +86,21 @@ class GuessViewController: LoadingViewController, UIScrollViewDelegate, UITextFi
         confirm("Are you ready to submit your guess of '\(textField.text!)'?", handler: { confirmed in
             if (confirmed) {
                 self.startLoading()
-                gamesManager.guess(game: self.game!, phrase: self.textField.text!, callback: {
+                gamesManager.guess(phrase: self.textField.text!, callback: {
                     (error, didFinish) in
-                    self.stopLoading()
-                    if let error = error {
-                        self.alert("error occured saving guess: \(error.localizedDescription)")
-                        return
-                    }
-                    
-                    if (didFinish) {
-                        //TODO segue to the completedgame controller
-                    }
-                    
-                    self.game = nil
-                    self.dismiss(animated: true)
+                    DispatchQueue.main.async(execute: {
+                        self.stopLoading()
+                        if let error = error {
+                            self.alert("error occured saving guess: \(error.localizedDescription)")
+                            return
+                        }
+                        
+                        if (didFinish) {
+                            //TODO segue to the completedgame controller
+                        }
+                        
+                        self.navigationController?.popToViewController(self.navigationController!.viewControllers.first!, animated: true)
+                    })
                 })
             }
         })
@@ -108,9 +108,8 @@ class GuessViewController: LoadingViewController, UIScrollViewDelegate, UITextFi
     }
     
     @IBAction func cancelTouch(_ sender: UIBarButtonItem) {
-        gamesManager.release(game: game!)//TODO callback
-        game = nil
-        dismiss(animated: true)
+        gamesManager.release()//TODO callback
+        self.navigationController?.popToViewController(self.navigationController!.viewControllers.first!, animated: true)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -121,7 +120,7 @@ class GuessViewController: LoadingViewController, UIScrollViewDelegate, UITextFi
         switch segue.identifier! {
         case "flag":
             let controller = segue.destination as! FlagViewController
-            controller.game = game?.fragments.gameDetailed
+            controller.game = gamesManager.currentGame?.fragments.gameDetailed
         default:
             NSLog("guess View: unhandled segue identifier: \(segue.identifier!)")
         }

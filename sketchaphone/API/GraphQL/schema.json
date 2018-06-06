@@ -1195,23 +1195,21 @@
                             "deprecationReason": null
                         },
                         {
+                            "name": "joinGame",
+                            "description": null,
+                            "args": [],
+                            "type": {
+                                "kind": "OBJECT",
+                                "name": "OpenGame",
+                                "ofType": null
+                            },
+                            "isDeprecated": false,
+                            "deprecationReason": null
+                        },
+                        {
                             "name": "takeTurn",
                             "description": null,
                             "args": [
-                                {
-                                    "name": "gameId",
-                                    "description": null,
-                                    "type": {
-                                        "kind": "NON_NULL",
-                                        "name": null,
-                                        "ofType": {
-                                            "kind": "SCALAR",
-                                            "name": "ID",
-                                            "ofType": null
-                                        }
-                                    },
-                                    "defaultValue": null
-                                },
                                 {
                                     "name": "phrase",
                                     "description": null,
@@ -1246,30 +1244,15 @@
                             "deprecationReason": null
                         },
                         {
-                            "name": "lockGame",
+                            "name": "renewLock",
                             "description": null,
-                            "args": [
-                                {
-                                    "name": "id",
-                                    "description": null,
-                                    "type": {
-                                        "kind": "NON_NULL",
-                                        "name": null,
-                                        "ofType": {
-                                            "kind": "SCALAR",
-                                            "name": "ID",
-                                            "ofType": null
-                                        }
-                                    },
-                                    "defaultValue": null
-                                }
-                            ],
+                            "args": [],
                             "type": {
                                 "kind": "NON_NULL",
                                 "name": null,
                                 "ofType": {
-                                    "kind": "INTERFACE",
-                                    "name": "Game",
+                                    "kind": "OBJECT",
+                                    "name": "OpenGame",
                                     "ofType": null
                                 }
                             },
@@ -1279,22 +1262,7 @@
                         {
                             "name": "releaseGame",
                             "description": null,
-                            "args": [
-                                {
-                                    "name": "id",
-                                    "description": null,
-                                    "type": {
-                                        "kind": "NON_NULL",
-                                        "name": null,
-                                        "ofType": {
-                                            "kind": "SCALAR",
-                                            "name": "ID",
-                                            "ofType": null
-                                        }
-                                    },
-                                    "defaultValue": null
-                                }
-                            ],
+                            "args": [],
                             "type": {
                                 "kind": "NON_NULL",
                                 "name": null,

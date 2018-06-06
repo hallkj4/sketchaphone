@@ -4,8 +4,11 @@ class CompletedViewController: UIViewController, UITableViewDataSource, GameWatc
     
     @IBOutlet weak var tableView: UITableView!
     
+    //TODO: pagination
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.navigationController?.setNavigationBarHidden(false, animated: true)
         gamesManager.add(watcher: self)
     }
     
@@ -14,11 +17,11 @@ class CompletedViewController: UIViewController, UITableViewDataSource, GameWatc
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return gamesManager.completedGames.count
+        return gamesManager.myCompletedGames.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let game = gamesManager.completedGames[indexPath.row]
+        let game = gamesManager.myCompletedGames[indexPath.row]
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
         var firstTurn = game.turns.first
@@ -40,12 +43,10 @@ class CompletedViewController: UIViewController, UITableViewDataSource, GameWatc
                 return
             }
             let controller = segue.destination as! CompletedGameViewController
-            controller.game = gamesManager.completedGames[indexPath.row]
+            controller.game = gamesManager.myCompletedGames[indexPath.row]
         default:
             NSLog("completed games controller: unhandled segue identifier: \(segue.identifier!)")
         }
     }
-    
-    
 }
 

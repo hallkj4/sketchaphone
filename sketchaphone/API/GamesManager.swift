@@ -7,8 +7,13 @@ protocol GameWatcher {
     func gamesUpdated()
 }
 
+protocol JoinGameDelgate {
+    func gameJoined()
+    func couldNotJoinGame(message: String)
+}
+
 class GamesManager {
-    var openGames = [OpenGameDetailed]()
+    var currentGame: OpenGameDetailed?
     var inProgressGames = [OpenGameDetailed]()
     
     var completedGames = [GameDetailed]()
@@ -19,11 +24,10 @@ class GamesManager {
     
     private var watchers = [GameWatcher]()
     
-    let numRounds = 9
-    
-    let maxGames = 8
+    let numRounds = 4 //TODO - update this to 9
     
     func new(phrase: String, callback: @escaping (Error?) -> Void) {
+        NSLog("attempting to create game: " + phrase)
         appSyncClient?.perform(mutation: StartGameMutation(phrase: phrase), resultHandler: { (result, error) in
             if let error = error {
                 NSLog("unexpected error type" + error.localizedDescription)
@@ -36,29 +40,34 @@ class GamesManager {
                 callback(NilDataError())
                 return
             }
+            NSLog("game created: " + phrase)
             self.inProgressGames.append(newGame)
             callback(nil)
             self.notifyWatchers()
         })
     }
     
-    func draw(game: OpenGameDetailed, image: UIImage, callback: @escaping (Error?, Bool) -> Void) {
-        let lastTurn = game.turns.last
-        if (lastTurn == nil) {
-            callback(GenericError("Error! game with no turns!"), false)
-            return
-        }
-        if(lastTurn!.phrase == nil) {
-            callback(GenericError("Error: game's last turn is not a phrase!"), false)
-            return
-        }
+    func draw(image: UIImage, callback: @escaping (Error?, Bool) -> Void) {
+//        guard let game = currentGame else {
+//            callback(NilDataError("currentGame was nil"), false)
+//            return
+//        }
+//        let lastTurn = game.turns.last
+//        if (lastTurn == nil) {
+//            callback(GenericError("Error! game with no turns!"), false)
+//            return
+//        }
+//        if(lastTurn!.phrase == nil) {
+//            callback(GenericError("Error: game's last turn is not a phrase!"), false)
+//            return
+//        }
         
         uploadDrawing(image: image, callback: {(drawing, error) in
             if let error = error {
                 callback(error, false)
                 return
             }
-            appSyncClient!.perform(mutation: TakeTurnMutation(gameId: game.id, drawing: drawing), resultHandler: {(result, error) in
+            appSyncClient!.perform(mutation: TakeTurnMutation(drawing: drawing), resultHandler: {(result, error) in
                 if let error = error {
                     NSLog("unexpected error type" + error.localizedDescription)
                     callback(error, false)
@@ -69,9 +78,6 @@ class GamesManager {
                     NSLog("game data was not sent")
                     callback(NilDataError(), false)
                     return
-                }
-                if let index = self.openGames.index(where: {$0.id == newGame.id}) {
-                    self.openGames.remove(at: index)
                 }
                 if (newGame.turns.count >= self.numRounds) {
                     self.completedGames.append(newGame.fragments.gameDetailed)
@@ -126,18 +132,22 @@ class GamesManager {
     }
     
     
-    func guess(game: OpenGameDetailed, phrase: String, callback: @escaping (Error?, Bool) -> Void) {
-        let lastTurn = game.turns.last
-        if (lastTurn == nil) {
-            callback(GenericError("Error! game with no turns!"), false)
-            return
-        }
-        if (lastTurn!.drawing == nil) {
-            callback(GenericError("Error: game's last turn is not a phrase!"), false)
-            return
-        }
+    func guess(phrase: String, callback: @escaping (Error?, Bool) -> Void) {
+//        guard let game = currentGame else {
+//            callback(NilDataError("currentGame was nil"), false)
+//            return
+//        }
+//        let lastTurn = game.turns.last
+//        if (lastTurn == nil) {
+//            callback(GenericError("Error! game with no turns!"), false)
+//            return
+//        }
+//        if (lastTurn!.drawing == nil) {
+//            callback(GenericError("Error: game's last turn is not a phrase!"), false)
+//            return
+//        }
         
-        appSyncClient!.perform(mutation: TakeTurnMutation(gameId: game.id, phrase: phrase), resultHandler: {(result, error) in
+        appSyncClient!.perform(mutation: TakeTurnMutation(phrase: phrase), resultHandler: {(result, error) in
             if let error = error {
                 NSLog("unexpected error type" + error.localizedDescription)
                 callback(error, false)
@@ -148,9 +158,6 @@ class GamesManager {
                 NSLog("game data was not sent")
                 callback(NilDataError(), false)
                 return
-            }
-            if let index = self.openGames.index(where: {$0.id == newGame.id}) {
-                self.openGames.remove(at: index)
             }
             if (newGame.turns.count >= self.numRounds) {
                 self.completedGames.append(newGame.fragments.gameDetailed)
@@ -169,8 +176,8 @@ class GamesManager {
     //TODO - what should the time limit be on drawing?
     //TODO - prompt that you're running out of time
     
-    func lock(game: OpenGameDetailed, callback: @escaping (OpenGameDetailed?, Error?) -> Void) {
-        appSyncClient!.perform(mutation: LockGameMutation(id: game.id), resultHandler: {(result, error) in
+    private func renewLock(callback: @escaping (OpenGameDetailed?, Error?) -> Void) {
+        appSyncClient!.perform(mutation: RenewLockMutation(), resultHandler: {(result, error) in
             //TODO: cleaner prompt for expected error
             if let error = error {
                 NSLog("error locking game: \(error.localizedDescription)")
@@ -178,22 +185,18 @@ class GamesManager {
                 return
             }
             
-            guard let game = result?.data?.lockGame.fragments.openGameDetailed else {
+            guard let game = result?.data?.renewLock.fragments.openGameDetailed else {
                 NSLog("did not get the locked game!")
                 callback(nil, NilDataError())
                 return
             }
-            if let index = self.openGames.index(where: {$0.id == game.id}) {
-                self.openGames.remove(at: index)
-            }
-            self.openGames.append(game)
             callback(game, nil)
         })
-        //TODO set a timer and continue to relock it every 60s
     }
     
-    func release(game: OpenGameDetailed) {
-        appSyncClient?.perform(mutation: ReleaseGameMutation(id: game.id))
+    func release() {
+        appSyncClient?.perform(mutation: ReleaseGameMutation())
+        //TODO callback
     }
     
     func add(watcher: GameWatcher) {
@@ -208,9 +211,6 @@ class GamesManager {
                 return
             }
             callback(nil)
-            if let index = self.openGames.index(where: {$0.id == game.id}) {
-                self.openGames.remove(at: index)
-            }
             if let index = self.inProgressGames.index(where: {$0.id == game.id}) {
                 self.inProgressGames.remove(at: index)
             }
@@ -228,29 +228,26 @@ class GamesManager {
         }
     }
     
-    func fetchOpenGames() {
-        NSLog("fetching open games")
-        appSyncClient!.fetch(query: OpenGamesQuery(), resultHandler: { (result, error) in
+    func joinGame(delegate: JoinGameDelgate) {
+        NSLog("attempting to join a game")
+        appSyncClient!.perform(mutation: JoinGameMutation(), resultHandler: { (result, error) in
+            NSLog("joinGame responded, handling response")
             if let error = error as? AWSAppSyncClientError {
-                NSLog("Error occurred: \(error.localizedDescription )")
-                if let body = error.body {
-                    NSLog("Error body: \(String(data: body, encoding: String.Encoding.utf8) ?? "nil"))")
-                }
-                else {
-                    NSLog("Error body: nil")
-                }
-                NSLog("Error failureReason: \(error.failureReason ?? "nil")")
-                NSLog("Error errorDescription: \(error.errorDescription ?? "nil")")
-                NSLog("Error recoverySuggestion: \(error.recoverySuggestion ?? "nil")")
+                NSLog("could not join game, encountered error: " + error.localizedDescription)
+                delegate.couldNotJoinGame(message: error.localizedDescription)
                 return
             }
-            guard let newOpenGames = result?.data?.openGames else {
-                NSLog("open games was null")
+            
+            guard let gameRaw = result?.data?.joinGame else {
+                NSLog("could not join game: no games were found")
+                delegate.couldNotJoinGame(message: "No games were found")
                 return
             }
-            self.openGames = newOpenGames.map({$0.fragments.openGameDetailed})
-            NSLog("got \(self.openGames.count) open games")
-            self.notifyWatchers()
+            let game = gameRaw.fragments.openGameDetailed
+            NSLog("Joined a game: " + game.id)
+            self.currentGame = game
+            delegate.gameJoined()
+            //TODO set a timer and lock game every so often
         })
     }
     

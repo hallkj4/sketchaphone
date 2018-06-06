@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "78269893624EFAA7AC9D216FBF0FEC59"
+               BlueprintIdentifier = "5DB65B269571531E1CD7BE043875C25D"
                BuildableName = "Pods_sketchaphone.framework"
                BlueprintName = "Pods-sketchaphone"
                ReferencedContainer = "container:Pods.xcodeproj">
@@ -26,7 +26,6 @@
       buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
-      language = ""
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
       </Testables>
@@ -37,7 +36,6 @@
       buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
-      language = ""
       launchStyle = "0"
       useCustomWorkingDirectory = "NO"
       ignoresPersistentStateOnLaunch = "NO"
@@ -47,7 +45,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "78269893624EFAA7AC9D216FBF0FEC59"
+            BlueprintIdentifier = "5DB65B269571531E1CD7BE043875C25D"
             BuildableName = "Pods_sketchaphone.framework"
             BlueprintName = "Pods-sketchaphone"
             ReferencedContainer = "container:Pods.xcodeproj">

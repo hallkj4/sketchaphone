@@ -2,8 +2,6 @@ import GoogleMobileAds
 import UIKit
 
 class DrawViewController: LoadingViewController, UIScrollViewDelegate, GADInterstitialDelegate {
-    var game: OpenGameDetailed?
-    
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var phraseLabel: UILabel!
     @IBOutlet weak var imageView: DrawableImageView!
@@ -52,19 +50,23 @@ class DrawViewController: LoadingViewController, UIScrollViewDelegate, GADInters
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        if (game == nil) {
+        self.navigationController?.setNavigationBarHidden(false, animated: true)
+        guard let game = gamesManager.currentGame else {
+            alert("Error: currentGame was nil", handler: { _ in
+                self.navigationController?.popToViewController(self.navigationController!.viewControllers.first!, animated: true)
+            })
             return
         }
-        let lastTurn = game!.turns.last
+        let lastTurn = game.turns.last
         if (lastTurn == nil) {
             alert("Error: lastTurn was nil", handler: { _ in
-                self.dismiss(animated: false)
+                self.navigationController?.popToViewController(self.navigationController!.viewControllers.first!, animated: true)
             })
             return
         }
         if (lastTurn!.phrase == nil) {
             alert("Error: lastTurn did not have a phrase", handler: { _ in
-                self.dismiss(animated: false)
+                self.navigationController?.popToViewController(self.navigationController!.viewControllers.first!, animated: true)
             })
             return
         }
@@ -87,11 +89,11 @@ class DrawViewController: LoadingViewController, UIScrollViewDelegate, GADInters
     }
     
     func interstitialDidDismissScreen(_ ad: GADInterstitial) {
-        dismiss(animated: true)
+        self.navigationController?.popToViewController(self.navigationController!.viewControllers.first!, animated: true)
     }
     func interstitial(_ ad: GADInterstitial, didFailToReceiveAdWithError error: GADRequestError) {
         NSLog("interstitial:didFailToReceiveAdWithError: \(error.localizedDescription)")
-        dismiss(animated: true)
+        self.navigationController?.popToViewController(self.navigationController!.viewControllers.first!, animated: true)
     }
     
     func viewForZooming(in scrollView: UIScrollView) -> UIView? {
@@ -122,27 +124,27 @@ class DrawViewController: LoadingViewController, UIScrollViewDelegate, GADInters
         confirm("Are you ready to submit your drawing?", handler: {confirmed in
             if (confirmed) {
                 self.startLoading()
-                gamesManager.draw(game: self.game!, image: self.imageView.image!, callback: {(error, completed) in
-                    self.stopLoading()
-                    if let error = error {
-                        self.alert("drawing could not be saved: \(error)")
-                        return
-                    }
-                    self.game = nil
-                    
-                    if (inAppPurchaseModel.hasPurchasedNoAds()) {
-                        self.dismiss(animated: true)
-                        return
-                    }
-                    if (self.interstitial.isReady) {
-                        self.interstitial.present(fromRootViewController: self)
-                        return
-                    }
-                    
-                    //TODO -check if the drawing is done...
-                    
-                    NSLog("Ad wasn't ready")
-                    self.dismiss(animated: true)
+                gamesManager.draw(image: self.imageView.image!, callback: {(error, completed) in
+                    DispatchQueue.main.async(execute: {
+                        self.stopLoading()
+                        if let error = error {
+                            self.alert("drawing could not be saved: \(error)")
+                            return
+                        }
+                        if (inAppPurchaseModel.hasPurchasedNoAds()) {
+                            self.navigationController?.popToViewController(self.navigationController!.viewControllers.first!, animated: true)
+                            return
+                        }
+                        if (self.interstitial.isReady) {
+                            self.interstitial.present(fromRootViewController: self)
+                            return
+                        }
+                        
+                        //TODO -check if the drawing is done...
+                        
+                        NSLog("Ad wasn't ready")
+                        self.navigationController?.popToViewController(self.navigationController!.viewControllers.first!, animated: true)
+                    })
                 })
             }
         })
@@ -151,9 +153,8 @@ class DrawViewController: LoadingViewController, UIScrollViewDelegate, GADInters
     @IBAction func cancelTouch(_ sender: UIBarButtonItem) {
         confirm("Are you sure you want to cancel?", handler: {confirmed in
             if (confirmed) {
-                gamesManager.release(game: self.game!)
-                self.game = nil
-                self.dismiss(animated: true)
+                gamesManager.release()
+                self.navigationController?.popToViewController(self.navigationController!.viewControllers.first!, animated: true)
             }
         })
     }
@@ -166,7 +167,7 @@ class DrawViewController: LoadingViewController, UIScrollViewDelegate, GADInters
         switch segue.identifier! {
         case "flag":
             let controller = segue.destination as! FlagViewController
-            controller.game = game?.fragments.gameDetailed
+            controller.game = gamesManager.currentGame?.fragments.gameDetailed
         default:
             NSLog("draw View: unhandled segue identifier: \(segue.identifier!)")
         }
