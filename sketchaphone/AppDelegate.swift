@@ -6,15 +6,8 @@ import AWSS3
 //import AWSAuthUI
 import AWSCognitoIdentityProvider
 
-var credentialsProvider: AWSCognitoCredentialsProvider?
-var pool: AWSCognitoIdentityUserPool?
 
-//class KeyProvider: AWSAPIKeyAuthProvider {
-//    func getAPIKey() -> String {
-//        return "da2-jhecjzi5ercorfoitswuscbate"
-//    }
-//}
-//var apiKeyAuthProvider = KeyProvider()
+var userManager = UserManager()
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -37,23 +30,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let configuration = AWSServiceConfiguration(region: CognitoAWSRegion, credentialsProvider: nil)
         NSLog("configuration: %@", configuration ?? "nil")
 
-        let poolConfiguration = AWSCognitoIdentityUserPoolConfiguration(clientId: CognitoAppId, clientSecret: CognitoAppClientSecret, poolId: CognitoPoolId)
+        let poolConfiguration = AWSCognitoIdentityUserPoolConfiguration(clientId: CognitoAppId, clientSecret: nil, poolId: CognitoPoolId)
         NSLog("poolConfiguration: %@", poolConfiguration)
 
         AWSCognitoIdentityUserPool.register(with: configuration, userPoolConfiguration: poolConfiguration, forKey: "UserPool")
         
-        pool = AWSCognitoIdentityUserPool(forKey: "UserPool")
-        NSLog("pool: %@", pool ?? "nil")
-        NSLog("pool.identityProviderName: %@", pool?.identityProviderName ?? "nil")
+        let pool = AWSCognitoIdentityUserPool(forKey: "UserPool")
+        userManager.setPool(pool)
+        NSLog("pool: %@", pool)
+        NSLog("pool.identityProviderName: %@", pool.identityProviderName)
         
-        NSLog("pool?.logins(): %@", pool?.logins() ?? "nil")
+        NSLog("pool?.logins(): %@", pool.logins())
         
-        NSLog("cognito pool username: \(pool?.currentUser()?.username ?? "unknown")")
-        pool!.delegate = self
+        NSLog("cognito pool username: \(pool.currentUser()?.username ?? "unknown")")
+        pool.delegate = self
         
         
-        credentialsProvider = AWSCognitoCredentialsProvider(regionType: CognitoAWSRegion, identityPoolId: CognitoIdentityPoolId, identityProviderManager: pool!)
-        NSLog("credentialsProvider: %@", credentialsProvider ?? "nil")
+        
+        let credentialsProvider = AWSCognitoCredentialsProvider(regionType: CognitoAWSRegion, identityPoolId: CognitoIdentityPoolId, identityProviderManager: pool)
+        NSLog("credentialsProvider: %@", credentialsProvider)
         
 //        AWSCognitoUserPoolsSignInProvider.setupUserPool(withId: CognitoIdentityPoolId, cognitoIdentityUserPoolAppClientId: CognitoAppId, cognitoIdentityUserPoolAppClientSecret: "", region: AWSRegion)
 //        let pool = AWSCognitoUserPoolsSignInProvider.sharedInstance().getUserPool()
@@ -65,10 +60,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //        credentialsProvider = AWSCognitoCredentialsProvider(regionType: AWSRegion, identityProvider: helper)
 
 
-//        let updatedConfiguration = AWSServiceConfiguration(region: AWSRegion, credentialsProvider: credentialsProvider!)
+        let updatedConfiguration = AWSServiceConfiguration(region: AWSRegion, credentialsProvider: credentialsProvider)
         
         
-//        AWSServiceManager.default().defaultServiceConfiguration = configuration
+        AWSServiceManager.default().defaultServiceConfiguration = updatedConfiguration
         
         
 //        credentialsProvider = AWSCognitoCredentialsProvider(regionType: AWSRegion, identityPoolId: "us-west-2:949ac5f7-a5ed-4a1f-975c-bfff3f9a571b")
@@ -80,7 +75,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         do {
             // Initialize the AWS AppSync configuration
-            let appSyncConfig = try AWSAppSyncClientConfiguration(url: AppSyncEndpointURL, serviceRegion: AWSRegion, credentialsProvider: credentialsProvider!)
+            let appSyncConfig = try AWSAppSyncClientConfiguration(url: AppSyncEndpointURL, serviceRegion: AWSRegion, credentialsProvider: credentialsProvider)
             
             // Initialize the AppSync client
             appSyncClient = try AWSAppSyncClient(appSyncConfig: appSyncConfig)
@@ -105,18 +100,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 extension AppDelegate: AWSCognitoIdentityInteractiveAuthenticationDelegate {
     func startPasswordAuthentication() -> AWSCognitoIdentityPasswordAuthentication {
         NSLog("startPasswordAuthentication called")
-        let tabController = self.window?.rootViewController as! UITabBarController
 
+        //TODO this should not happen in the background thread...
         let loginViewController = self.storyboard?.instantiateViewController(withIdentifier: "LoginViewController") as! LoginViewController
-
-//        DispatchQueue.main.async {
-//            self.navigationController?.present(loginViewController!, animated: true, completion: nil)
-//        }
-
-//        let newGamesNavController = tabController.selectedViewController as! UINavigationController
-//        newGamesNavController.topViewController!.performSegue(withIdentifier: "login", sender: self)
         DispatchQueue.main.async {
-            tabController.present(loginViewController, animated: true, completion: nil)
+            let rootController = self.window?.rootViewController as! UINavigationController
+            
+            rootController.present(loginViewController, animated: true, completion: nil)
         }
 
         return loginViewController

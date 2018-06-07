@@ -3,6 +3,7 @@ class HomeViewController: LoadingViewController {
     @IBOutlet weak var pencil: UIImageView!
     @IBOutlet weak var startButton: UIButton!
     @IBOutlet weak var nav: UIStackView!
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
@@ -20,5 +21,9 @@ class HomeViewController: LoadingViewController {
         self.startButton.isHidden = false
         self.pencil.isHidden = false
         self.nav.isHidden = true
+    }
+    
+    @IBAction func startButtonTouch() {
+        userManager.signIn()
     }
 }

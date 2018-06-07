@@ -1,15 +1,28 @@
 import Foundation
-
-let userManager = UserManager()
+import AWSCognitoIdentityProvider
 
 class UserManager {
+    var identityPool: AWSCognitoIdentityUserPool?
     
     //TODO persist this?
     var currentUser: UserBasic?
     
+    func setPool(_ identityPool: AWSCognitoIdentityUserPool) {
+        self.identityPool = identityPool
+    }
     
     func signedIn() -> Bool {
-        return currentUser == nil
+        return identityPool?.currentUser()?.isSignedIn ?? false
+    }
+    
+    func signIn() {
+        //this method will force a sign if if not already signed in
+        identityPool?.currentUser()
+    }
+    
+    func signOut() {
+        let poolUser = identityPool?.currentUser()
+        poolUser?.signOut()
     }
     
     func set(name: String, callback: @escaping (Error?) -> Void) {

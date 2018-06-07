@@ -1,10 +1,9 @@
 import AWSAppSync
 
-let CognitoAWSRegion = AWSRegionType.USEast1
-let CognitoPoolId = "us-east-1_b2dwuMxth"
-let CognitoIdentityPoolId = "us-east-1:09824db8-6c1e-4adc-8347-d071458c7f99"
-let CognitoAppId = "f1tmlg79com5qg19m4260gfg2"
-let CognitoAppClientSecret = "d87ie09ig6rocufao36uvthvr04u7hcd604hojsqq6kr1b4gj40"
+let CognitoAWSRegion = AWSRegionType.USWest2
+let CognitoPoolId = "us-west-2_AOGYjBEBz"
+let CognitoIdentityPoolId = "us-west-2:949ac5f7-a5ed-4a1f-975c-bfff3f9a571b"
+let CognitoAppId = "3opl5him2odnff9dq531rk806q"
 
 let S3BUCKET = "skechaphone-drawings"
 let AWSRegion = AWSRegionType.USWest2

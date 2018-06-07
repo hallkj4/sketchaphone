@@ -11,10 +11,6 @@ class SettingsViewController: LoadingViewController, UITextFieldDelegate {
         self.navigationController?.setNavigationBarHidden(false, animated: true)
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-    }
-    
     func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
         if (textField == nameField) {
             return nameEditingDone()
@@ -47,20 +43,20 @@ class SettingsViewController: LoadingViewController, UITextFieldDelegate {
     
     
     @IBAction func signOutTouch() {
-        let user = pool?.currentUser()
-        user?.signOut()
-        user?.getDetails().continueOnSuccessWith(block: { (task) -> Any? in
-            guard task.result != nil else {
-                return nil
-            }
-            task.result?.mfaOptions?.forEach({(option) in
-                NSLog("mfaOption: \(option.attributeName ?? "nil")")
-            })
-            task.result?.userAttributes?.forEach({ (attribute) in
-                NSLog("attribute: \(attribute.name ?? "nil" ):\(attribute.value ?? "nil") ")
-            })
-            return nil
-        })
+        userManager.signOut()
+        //TODO - bump the user out
+//        user?.getDetails().continueOnSuccessWith(block: { (task) -> Any? in
+//            guard task.result != nil else {
+//                return nil
+//            }
+//            task.result?.mfaOptions?.forEach({(option) in
+//                NSLog("mfaOption: \(option.attributeName ?? "nil")")
+//            })
+//            task.result?.userAttributes?.forEach({ (attribute) in
+//                NSLog("attribute: \(attribute.name ?? "nil" ):\(attribute.value ?? "nil") ")
+//            })
+//            return nil
+//        })
     }
     
 }

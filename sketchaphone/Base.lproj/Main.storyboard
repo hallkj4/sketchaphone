@@ -420,7 +420,7 @@
         <!--Settings-->
         <scene sceneID="5A1-Lk-2IC">
             <objects>
-                <viewController title="Settings" id="JTk-IM-Z4t" sceneMemberID="viewController">
+                <viewController title="Settings" id="JTk-IM-Z4t" customClass="SettingsViewController" customModule="sketchaphone" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="06H-eg-gY3">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -436,17 +436,13 @@
                                 </connections>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jQ1-5v-iRC">
-                                <rect key="frame" x="130" y="285" width="60" height="30"/>
+                                <rect key="frame" x="130" y="274" width="60" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Sign Out"/>
                                 <connections>
+                                    <action selector="signOutTouch" destination="JTk-IM-Z4t" eventType="touchUpInside" id="bee-r2-cQX"/>
                                     <action selector="signOutTouch" destination="lr0-jv-hZo" eventType="touchUpInside" id="br0-iJ-naF"/>
                                 </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="E7F-4B-qvl">
-                                <rect key="frame" x="114" y="127" width="93" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Update name"/>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Name:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2ZG-jc-3Bs">
                                 <rect key="frame" x="30" y="89" width="50" height="30"/>
@@ -459,10 +455,13 @@
                         <color key="backgroundColor" red="0.51235103609999999" green="0.84975951910000003" blue="0.92168837790000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <viewLayoutGuide key="safeArea" id="tgf-nW-QRo"/>
                     </view>
+                    <connections>
+                        <outlet property="nameField" destination="PVJ-Wa-J8d" id="nJL-n3-mTb"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="55X-0S-VSD" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-141" y="1368"/>
+            <point key="canvasLocation" x="-142.5" y="1367.5"/>
         </scene>
         <!--Title-->
         <scene sceneID="dFV-tY-O4j">
@@ -553,6 +552,10 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="pencil" translatesAutoresizingMaskIntoConstraints="NO" id="2E9-7I-SXc">
+                                <rect key="frame" x="38" y="136" width="240" height="344"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Doodle Game" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rI5-VG-Skj">
                                 <rect key="frame" x="57.5" y="74" width="206.5" height="37"/>
                                 <fontDescription key="fontDescription" name="Helvetica-Bold" family="Helvetica" pointSize="32"/>
@@ -655,16 +658,16 @@
                                     </stackView>
                                 </subviews>
                             </stackView>
-                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UyZ-NH-N2r">
-                                <rect key="frame" x="99" y="358" width="123" height="46"/>
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hgc-c0-gtY">
+                                <rect key="frame" x="109" y="401" width="99" height="41"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="28"/>
-                                <state key="normal" title="Let's Play!">
-                                    <color key="titleColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                <state key="normal" title="Let's Play">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
-                                        <color key="value" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="value" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
                                         <real key="value" value="1"/>
@@ -674,13 +677,9 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
-                                    <segue destination="eCb-1O-KAe" kind="presentation" id="m4n-XC-ofQ"/>
+                                    <action selector="startButtonTouch" destination="adt-FZ-Xae" eventType="touchUpInside" id="Waj-Gv-26w"/>
                                 </connections>
                             </button>
-                            <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="pencil" translatesAutoresizingMaskIntoConstraints="NO" id="2E9-7I-SXc">
-                                <rect key="frame" x="38" y="136" width="240" height="344"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            </imageView>
                         </subviews>
                         <color key="backgroundColor" red="0.51235103607177734" green="0.84975951910018921" blue="0.92168837785720825" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
@@ -695,12 +694,13 @@
                     <connections>
                         <outlet property="nav" destination="C8V-eZ-kP4" id="aGc-GJ-ZhM"/>
                         <outlet property="pencil" destination="2E9-7I-SXc" id="pEZ-BA-aT6"/>
-                        <outlet property="startButton" destination="UyZ-NH-N2r" id="1hn-Ug-Gcf"/>
+                        <outlet property="startButton" destination="hgc-c0-gtY" id="ByH-li-yta"/>
+                        <segue destination="eCb-1O-KAe" kind="presentation" identifier="signIn" id="Ok2-zX-sge"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Y4U-GH-UqN" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-139" y="-975"/>
+            <point key="canvasLocation" x="-140.625" y="-975"/>
         </scene>
         <!--Join Game View Controller-->
         <scene sceneID="Hzb-2i-4t1">
