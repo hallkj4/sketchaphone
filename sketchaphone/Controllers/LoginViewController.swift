@@ -10,6 +10,16 @@ class LoginViewController: LoadingViewController {
     
     var passwordAuthenticationCompletion: AWSTaskCompletionSource<AWSCognitoIdentityPasswordAuthenticationDetails>?
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        self.navigationController?.setNavigationBarHidden(true, animated: true)
+    }
+    
+    //TODO: handle user hitting return also
+    
+    //TODO - use the email keyboard
+    
+    //TODO - use the remember passwords keyboard thing
     
     @IBAction func loginTouch() {
         startLoading()
@@ -27,17 +37,20 @@ extension LoginViewController: AWSCognitoIdentityPasswordAuthentication {
 
     public func didCompleteStepWithError(_ error: Error?) {
         DispatchQueue.main.async {
-            self.stopLoading()
             if let error = error as NSError? {
-                self.alert(error.localizedDescription)
+                self.stopLoading()
+                let errorType = error.userInfo["__type"] as? String
+                let errorMessage = error.userInfo["message"] as? String
+                self.alert((errorType ?? "unknown type") + " " + (errorMessage ?? "no message provided"))
+                return
             }
-            else {
-                NSLog("success??")
-                self.dismiss(animated: true, completion: {
-                    //TODO
-//                    self.usernameInput?.text = nil
-//                    self.passwordInput?.text = nil
-                })
+            
+            // NO ERROR
+            userManager.waitForSignIn {
+                self.stopLoading()
+                self.emailField?.text = nil
+                self.passwordField?.text = nil
+                self.navigationController?.popViewController(animated: true)
             }
         }
     }

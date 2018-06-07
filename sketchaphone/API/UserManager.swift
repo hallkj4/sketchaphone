@@ -1,6 +1,12 @@
 import Foundation
 import AWSCognitoIdentityProvider
 
+
+protocol LoginWatcher {
+    func loginStateUpdated()
+}
+
+
 class UserManager {
     var identityPool: AWSCognitoIdentityUserPool?
     
@@ -16,8 +22,20 @@ class UserManager {
     }
     
     func signIn() {
+        NSLog("UserManager.signin invoked")
         //this method will force a sign if if not already signed in
-        identityPool?.currentUser()
+        identityPool?.currentUser()?.getDetails()
+    }
+    
+    func waitForSignIn(_ callback: @escaping () -> Void) {
+        if (signedIn()) {
+            callback()
+            return
+        }
+        NSLog("not signed in, waiting another second")
+        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1), execute: {
+            self.waitForSignIn(callback)
+        })
     }
     
     func signOut() {

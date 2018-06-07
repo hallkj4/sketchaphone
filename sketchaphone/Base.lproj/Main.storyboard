@@ -702,7 +702,7 @@
                         <outlet property="nav" destination="C8V-eZ-kP4" id="aGc-GJ-ZhM"/>
                         <outlet property="pencil" destination="2E9-7I-SXc" id="pEZ-BA-aT6"/>
                         <outlet property="startButton" destination="hgc-c0-gtY" id="ByH-li-yta"/>
-                        <segue destination="eCb-1O-KAe" kind="presentation" identifier="signIn" id="Ok2-zX-sge"/>
+                        <segue destination="eCb-1O-KAe" kind="show" identifier="signIn" id="Qxo-Jy-MKD"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Y4U-GH-UqN" userLabel="First Responder" sceneMemberID="firstResponder"/>

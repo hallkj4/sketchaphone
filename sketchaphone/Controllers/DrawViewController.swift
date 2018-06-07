@@ -121,41 +121,37 @@ class DrawViewController: LoadingViewController, UIScrollViewDelegate, GADInters
     }
     
     @IBAction func submitTouch(_ sender: UIBarButtonItem) {
-        confirm("Are you ready to submit your drawing?", handler: {confirmed in
-            if (confirmed) {
-                self.startLoading()
-                gamesManager.draw(image: self.imageView.image!, callback: {(error, completed) in
-                    DispatchQueue.main.async(execute: {
-                        self.stopLoading()
-                        if let error = error {
-                            self.alert("drawing could not be saved: \(error)")
-                            return
-                        }
-                        if (inAppPurchaseModel.hasPurchasedNoAds()) {
-                            self.goHome()
-                            return
-                        }
-                        if (self.interstitial.isReady) {
-                            self.interstitial.present(fromRootViewController: self)
-                            return
-                        }
-                        
-                        //TODO -check if the drawing is done...
-                        
-                        NSLog("Ad wasn't ready")
+        confirm("Are you ready to submit your drawing?", confirmedHandler: {
+            self.startLoading()
+            gamesManager.draw(image: self.imageView.image!, callback: {(error, completed) in
+                DispatchQueue.main.async(execute: {
+                    self.stopLoading()
+                    if let error = error {
+                        self.alert("drawing could not be saved: \(error)")
+                        return
+                    }
+                    if (inAppPurchaseModel.hasPurchasedNoAds()) {
                         self.goHome()
-                    })
+                        return
+                    }
+                    if (self.interstitial.isReady) {
+                        self.interstitial.present(fromRootViewController: self)
+                        return
+                    }
+                    
+                    //TODO -check if the drawing is done...
+                    
+                    NSLog("Ad wasn't ready")
+                    self.goHome()
                 })
-            }
+            })
         })
     }
     
     @IBAction func cancelTouch(_ sender: UIBarButtonItem) {
-        confirm("Are you sure you want to cancel?", handler: {confirmed in
-            if (confirmed) {
-                gamesManager.release()
-                self.goHome()
-            }
+        confirm("Are you sure you want to cancel?", confirmedHandler: {
+            gamesManager.release()
+            self.goHome()
         })
     }
     

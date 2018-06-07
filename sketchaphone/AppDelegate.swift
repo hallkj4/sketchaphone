@@ -2,10 +2,7 @@ import UIKit
 import GoogleMobileAds
 import AWSAppSync
 import AWSS3
-//import AWSUserPoolsSignIn
-//import AWSAuthUI
 import AWSCognitoIdentityProvider
-
 
 var userManager = UserManager()
 
@@ -50,27 +47,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let credentialsProvider = AWSCognitoCredentialsProvider(regionType: CognitoAWSRegion, identityPoolId: CognitoIdentityPoolId, identityProviderManager: pool)
         NSLog("credentialsProvider: %@", credentialsProvider)
         
-//        AWSCognitoUserPoolsSignInProvider.setupUserPool(withId: CognitoIdentityPoolId, cognitoIdentityUserPoolAppClientId: CognitoAppId, cognitoIdentityUserPoolAppClientSecret: "", region: AWSRegion)
-//        let pool = AWSCognitoUserPoolsSignInProvider.sharedInstance().getUserPool()
-//
-//        AWSSignInManager.sharedInstance().register(signInProvider: AWSCognitoUserPoolsSignInProvider.sharedInstance())
-//
-//        let helper = AWSCognitoCredentialsProviderHelper(regionType: AWSRegion, identityPoolId: CognitoIdentityPoolId, useEnhancedFlow: false, identityProviderManager: pool)
-//
-//        credentialsProvider = AWSCognitoCredentialsProvider(regionType: AWSRegion, identityProvider: helper)
-
 
         let updatedConfiguration = AWSServiceConfiguration(region: AWSRegion, credentialsProvider: credentialsProvider)
         
         
         AWSServiceManager.default().defaultServiceConfiguration = updatedConfiguration
-        
-        
-//        credentialsProvider = AWSCognitoCredentialsProvider(regionType: AWSRegion, identityPoolId: "us-west-2:949ac5f7-a5ed-4a1f-975c-bfff3f9a571b")
-//
-        
-        
-//        let databaseURL = URL(fileURLWithPath:NSTemporaryDirectory()).appendingPathComponent(database_name)
         
         
         do {
@@ -86,11 +67,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         catch {
             NSLog("Error initializing appsync client. Error: %@", error as NSError)
         }
-
-        //COMMENTED OUT RECENTLY
-//        appSyncClient?.fetch(query: OpenGamesQuery(), resultHandler: {(results, error) in
-//            NSLog("error: %@", error as NSError? ?? "nil")
-//        })
         
         return true
     }
@@ -106,7 +82,7 @@ extension AppDelegate: AWSCognitoIdentityInteractiveAuthenticationDelegate {
         DispatchQueue.main.async {
             let rootController = self.window?.rootViewController as! UINavigationController
             
-            rootController.present(loginViewController, animated: true, completion: nil)
+            rootController.pushViewController(loginViewController, animated: true)
         }
 
         return loginViewController

@@ -8,8 +8,10 @@ class HomeViewController: LoadingViewController {
         super.viewWillAppear(animated)
         
         self.navigationController?.setNavigationBarHidden(true, animated: true)
-        
-        
+        updateButtonsForSignIn()
+    }
+    
+    func updateButtonsForSignIn() {
         if (userManager.signedIn()) {
             NSLog("signed in, showing home screen")
             self.startButton.isHidden = true

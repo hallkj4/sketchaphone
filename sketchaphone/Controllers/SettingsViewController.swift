@@ -41,22 +41,11 @@ class SettingsViewController: LoadingViewController, UITextFieldDelegate {
         return true
     }
     
-    
     @IBAction func signOutTouch() {
-        userManager.signOut()
-        //TODO - bump the user out
-//        user?.getDetails().continueOnSuccessWith(block: { (task) -> Any? in
-//            guard task.result != nil else {
-//                return nil
-//            }
-//            task.result?.mfaOptions?.forEach({(option) in
-//                NSLog("mfaOption: \(option.attributeName ?? "nil")")
-//            })
-//            task.result?.userAttributes?.forEach({ (attribute) in
-//                NSLog("attribute: \(attribute.name ?? "nil" ):\(attribute.value ?? "nil") ")
-//            })
-//            return nil
-//        })
+        confirm("Are you sure you want to sign out?", confirmedHandler: {
+            userManager.signOut()
+            self.navigationController?.popViewController(animated: true)
+        })
     }
     
 }
