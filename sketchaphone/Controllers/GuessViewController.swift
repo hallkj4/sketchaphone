@@ -21,21 +21,21 @@ class GuessViewController: LoadingViewController, UIScrollViewDelegate, UITextFi
         
         guard let game = gamesManager.currentGame else {
             alert("game is nil", handler: { _ in
-                self.navigationController?.popToViewController(self.navigationController!.viewControllers.first!, animated: true)
+                self.goHome()
             })
             return
         }
         
         guard let lastTurn = game.turns.last else {
             alert("lastTurn is nil", handler: { _ in
-                self.navigationController?.popToViewController(self.navigationController!.viewControllers.first!, animated: true)
+                self.goHome()
             })
             return
         }
         
         guard let imageURL = lastTurn.imageURL() else {
             alert("lastTurn did not have an image", handler: { _ in
-                self.navigationController?.popToViewController(self.navigationController!.viewControllers.first!, animated: true)
+                self.goHome()
             })
             return
         }
@@ -99,7 +99,7 @@ class GuessViewController: LoadingViewController, UIScrollViewDelegate, UITextFi
                             //TODO segue to the completedgame controller
                         }
                         
-                        self.navigationController?.popToViewController(self.navigationController!.viewControllers.first!, animated: true)
+                        self.goHome()
                     })
                 })
             }
@@ -109,7 +109,7 @@ class GuessViewController: LoadingViewController, UIScrollViewDelegate, UITextFi
     
     @IBAction func cancelTouch(_ sender: UIBarButtonItem) {
         gamesManager.release()//TODO callback
-        self.navigationController?.popToViewController(self.navigationController!.viewControllers.first!, animated: true)
+        self.goHome()
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

@@ -74,11 +74,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //        credentialsProvider = AWSCognitoCredentialsProvider(regionType: AWSRegion, identityPoolId: "us-west-2:949ac5f7-a5ed-4a1f-975c-bfff3f9a571b")
 //
         
-        let databaseURL = URL(fileURLWithPath:NSTemporaryDirectory()).appendingPathComponent(database_name)
+        
+//        let databaseURL = URL(fileURLWithPath:NSTemporaryDirectory()).appendingPathComponent(database_name)
+        
         
         do {
             // Initialize the AWS AppSync configuration
-            let appSyncConfig = try AWSAppSyncClientConfiguration(url: AppSyncEndpointURL, serviceRegion: AWSRegion, credentialsProvider: credentialsProvider!, databaseURL:databaseURL)
+            let appSyncConfig = try AWSAppSyncClientConfiguration(url: AppSyncEndpointURL, serviceRegion: AWSRegion, credentialsProvider: credentialsProvider!)
             
             // Initialize the AppSync client
             appSyncClient = try AWSAppSyncClient(appSyncConfig: appSyncConfig)

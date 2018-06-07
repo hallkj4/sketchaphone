@@ -82,19 +82,19 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" scrollEnabled="NO" maximumZoomScale="3" translatesAutoresizingMaskIntoConstraints="NO" id="axC-IE-yHR">
-                                <rect key="frame" x="0.0" y="108" width="320" height="332"/>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" maximumZoomScale="3" translatesAutoresizingMaskIntoConstraints="NO" id="axC-IE-yHR">
+                                <rect key="frame" x="0.0" y="64" width="320" height="376"/>
                                 <subviews>
-                                    <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" axis="vertical" distribution="equalSpacing" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="BJf-UH-alO">
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="BJf-UH-alO">
                                         <rect key="frame" x="0.0" y="10" width="320" height="390.5"/>
                                         <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Word or phrase" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6Zo-eH-dkD">
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Word or phrase" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6Zo-eH-dkD">
                                                 <rect key="frame" x="101" y="0.0" width="118" height="20.5"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <imageView multipleTouchEnabled="YES" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9Uj-kr-5VS" customClass="DrawableImageView" customModule="sketchaphone" customModuleProvider="target">
+                                            <imageView multipleTouchEnabled="YES" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="9Uj-kr-5VS" customClass="DrawableImageView" customModule="sketchaphone" customModuleProvider="target">
                                                 <rect key="frame" x="16" y="30.5" width="288" height="360"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="360" id="9dk-lZ-paz"/>
@@ -150,6 +150,7 @@
                             <constraint firstItem="zCq-3a-b38" firstAttribute="trailing" secondItem="XH3-TT-jIt" secondAttribute="trailing" constant="10" id="FD1-0p-5Ap"/>
                             <constraint firstItem="XH3-TT-jIt" firstAttribute="top" secondItem="axC-IE-yHR" secondAttribute="bottom" constant="10" id="GKU-Ja-VFO"/>
                             <constraint firstItem="zCq-3a-b38" firstAttribute="trailing" secondItem="axC-IE-yHR" secondAttribute="trailing" id="Vdx-dD-eJO"/>
+                            <constraint firstItem="axC-IE-yHR" firstAttribute="top" secondItem="zCq-3a-b38" secondAttribute="top" id="alB-2I-qt4"/>
                             <constraint firstItem="axC-IE-yHR" firstAttribute="leading" secondItem="zCq-3a-b38" secondAttribute="leading" id="fgP-Sb-khG"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="zCq-3a-b38"/>
@@ -1041,6 +1042,6 @@
         <image name="rules" width="33" height="33"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="7hf-0Y-3Ut"/>
+        <segue reference="bYq-59-xeO"/>
     </inferredMetricsTieBreakers>
 </document>

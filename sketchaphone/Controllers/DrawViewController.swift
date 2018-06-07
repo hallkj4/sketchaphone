@@ -53,20 +53,20 @@ class DrawViewController: LoadingViewController, UIScrollViewDelegate, GADInters
         self.navigationController?.setNavigationBarHidden(false, animated: true)
         guard let game = gamesManager.currentGame else {
             alert("Error: currentGame was nil", handler: { _ in
-                self.navigationController?.popToViewController(self.navigationController!.viewControllers.first!, animated: true)
+                self.goHome()
             })
             return
         }
         let lastTurn = game.turns.last
         if (lastTurn == nil) {
             alert("Error: lastTurn was nil", handler: { _ in
-                self.navigationController?.popToViewController(self.navigationController!.viewControllers.first!, animated: true)
+                self.goHome()
             })
             return
         }
         if (lastTurn!.phrase == nil) {
             alert("Error: lastTurn did not have a phrase", handler: { _ in
-                self.navigationController?.popToViewController(self.navigationController!.viewControllers.first!, animated: true)
+                self.goHome()
             })
             return
         }
@@ -89,11 +89,11 @@ class DrawViewController: LoadingViewController, UIScrollViewDelegate, GADInters
     }
     
     func interstitialDidDismissScreen(_ ad: GADInterstitial) {
-        self.navigationController?.popToViewController(self.navigationController!.viewControllers.first!, animated: true)
+        self.goHome()
     }
     func interstitial(_ ad: GADInterstitial, didFailToReceiveAdWithError error: GADRequestError) {
         NSLog("interstitial:didFailToReceiveAdWithError: \(error.localizedDescription)")
-        self.navigationController?.popToViewController(self.navigationController!.viewControllers.first!, animated: true)
+        self.goHome()
     }
     
     func viewForZooming(in scrollView: UIScrollView) -> UIView? {
@@ -132,7 +132,7 @@ class DrawViewController: LoadingViewController, UIScrollViewDelegate, GADInters
                             return
                         }
                         if (inAppPurchaseModel.hasPurchasedNoAds()) {
-                            self.navigationController?.popToViewController(self.navigationController!.viewControllers.first!, animated: true)
+                            self.goHome()
                             return
                         }
                         if (self.interstitial.isReady) {
@@ -143,7 +143,7 @@ class DrawViewController: LoadingViewController, UIScrollViewDelegate, GADInters
                         //TODO -check if the drawing is done...
                         
                         NSLog("Ad wasn't ready")
-                        self.navigationController?.popToViewController(self.navigationController!.viewControllers.first!, animated: true)
+                        self.goHome()
                     })
                 })
             }
@@ -154,7 +154,7 @@ class DrawViewController: LoadingViewController, UIScrollViewDelegate, GADInters
         confirm("Are you sure you want to cancel?", handler: {confirmed in
             if (confirmed) {
                 gamesManager.release()
-                self.navigationController?.popToViewController(self.navigationController!.viewControllers.first!, animated: true)
+                self.goHome()
             }
         })
     }

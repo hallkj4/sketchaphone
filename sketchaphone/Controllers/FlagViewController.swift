@@ -25,8 +25,8 @@ class FlagViewController: LoadingViewController {
                     self.alert("Error occurred: \(error.localizedDescription)")
                     return
                 }
-               // go back to home
-                self.navigationController?.popToViewController(self.navigationController!.viewControllers.first!, animated: true)
+                // go back to home
+                self.goHome()
             })
         })
     }

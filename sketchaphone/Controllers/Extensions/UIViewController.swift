@@ -17,4 +17,9 @@ extension UIViewController {
         }))
         present(alert, animated: true, completion: nil)
     }
+    
+    func goHome() {
+        self.navigationController?.popToViewController(
+            self.navigationController!.viewControllers.first!, animated: true)
+    }
 }
