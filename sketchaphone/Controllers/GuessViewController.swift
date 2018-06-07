@@ -83,26 +83,24 @@ class GuessViewController: LoadingViewController, UIScrollViewDelegate, UITextFi
             alert("You have to type something.")
             return
         }
-        confirm("Are you ready to submit your guess of '\(textField.text!)'?", handler: { confirmed in
-            if (confirmed) {
-                self.startLoading()
-                gamesManager.guess(phrase: self.textField.text!, callback: {
-                    (error, didFinish) in
-                    DispatchQueue.main.async(execute: {
-                        self.stopLoading()
-                        if let error = error {
-                            self.alert("error occured saving guess: \(error.localizedDescription)")
-                            return
-                        }
-                        
-                        if (didFinish) {
-                            //TODO segue to the completedgame controller
-                        }
-                        
-                        self.goHome()
-                    })
+        confirm("Are you ready to submit your guess of '\(textField.text!)'?", confirmedHandler: {
+            self.startLoading()
+            gamesManager.guess(phrase: self.textField.text!, callback: {
+                (error, didFinish) in
+                DispatchQueue.main.async(execute: {
+                    self.stopLoading()
+                    if let error = error {
+                        self.alert("error occured saving guess: \(error.localizedDescription)")
+                        return
+                    }
+                    
+                    if (didFinish) {
+                        //TODO segue to the completedgame controller
+                    }
+                    
+                    self.goHome()
                 })
-            }
+            })
         })
         
     }

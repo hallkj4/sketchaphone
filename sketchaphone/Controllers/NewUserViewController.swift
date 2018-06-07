@@ -22,21 +22,19 @@ class NewUserViewController: LoadingViewController, UITextFieldDelegate {
             alert("Name cannot be blank")
             return
         }
-        confirm("Setting name to '\(textField.text!)', are you sure?", handler: { confirmed in
-            if (confirmed) {
-                self.textField.isEnabled = false
-                self.startLoading()
-                userManager.set(name: self.textField.text!, callback: {(error) in
-                    DispatchQueue.main.async(execute: {
-                        self.stopLoading()
-                        if let error = error {
-                            self.alert("could not set name: \(error.localizedDescription)")
-                            return
-                        }
-                        self.dismiss(animated: true)
-                    })
+        confirm("Setting name to '\(textField.text!)', are you sure?", confirmedHandler: {
+            self.textField.isEnabled = false
+            self.startLoading()
+            userManager.set(name: self.textField.text!, callback: {(error) in
+                DispatchQueue.main.async(execute: {
+                    self.stopLoading()
+                    if let error = error {
+                        self.alert("could not set name: \(error.localizedDescription)")
+                        return
+                    }
+                    self.dismiss(animated: true)
                 })
-            }
+            })
         })
     }
 }

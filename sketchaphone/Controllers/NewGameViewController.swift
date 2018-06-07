@@ -26,23 +26,21 @@ class NewGameViewController: LoadingViewController, UITextFieldDelegate {
             alert("Please enter a word or phrase to start a new game.")
             return
         }
-        confirm("Are you sure you want to start a new game with the phrase '\(textField.text!)'", handler: { confirmed in
-            if (confirmed) {
-                self.textField.isEnabled = false
-                self.startLoading()
-                gamesManager.new(phrase: self.textField.text!, callback: {(error) in
-                    DispatchQueue.main.async(execute: {
-                        self.stopLoading()
-                        if let error = error {
-                            self.alert("game could not be created: \(error.localizedDescription)")
-                            return
-                        }
-                        self.alert("Your game was created!", title: "Success", handler: { _ in
-                            self.navigationController?.popViewController(animated: true)
-                        })
+        confirm("Are you sure you want to start a new game with the phrase '\(textField.text!)'", confirmedHandler: {
+            self.textField.isEnabled = false
+            self.startLoading()
+            gamesManager.new(phrase: self.textField.text!, callback: {(error) in
+                DispatchQueue.main.async(execute: {
+                    self.stopLoading()
+                    if let error = error {
+                        self.alert("game could not be created: \(error.localizedDescription)")
+                        return
+                    }
+                    self.alert("Your game was created!", title: "Success", handler: { _ in
+                        self.navigationController?.popViewController(animated: true)
                     })
                 })
-            }
+            })
         })
     }
 }
