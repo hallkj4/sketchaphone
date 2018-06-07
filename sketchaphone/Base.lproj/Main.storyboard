@@ -6,6 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Navigation items with more than one left or right bar item" minToolsVersion="7.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -552,9 +553,11 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="pencil" translatesAutoresizingMaskIntoConstraints="NO" id="2E9-7I-SXc">
-                                <rect key="frame" x="38" y="136" width="240" height="344"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="pencil" translatesAutoresizingMaskIntoConstraints="NO" id="2E9-7I-SXc">
+                                <rect key="frame" x="94.5" y="280" width="131" height="200"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="2E9-7I-SXc" secondAttribute="height" multiplier="133:202" id="yCz-32-NEH"/>
+                                </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Doodle Game" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rI5-VG-Skj">
                                 <rect key="frame" x="57.5" y="74" width="206.5" height="37"/>
@@ -658,9 +661,8 @@
                                     </stackView>
                                 </subviews>
                             </stackView>
-                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hgc-c0-gtY">
-                                <rect key="frame" x="109" y="401" width="99" height="41"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hgc-c0-gtY">
+                                <rect key="frame" x="110.5" y="401" width="99" height="41"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                 <state key="normal" title="Let's Play">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -685,8 +687,13 @@
                         <constraints>
                             <constraint firstItem="rI5-VG-Skj" firstAttribute="centerX" secondItem="HkL-os-7o8" secondAttribute="centerX" id="2lV-T7-g79"/>
                             <constraint firstItem="rI5-VG-Skj" firstAttribute="top" secondItem="HkL-os-7o8" secondAttribute="top" constant="10" id="GO9-bw-naz"/>
+                            <constraint firstItem="hgc-c0-gtY" firstAttribute="centerX" secondItem="HkL-os-7o8" secondAttribute="centerX" id="Mpl-LM-O94"/>
                             <constraint firstItem="C8V-eZ-kP4" firstAttribute="centerX" secondItem="HkL-os-7o8" secondAttribute="centerX" id="RDz-o5-oTy"/>
+                            <constraint firstItem="2E9-7I-SXc" firstAttribute="bottom" secondItem="HkL-os-7o8" secondAttribute="bottom" id="Xxv-Bs-eOo"/>
+                            <constraint firstItem="2E9-7I-SXc" firstAttribute="centerX" secondItem="HkL-os-7o8" secondAttribute="centerX" id="lxu-C9-DUy"/>
+                            <constraint firstItem="2E9-7I-SXc" firstAttribute="height" secondItem="5Mw-r7-QQM" secondAttribute="height" constant="-280" id="rJ7-ZP-LG6"/>
                             <constraint firstItem="C8V-eZ-kP4" firstAttribute="centerY" secondItem="HkL-os-7o8" secondAttribute="centerY" id="u6w-nZ-1uz"/>
+                            <constraint firstItem="HkL-os-7o8" firstAttribute="bottom" secondItem="hgc-c0-gtY" secondAttribute="bottom" constant="38" id="zg7-K2-WBw"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="HkL-os-7o8"/>
                     </view>
