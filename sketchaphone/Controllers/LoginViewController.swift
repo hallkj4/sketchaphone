@@ -4,15 +4,40 @@ import AWSCognitoIdentityProvider
 
 class LoginViewController: LoadingViewController {
     
+    @IBOutlet weak var nameStack: UIStackView!
+    @IBOutlet weak var loginDesc: UILabel!
+    @IBOutlet weak var signUpDesc: UIView!
     @IBOutlet weak var nameField: UITextField!
     @IBOutlet weak var emailField: UITextField!
     @IBOutlet weak var passwordField: UITextField!
+    
+    @IBOutlet weak var resetButton: UIButton!
+    @IBOutlet weak var createButton: UIButton!
+    @IBOutlet weak var loginButton: UIButton!
+    
+    @IBOutlet weak var switchToLoginButton: UIButton!
+    @IBOutlet weak var switchToCreateButton: UIButton!
+    
+    var showLogin = false
     
     var passwordAuthenticationCompletion: AWSTaskCompletionSource<AWSCognitoIdentityPasswordAuthenticationDetails>?
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         self.navigationController?.setNavigationBarHidden(true, animated: true)
+        showHideUIElements()
+    }
+    
+    func showHideUIElements() {
+        nameStack.isHidden = showLogin
+        signUpDesc.isHidden = showLogin
+        createButton.isHidden = showLogin
+        switchToLoginButton.isHidden = showLogin
+        
+        switchToCreateButton.isHidden = !showLogin
+        resetButton.isHidden = !showLogin
+        loginDesc.isHidden = !showLogin
+        loginButton.isHidden = !showLogin
     }
     
     //TODO: handle user hitting return also
@@ -26,6 +51,40 @@ class LoginViewController: LoadingViewController {
         let authDetails = AWSCognitoIdentityPasswordAuthenticationDetails(username: emailField.text ?? "", password: passwordField.text ?? "")
         self.passwordAuthenticationCompletion?.set(result: authDetails)
     }
+    
+    
+    @IBAction func getStartedTouch() {
+        //TODO check that these are filled
+        let email = emailField.text ?? ""
+        let password = passwordField.text ?? ""
+        let name = nameField.text ?? ""
+        startLoading()
+        userManager.signUp(email: email, password: password, name: name, callback: {(error, confirmation) in
+            
+            DispatchQueue.main.async {
+                self.stopLoading()
+                if let error = error {
+                    self.alert(error)
+                    return
+                }
+                if (confirmation != nil) {
+                    self.performSegue(withIdentifier: "confirm", sender: nil)
+                    return
+                }
+                NSLog("no confirmation is required")
+                
+                //TODO - do i need to wait for full sign in?
+                self.goHome()
+            }
+        })
+    }
+    
+    @IBAction func switchTouch() {
+        showLogin = !showLogin
+        showHideUIElements()
+    }
+    
+    
 }
 
 extension LoginViewController: AWSCognitoIdentityPasswordAuthentication {
@@ -48,9 +107,12 @@ extension LoginViewController: AWSCognitoIdentityPasswordAuthentication {
             // NO ERROR
             userManager.waitForSignIn {
                 self.stopLoading()
+                self.nameField?.text = nil
                 self.emailField?.text = nil
                 self.passwordField?.text = nil
-                self.navigationController?.popViewController(animated: true)
+                self.alert("You're signed in", title: "Welcome back!", handler: { _ in
+                    self.navigationController?.popViewController(animated: true)
+                })
             }
         }
     }

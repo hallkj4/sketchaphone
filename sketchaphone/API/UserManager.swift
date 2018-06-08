@@ -1,12 +1,6 @@
 import Foundation
 import AWSCognitoIdentityProvider
 
-
-protocol LoginWatcher {
-    func loginStateUpdated()
-}
-
-
 class UserManager {
     var identityPool: AWSCognitoIdentityUserPool?
     
@@ -36,6 +30,46 @@ class UserManager {
         DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1), execute: {
             self.waitForSignIn(callback)
         })
+        //TODO - try something liek this instead:
+//        identityPool?.currentUser()?.getSession().continueWith(block: { (task) in
+//            //blah
+//        })
+    }
+    
+    func resetPassword(email: String, callback: @escaping (String?) -> Void) {
+        let user = identityPool?.getUser(email)
+        user?.forgotPassword().continueWith{(task: AWSTask) -> AnyObject? in
+            if let error = task.error as NSError? {
+                let message = error.userInfo["message"] as? String
+                callback(message ?? "unknown error")
+                return nil
+            }
+            callback(nil)
+            return nil
+        }
+    }
+    
+    func confirmAccount(code: String, callback: @escaping (String?) -> Void) {
+        identityPool?.currentUser()?.confirmSignUp(code).continueWith(block: { (task) -> Any? in
+            //TODO - set their name!s
+            if let error = task.error as NSError? {
+                callback(error.userInfo["message"] as? String ?? "unknown error")
+                return nil
+            }
+            callback(nil)
+            return nil
+        })
+    }
+    
+    func resetPasswordConfirm(code: String, password: String, callback: @escaping (String?) -> Void) {
+        identityPool?.currentUser()?.confirmForgotPassword(code, password: password).continueWith(block: { (task) -> Any? in
+            if let error = task.error as NSError? {
+                callback(error.userInfo["message"] as? String ?? "unknown error")
+                return nil
+            }
+            callback(nil)
+            return nil
+        })
     }
     
     func signOut() {
@@ -56,6 +90,34 @@ class UserManager {
             
             self.currentUser = userRaw.fragments.userBasic
             callback(nil)
+        })
+    }
+    
+    func signUp(email: String, password: String, name: String, callback: @escaping (String?, String?) -> Void) {
+        var attributes = [AWSCognitoIdentityUserAttributeType]()
+        let emailAttr = AWSCognitoIdentityUserAttributeType()
+        emailAttr!.name = "email"
+        emailAttr!.value = email
+        attributes.append(emailAttr!)
+        identityPool?.signUp(email, password: password, userAttributes: attributes, validationData: nil).continueWith(block: {(task) in
+            
+            if let error = task.error as NSError? {
+                callback((error.userInfo["message"] as? String) ?? "unknown error", nil)
+                return nil
+            }
+            guard let result = task.result else {
+                callback("task result was not set, and error wasn't set", nil)
+                return nil
+            }
+            // handle the case where user has to confirm his identity via email / SMS
+            if (result.user.confirmedStatus != AWSCognitoIdentityUserStatus.confirmed) {
+                let confirmAddress = (result.codeDeliveryDetails?.destination ?? "unknown")
+                NSLog("confirmation required: confirmation delivered to: " + confirmAddress)
+                callback(nil, confirmAddress)
+                return nil
+            }
+            callback(nil, nil)
+            return nil
         })
     }
 }

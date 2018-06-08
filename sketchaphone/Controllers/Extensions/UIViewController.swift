@@ -20,7 +20,6 @@ extension UIViewController {
     }
     
     func goHome() {
-        self.navigationController?.popToViewController(
-            self.navigationController!.viewControllers.first!, animated: true)
+        self.navigationController?.popToRootViewController(animated: true)
     }
 }
