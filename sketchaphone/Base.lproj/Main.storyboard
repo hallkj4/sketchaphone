@@ -901,7 +901,6 @@
                                                 </userDefinedRuntimeAttributes>
                                                 <connections>
                                                     <action selector="getStartedTouch" destination="eCb-1O-KAe" eventType="touchUpInside" id="JM5-JG-Y1s"/>
-                                                    <action selector="getStartedTough" destination="eCb-1O-KAe" eventType="touchUpInside" id="a5t-ko-74A"/>
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gva-vM-117">
@@ -1039,7 +1038,6 @@
                                                     </userDefinedRuntimeAttribute>
                                                 </userDefinedRuntimeAttributes>
                                                 <connections>
-                                                    <action selector="loginTouch" destination="eCb-1O-KAe" eventType="touchUpInside" id="A3O-n8-mbE"/>
                                                     <action selector="resetTouch" destination="n1a-Fo-kJl" eventType="touchUpInside" id="ouc-fM-NhD"/>
                                                 </connections>
                                             </button>
@@ -1062,7 +1060,7 @@
                     </view>
                     <connections>
                         <outlet property="emailField" destination="vLb-2S-49j" id="pS0-Km-1dr"/>
-                        <segue destination="rKu-3J-HMr" kind="show" id="x4n-0B-lbS"/>
+                        <segue destination="rKu-3J-HMr" kind="show" identifier="resetConfirm" id="x4n-0B-lbS"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="KkZ-9H-PH1" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1299,7 +1297,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="g8x-q6-PBR">
-                                <rect key="frame" x="10" y="74" width="300" height="177.5"/>
+                                <rect key="frame" x="10" y="74" width="300" height="208"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5uW-bX-Hqc">
                                         <rect key="frame" x="0.0" y="0.0" width="300" height="61"/>
@@ -1318,8 +1316,25 @@
                                             <constraint firstAttribute="bottom" secondItem="r3t-ok-Rrb" secondAttribute="bottom" id="yz1-Ja-918"/>
                                         </constraints>
                                     </view>
+                                    <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="tw4-jc-aJ8">
+                                        <rect key="frame" x="47.5" y="71" width="205" height="20.5"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Email:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="F41-zP-qGb">
+                                                <rect key="frame" x="0.0" y="0.0" width="45.5" height="20.5"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="foo@jooooboo.com" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="De1-R4-xuv">
+                                                <rect key="frame" x="55.5" y="0.0" width="149.5" height="20.5"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                    </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="aT1-m1-54b">
-                                        <rect key="frame" x="0.0" y="71" width="300" height="50.5"/>
+                                        <rect key="frame" x="0.0" y="101.5" width="300" height="50.5"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="jCp-3Z-JTB">
                                                 <rect key="frame" x="0.0" y="0.0" width="300" height="50.5"/>
@@ -1341,7 +1356,7 @@
                                         </subviews>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="OHk-Nv-8fK">
-                                        <rect key="frame" x="0.0" y="131.5" width="300" height="46"/>
+                                        <rect key="frame" x="0.0" y="162" width="300" height="46"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="trailing" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UVf-OC-7D8">
                                                 <rect key="frame" x="0.0" y="0.0" width="300" height="46"/>
@@ -1362,8 +1377,6 @@
                                                 </userDefinedRuntimeAttributes>
                                                 <connections>
                                                     <action selector="confirmTouch" destination="MMW-tQ-Bfb" eventType="touchUpInside" id="fFo-it-GR2"/>
-                                                    <action selector="loginTouch" destination="eCb-1O-KAe" eventType="touchUpInside" id="s6j-Oc-40x"/>
-                                                    <action selector="resetTouch" destination="MMW-tQ-Bfb" eventType="touchUpInside" id="zOU-S9-5gF"/>
                                                 </connections>
                                             </button>
                                         </subviews>
@@ -1385,7 +1398,7 @@
                     </view>
                     <connections>
                         <outlet property="codeField" destination="ppV-K9-YgM" id="md6-Iv-IhK"/>
-                        <outlet property="emailField" destination="ppV-K9-YgM" id="qnf-i9-6rv"/>
+                        <outlet property="emailLabel" destination="De1-R4-xuv" id="t3p-Bw-9lq"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WZE-iW-KUR" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1401,13 +1414,13 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="tlO-EK-tBT">
-                                <rect key="frame" x="10" y="74" width="300" height="238"/>
+                                <rect key="frame" x="10" y="74" width="300" height="258.5"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UpX-lq-q39">
-                                        <rect key="frame" x="0.0" y="0.0" width="300" height="61"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="300" height="81.5"/>
                                         <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You should be getting an email confirmation shortly - please enter the code here to reset your password" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1eS-ja-6r7">
-                                                <rect key="frame" x="0.0" y="0.0" width="300" height="61"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You should get an email shortly to verify your identity. Please enter the code from the email here to reset your password" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1eS-ja-6r7">
+                                                <rect key="frame" x="0.0" y="0.0" width="300" height="81.5"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
@@ -1421,7 +1434,7 @@
                                         </constraints>
                                     </view>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="YcV-6R-28J">
-                                        <rect key="frame" x="0.0" y="71" width="300" height="50.5"/>
+                                        <rect key="frame" x="0.0" y="91.5" width="300" height="50.5"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="gHA-F4-G6L">
                                                 <rect key="frame" x="0.0" y="0.0" width="300" height="50.5"/>
@@ -1443,7 +1456,7 @@
                                         </subviews>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="YZh-CL-7Df">
-                                        <rect key="frame" x="0.0" y="131.5" width="300" height="50.5"/>
+                                        <rect key="frame" x="0.0" y="152" width="300" height="50.5"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="New Password" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6oC-eO-MmW">
                                                 <rect key="frame" x="0.0" y="0.0" width="300" height="20.5"/>
@@ -1460,7 +1473,7 @@
                                         </subviews>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="6Yc-vE-hQo">
-                                        <rect key="frame" x="0.0" y="192" width="300" height="46"/>
+                                        <rect key="frame" x="0.0" y="212.5" width="300" height="46"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="trailing" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="W9w-47-zev">
                                                 <rect key="frame" x="0.0" y="0.0" width="300" height="46"/>
@@ -1480,9 +1493,7 @@
                                                     </userDefinedRuntimeAttribute>
                                                 </userDefinedRuntimeAttributes>
                                                 <connections>
-                                                    <action selector="loginTouch" destination="eCb-1O-KAe" eventType="touchUpInside" id="5Ux-jB-1Oh"/>
-                                                    <action selector="resetPasswordTouch" destination="rKu-3J-HMr" eventType="touchUpInside" id="Gc0-Ay-isp"/>
-                                                    <action selector="resetTouch" destination="rKu-3J-HMr" eventType="touchUpInside" id="hwq-mt-i4Q"/>
+                                                    <action selector="resetPasswordTouch" destination="rKu-3J-HMr" eventType="touchUpInside" id="F5W-3m-arq"/>
                                                 </connections>
                                             </button>
                                         </subviews>
@@ -1505,7 +1516,6 @@
                     </view>
                     <connections>
                         <outlet property="codeField" destination="pVn-l3-dU6" id="3iR-hQ-Mwg"/>
-                        <outlet property="emailField" destination="pVn-l3-dU6" id="5Es-FZ-AP3"/>
                         <outlet property="passwordField" destination="s0S-Sv-qao" id="Y0e-xD-Lcr"/>
                     </connections>
                 </viewController>

@@ -25,10 +25,7 @@ class ResetPasswordViewController: LoadingViewController {
                     self.alert(error)
                     return
                 }
-                self.alert("A password reset email has been sent. Please check your email for next steps.", handler: { _ in
-                    self.navigationController?.popViewController(animated: true)
-                })
-                
+                self.performSegue(withIdentifier: "resetConfirm", sender: nil)
             }
         }
     }

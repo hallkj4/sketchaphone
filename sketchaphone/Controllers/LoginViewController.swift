@@ -2,7 +2,7 @@ import UIKit
 
 import AWSCognitoIdentityProvider
 
-class LoginViewController: LoadingViewController {
+class LoginViewController: LoadingViewController, LoginDelegate {
     
     @IBOutlet weak var nameStack: UIStackView!
     @IBOutlet weak var loginDesc: UILabel!
@@ -20,7 +20,10 @@ class LoginViewController: LoadingViewController {
     
     var showLogin = false
     
-    var passwordAuthenticationCompletion: AWSTaskCompletionSource<AWSCognitoIdentityPasswordAuthenticationDetails>?
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        userManager.loginDelegate = self
+    }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
@@ -47,17 +50,54 @@ class LoginViewController: LoadingViewController {
     //TODO - use the remember passwords keyboard thing
     
     @IBAction func loginTouch() {
+        
+        guard let email = emailField.text else {
+            alert("Email is required.")
+            return
+        }
+        if (email == "") {
+            alert("Email is required.")
+            return
+        }
+        guard let password = passwordField.text else {
+            alert("A password of 6 or more characters is required.")
+            return
+        }
+        if (password.count < 6) {
+            alert("A password of 6 or more characters is required.")
+            return
+        }
         startLoading()
-        let authDetails = AWSCognitoIdentityPasswordAuthenticationDetails(username: emailField.text ?? "", password: passwordField.text ?? "")
-        self.passwordAuthenticationCompletion?.set(result: authDetails)
+        
+        userManager.login(email: email, password: password)
     }
     
     
     @IBAction func getStartedTouch() {
-        //TODO check that these are filled
-        let email = emailField.text ?? ""
-        let password = passwordField.text ?? ""
-        let name = nameField.text ?? ""
+        guard let email = emailField.text else {
+            alert("Email is required.")
+            return
+        }
+        if (email == "") {
+            alert("Email is required.")
+            return
+        }
+        guard let password = passwordField.text else {
+            alert("A password of 6 or more characters is required.")
+            return
+        }
+        if (password.count < 6) {
+            alert("A password of 6 or more characters is required.")
+            return
+        }
+        guard let name = nameField.text else {
+            alert("Name is required.")
+            return
+        }
+        if (name == "") {
+            alert("Name is required.")
+            return
+        }
         startLoading()
         userManager.signUp(email: email, password: password, name: name, callback: {(error, confirmation) in
             
@@ -83,39 +123,21 @@ class LoginViewController: LoadingViewController {
         showLogin = !showLogin
         showHideUIElements()
     }
-    
-    
-}
 
-extension LoginViewController: AWSCognitoIdentityPasswordAuthentication {
-
-    public func getDetails(_ authenticationInput: AWSCognitoIdentityPasswordAuthenticationInput, passwordAuthenticationCompletionSource: AWSTaskCompletionSource<AWSCognitoIdentityPasswordAuthenticationDetails>) {
-        self.passwordAuthenticationCompletion = passwordAuthenticationCompletionSource
-        //TODO: update UI with: authenticationInput.lastKnownUsername
+    func handleLogin() {
+        stopLoading()
+        self.nameField?.text = nil
+        self.emailField?.text = nil
+        self.passwordField?.text = nil
+        self.alert("You're signed in", title: "Welcome back!", handler: { _ in
+            self.goHome()
+        })
     }
-
-    public func didCompleteStepWithError(_ error: Error?) {
-        DispatchQueue.main.async {
-            if let error = error as NSError? {
-                self.stopLoading()
-                let errorType = error.userInfo["__type"] as? String
-                let errorMessage = error.userInfo["message"] as? String
-                self.alert((errorType ?? "unknown type") + " " + (errorMessage ?? "no message provided"))
-                return
-            }
-            
-            // NO ERROR
-            userManager.waitForSignIn {
-                self.stopLoading()
-                self.nameField?.text = nil
-                self.emailField?.text = nil
-                self.passwordField?.text = nil
-                self.alert("You're signed in", title: "Welcome back!", handler: { _ in
-                    self.navigationController?.popViewController(animated: true)
-                })
-            }
-        }
+    
+    func handleLoginFailure(message: String) {
+        stopLoading()
+        alert(message)
     }
-
+    
 }
 

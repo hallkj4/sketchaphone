@@ -260,8 +260,8 @@
 				4C27A03120C7012800449704 /* HomeViewController.swift */,
 				4C27A03520C7196000449704 /* RulesInfoViewController.swift */,
 				4C7EBF7420C9BB26006AE5C0 /* ResetPasswordViewController.swift */,
-				4C7EBF7620C9F8EB006AE5C0 /* ConfirmAccountViewController.swift */,
 				4C7EBF7820C9FF30006AE5C0 /* ResetPasswordConfirmViewController.swift */,
+				4C7EBF7620C9F8EB006AE5C0 /* ConfirmAccountViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";

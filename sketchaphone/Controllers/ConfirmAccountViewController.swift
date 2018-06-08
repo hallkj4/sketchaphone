@@ -2,10 +2,13 @@ import UIKit
 class ConfirmAccountViewController: LoadingViewController {
     @IBOutlet weak var codeField: UITextField!
     
+    @IBOutlet weak var emailLabel: UILabel!
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         self.navigationController?.setNavigationBarHidden(false, animated: true)
+        self.emailLabel.text = userManager.getCurrentEmail()
     }
     
     //TODO resend confirmation - see: https://github.com/awslabs/aws-sdk-ios-samples/blob/master/CognitoYourUserPools-Sample/Swift/CognitoYourUserPoolsSample/ConfirmSignUpViewController.swift

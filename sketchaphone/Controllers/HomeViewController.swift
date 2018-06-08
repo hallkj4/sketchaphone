@@ -26,6 +26,6 @@ class HomeViewController: LoadingViewController {
     }
     
     @IBAction func startButtonTouch() {
-        userManager.signIn()
+        userManager.promptSignIn()
     }
 }

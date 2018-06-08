@@ -77,15 +77,14 @@ extension AppDelegate: AWSCognitoIdentityInteractiveAuthenticationDelegate {
     func startPasswordAuthentication() -> AWSCognitoIdentityPasswordAuthentication {
         NSLog("startPasswordAuthentication called")
 
-        //TODO this should not happen in the background thread...
-        let loginViewController = self.storyboard?.instantiateViewController(withIdentifier: "LoginViewController") as! LoginViewController
         DispatchQueue.main.async {
+            let loginViewController = self.storyboard?.instantiateViewController(withIdentifier: "LoginViewController") as! LoginViewController
             let rootController = self.window?.rootViewController as! UINavigationController
             
             rootController.pushViewController(loginViewController, animated: true)
         }
 
-        return loginViewController
+        return userManager
     }
 }
 
