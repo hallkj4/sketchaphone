@@ -12,7 +12,7 @@ class HomeViewController: LoadingViewController {
     }
     
     func updateButtonsForSignIn() {
-        if (userManager.signedIn()) {
+        if (userManager.isSignedIn()) {
             NSLog("signed in, showing home screen")
             self.startButton.isHidden = true
             self.pencil.isHidden = true

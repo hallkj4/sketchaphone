@@ -22,7 +22,7 @@ class UserManager : NSObject {
         self.identityPool = identityPool
     }
     
-    func signedIn() -> Bool {
+    func isSignedIn() -> Bool {
         return identityPool?.currentUser()?.isSignedIn ?? false
     }
     
@@ -32,65 +32,23 @@ class UserManager : NSObject {
         identityPool?.currentUser()?.getDetails()
     }
     
-    func waitForSignIn(_ callback: @escaping () -> Void) {
-        if (signedIn()) {
-            callback()
+
+    func waitForSignIn() {
+        NSLog("waiting for user to be signed in")
+        if (isSignedIn()) {
+            self.loginDelegate?.handleLogin()
             return
         }
         NSLog("not signed in, waiting another second")
+        //TODO - this could get stuck...
         DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1), execute: {
-            self.waitForSignIn(callback)
-        })
-        //TODO - try something liek this instead:
-//        identityPool?.currentUser()?.getSession().continueWith(block: { (task) in
-//            //blah
-//        })
-    }
-    
-    func resetPassword(email: String, callback: @escaping (String?) -> Void) {
-        let user = identityPool?.getUser(email)
-        self.email = email
-        user?.forgotPassword().continueWith{(task: AWSTask) -> AnyObject? in
-            if let error = task.error as NSError? {
-                let message = error.userInfo["message"] as? String
-                callback(message ?? "unknown error")
-                return nil
-            }
-            callback(nil)
-            return nil
-        }
-    }
-    
-    func confirmAccount(code: String, callback: @escaping (String?) -> Void) {
-        identityPool?.getUser(email!).confirmSignUp(code).continueWith(block: { (task) -> Any? in
-            //TODO - set their name!s
-            if let error = task.error as NSError? {
-                callback(error.userInfo["message"] as? String ?? "unknown error")
-                return nil
-            }
-            callback(nil)
-            return nil
+            self.waitForSignIn()
         })
     }
+    
     
     func getCurrentEmail() -> String? {
         return email
-    }
-    
-    func resetPasswordConfirm(code: String, password: String, callback: @escaping (String?) -> Void) {
-        identityPool?.getUser(email!).confirmForgotPassword(code, password: password).continueWith(block: { (task) -> Any? in
-            if let error = task.error as NSError? {
-                callback(error.userInfo["message"] as? String ?? "unknown error")
-                return nil
-            }
-            callback(nil)
-            return nil
-        })
-    }
-    
-    func signOut() {
-        let poolUser = identityPool?.currentUser()
-        poolUser?.signOut()
     }
     
     func set(name: String, callback: @escaping (Error?) -> Void) {
@@ -109,10 +67,71 @@ class UserManager : NSObject {
         })
     }
     
-    func login(email: String, password: String) {
+    func resetPassword(email: String, callback: @escaping (String?) -> Void) {
+        let user = identityPool?.getUser(email)
         self.email = email
+        user?.forgotPassword().continueWith{(task: AWSTask) -> AnyObject? in
+            if let error = task.error as NSError? {
+                let message = error.userInfo["message"] as? String
+                callback(message ?? "unknown error")
+                return nil
+            }
+            callback(nil)
+            return nil
+        }
+    }
+    
+    func confirmAccount(code: String) {
+        NSLog("confirming account")
+        identityPool?.getUser(email!).confirmSignUp(code).continueWith(block: { (task) -> Any? in
+            //TODO - set their name!s
+            if let error = task.error as NSError? {
+                let errorMessage = error.userInfo["message"] as? String ?? "unknown error"
+                NSLog("error confirming account: " + errorMessage)
+                self.loginDelegate?.handleLoginFailure(message: errorMessage)
+                return nil
+            }
+            
+            NSLog("account confirmed successfully")
+            guard let email = self.email else {
+                self.loginDelegate?.handleLoginFailure(message: "Confirmation successful. No saved email found, please login.")
+                return nil
+            }
+            
+            guard let password = self.password else {
+                self.loginDelegate?.handleLoginFailure(message: "Confirmation successful. No saved password found, please login.")
+                return nil
+            }
+            self.signIn(email: email, password: password)
+            return nil
+        })
+    }
+    
+    func resetPasswordConfirm(code: String, password: String, callback: @escaping (String?) -> Void) {
+        identityPool?.getUser(email!).confirmForgotPassword(code, password: password).continueWith(block: { (task) -> Any? in
+            if let error = task.error as NSError? {
+                callback(error.userInfo["message"] as? String ?? "unknown error")
+                return nil
+            }
+            callback(nil)
+            return nil
+        })
+    }
+    
+    func signIn(email: String, password: String) {
+        NSLog("signing in")
+        self.email = email
+        self.password = password
         let authDetails = AWSCognitoIdentityPasswordAuthenticationDetails(username: email, password: password)
         self.passwordAuthenticationCompletion?.set(result: authDetails)
+    }
+    
+    func signOut() {
+        NSLog("signing out")
+        let poolUser = identityPool?.currentUser()
+        self.email = nil
+        self.password = nil
+        poolUser?.signOut()
     }
     
     func signUp(email: String, password: String, name: String, callback: @escaping (String?, String?) -> Void) {
@@ -122,6 +141,8 @@ class UserManager : NSObject {
         emailAttr!.value = email
         attributes.append(emailAttr!)
         self.email = email
+        self.password = password
+        NSLog("signing up")
         identityPool?.signUp(email, password: password, userAttributes: attributes, validationData: nil).continueWith(block: {(task) in
             
             if let error = task.error as NSError? {
@@ -143,6 +164,8 @@ class UserManager : NSObject {
             return nil
         })
     }
+    
+    
 }
 
 
@@ -154,19 +177,15 @@ extension UserManager: AWSCognitoIdentityPasswordAuthentication {
     }
     
     public func didCompleteStepWithError(_ error: Error?) {
-        DispatchQueue.main.async {
-            if let error = error as NSError? {
+        NSLog("didCompleteStepWithError called")
+        if let error = error as NSError? {
 //                let errorType = error.userInfo["__type"] as? String
-                let errorMessage = error.userInfo["message"] as? String
-                self.loginDelegate?.handleLoginFailure(message: errorMessage ?? "Unknown error")
-                return
-            }
-            
-            // NO ERROR
-            userManager.waitForSignIn {
-                self.loginDelegate?.handleLogin()
-            }
+            let errorMessage = error.userInfo["message"] as? String
+            self.loginDelegate?.handleLoginFailure(message: errorMessage ?? "Unknown error")
+            return
         }
+        
+        waitForSignIn()
     }
     
 }

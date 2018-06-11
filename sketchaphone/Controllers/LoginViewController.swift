@@ -2,7 +2,7 @@ import UIKit
 
 import AWSCognitoIdentityProvider
 
-class LoginViewController: LoadingViewController, LoginDelegate {
+class LoginViewController: LoadingViewController {
     
     @IBOutlet weak var nameStack: UIStackView!
     @IBOutlet weak var loginDesc: UILabel!
@@ -20,15 +20,11 @@ class LoginViewController: LoadingViewController, LoginDelegate {
     
     var showLogin = false
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        userManager.loginDelegate = self
-    }
-    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         self.navigationController?.setNavigationBarHidden(true, animated: true)
         showHideUIElements()
+        userManager.loginDelegate = self
     }
     
     func showHideUIElements() {
@@ -69,7 +65,7 @@ class LoginViewController: LoadingViewController, LoginDelegate {
         }
         startLoading()
         
-        userManager.login(email: email, password: password)
+        userManager.signIn(email: email, password: password)
     }
     
     
@@ -124,20 +120,28 @@ class LoginViewController: LoadingViewController, LoginDelegate {
         showHideUIElements()
     }
 
+}
+
+
+extension LoginViewController: LoginDelegate {
+    
     func handleLogin() {
-        stopLoading()
-        self.nameField?.text = nil
-        self.emailField?.text = nil
-        self.passwordField?.text = nil
-        self.alert("You're signed in", title: "Welcome back!", handler: { _ in
-            self.goHome()
-        })
+        DispatchQueue.main.async {
+            self.stopLoading()
+            self.nameField?.text = nil
+            self.emailField?.text = nil
+            self.passwordField?.text = nil
+            self.alert("You're signed in", title: "Welcome back!", handler: { _ in
+                self.goHome()
+            })
+        }
     }
     
     func handleLoginFailure(message: String) {
-        stopLoading()
-        alert(message)
+        DispatchQueue.main.async {
+            self.stopLoading()
+            self.alert(message)
+        }
     }
     
 }
-

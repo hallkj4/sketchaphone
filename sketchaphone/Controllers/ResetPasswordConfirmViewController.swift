@@ -3,6 +3,9 @@ class ResetPasswordConfirmViewController: LoadingViewController {
     @IBOutlet weak var codeField: UITextField!
     @IBOutlet weak var passwordField: UITextField!
     
+    
+    //TODO - use a numberpad instead of normal keybaord
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         

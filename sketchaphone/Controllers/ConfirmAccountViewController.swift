@@ -9,7 +9,10 @@ class ConfirmAccountViewController: LoadingViewController {
         
         self.navigationController?.setNavigationBarHidden(false, animated: true)
         self.emailLabel.text = userManager.getCurrentEmail()
+        userManager.loginDelegate = self
     }
+    
+    //TODO - use a numberpad instead of normal keybaord
     
     //TODO resend confirmation - see: https://github.com/awslabs/aws-sdk-ios-samples/blob/master/CognitoYourUserPools-Sample/Swift/CognitoYourUserPoolsSample/ConfirmSignUpViewController.swift
     
@@ -23,18 +26,26 @@ class ConfirmAccountViewController: LoadingViewController {
             return
         }
         startLoading()
-        userManager.confirmAccount(code: code) { (error) in
-            DispatchQueue.main.async {
-                self.stopLoading()
-                if let error = error {
-                    self.alert(error)
-                    return
-                }
-                self.alert("Account confirmed! Thanks!", handler: { _ in
-                    self.goHome()
-                })
-                
-            }
+        userManager.confirmAccount(code: code)
+    }
+}
+
+extension ConfirmAccountViewController: LoginDelegate {
+    
+    func handleLogin() {
+        DispatchQueue.main.async {
+            self.stopLoading()
+            self.alert("Account confirmed! Thanks!", handler: { _ in
+                self.goHome()
+            })
         }
     }
+    
+    func handleLoginFailure(message: String) {
+        DispatchQueue.main.async {
+            self.stopLoading()
+            self.alert(message)
+        }
+    }
+    
 }
