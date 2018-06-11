@@ -1297,7 +1297,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="g8x-q6-PBR">
-                                <rect key="frame" x="10" y="74" width="300" height="208"/>
+                                <rect key="frame" x="10" y="74" width="300" height="257"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5uW-bX-Hqc">
                                         <rect key="frame" x="0.0" y="0.0" width="300" height="61"/>
@@ -1381,9 +1381,36 @@
                                             </button>
                                         </subviews>
                                     </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4BJ-pv-aOC">
+                                        <rect key="frame" x="0.0" y="218" width="300" height="39"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NSB-by-7md">
+                                                <rect key="frame" x="0.0" y="0.0" width="300" height="39"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                                <state key="normal" title="Resend Confirmation Email">
+                                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </state>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                                        <color key="value" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                                        <real key="value" value="1"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                        <real key="value" value="5"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                </userDefinedRuntimeAttributes>
+                                                <connections>
+                                                    <action selector="resendTouch" destination="MMW-tQ-Bfb" eventType="touchUpInside" id="e1d-yF-RkC"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                    </stackView>
                                 </subviews>
                                 <constraints>
                                     <constraint firstItem="OHk-Nv-8fK" firstAttribute="width" secondItem="g8x-q6-PBR" secondAttribute="width" id="4hb-Yv-jHf"/>
+                                    <constraint firstItem="4BJ-pv-aOC" firstAttribute="width" secondItem="g8x-q6-PBR" secondAttribute="width" id="L4b-pA-Zhf"/>
                                     <constraint firstItem="ppV-K9-YgM" firstAttribute="width" secondItem="g8x-q6-PBR" secondAttribute="width" id="mAS-u0-qIm"/>
                                 </constraints>
                             </stackView>

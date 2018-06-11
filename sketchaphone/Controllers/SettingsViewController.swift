@@ -35,7 +35,7 @@ class SettingsViewController: LoadingViewController, UITextFieldDelegate {
         userManager.set(name: nameField.text!, callback: {(error) in
             self.stopLoading()
             if let error = error {
-                self.alert("error setting name, please edit to try again: \(error.localizedDescription)")
+                self.alert("Error setting name, please edit to try again: \(error.localizedDescription)")
             }
         })
         return true

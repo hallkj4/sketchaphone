@@ -1,11 +1,6 @@
 import Foundation
 import AWSCognitoIdentityProvider
 
-protocol LoginDelegate {
-    func handleLogin()
-    func handleLoginFailure(message: String)
-}
-
 class UserManager : NSObject {
     var identityPool: AWSCognitoIdentityUserPool?
     
@@ -13,8 +8,9 @@ class UserManager : NSObject {
     var currentUser: UserBasic?
     var email: String?
     var password: String?
+    var name: String?
     
-    var loginDelegate: LoginDelegate?
+    var loginCallback: ((String?, Bool) -> Void)?
     
     var passwordAuthenticationCompletion: AWSTaskCompletionSource<AWSCognitoIdentityPasswordAuthenticationDetails>?
     
@@ -32,11 +28,11 @@ class UserManager : NSObject {
         identityPool?.currentUser()?.getDetails()
     }
     
-
     func waitForSignIn() {
         NSLog("waiting for user to be signed in")
         if (isSignedIn()) {
-            self.loginDelegate?.handleLogin()
+            self.loginCallback?(nil, false)
+            self.loginCallback = nil
             return
         }
         NSLog("not signed in, waiting another second")
@@ -67,6 +63,11 @@ class UserManager : NSObject {
         })
     }
     
+    func setNameExisting(callback: @escaping (Error?) -> Void) {
+        let name = self.name ?? ("Player" + String(arc4random_uniform(9999)))
+        set(name: name, callback: callback)
+    }
+    
     func resetPassword(email: String, callback: @escaping (String?) -> Void) {
         let user = identityPool?.getUser(email)
         self.email = email
@@ -81,28 +82,29 @@ class UserManager : NSObject {
         }
     }
     
-    func confirmAccount(code: String) {
+    func confirmAccount(code: String, callback: @escaping (String?) -> Void) {
         NSLog("confirming account")
         identityPool?.getUser(email!).confirmSignUp(code).continueWith(block: { (task) -> Any? in
-            //TODO - set their name!s
             if let error = task.error as NSError? {
                 let errorMessage = error.userInfo["message"] as? String ?? "unknown error"
                 NSLog("error confirming account: " + errorMessage)
-                self.loginDelegate?.handleLoginFailure(message: errorMessage)
+                callback(errorMessage)
                 return nil
             }
             
             NSLog("account confirmed successfully")
-            guard let email = self.email else {
-                self.loginDelegate?.handleLoginFailure(message: "Confirmation successful. No saved email found, please login.")
+            callback(nil)
+            return nil
+        })
+    }
+    
+    func resendConfirmCode(callback: @escaping (String?) -> Void) {
+        identityPool?.getUser(email!).resendConfirmationCode().continueWith(block: { (task) -> Any? in
+            if let error = task.error as NSError? {
+                callback(error.userInfo["message"] as? String ?? "unknown error")
                 return nil
             }
-            
-            guard let password = self.password else {
-                self.loginDelegate?.handleLoginFailure(message: "Confirmation successful. No saved password found, please login.")
-                return nil
-            }
-            self.signIn(email: email, password: password)
+            callback(nil)
             return nil
         })
     }
@@ -118,12 +120,26 @@ class UserManager : NSObject {
         })
     }
     
-    func signIn(email: String, password: String) {
+    func signIn(email: String, password: String, callback: @escaping (String?, Bool) -> Void) {
         NSLog("signing in")
         self.email = email
         self.password = password
+        self.loginCallback = callback
         let authDetails = AWSCognitoIdentityPasswordAuthenticationDetails(username: email, password: password)
         self.passwordAuthenticationCompletion?.set(result: authDetails)
+    }
+    
+    func signInExistingCreds(callback: @escaping (String?, Bool) -> Void){
+        guard let email = self.email else {
+            callback("No existing email found.", false)
+            return
+        }
+        
+        guard let password = self.password else {
+            callback("No existing password found.", false)
+            return
+        }
+        signIn(email: email, password: password, callback: callback)
     }
     
     func signOut() {
@@ -134,7 +150,7 @@ class UserManager : NSObject {
         poolUser?.signOut()
     }
     
-    func signUp(email: String, password: String, name: String, callback: @escaping (String?, String?) -> Void) {
+    func signUp(email: String, password: String, name: String, callback: @escaping (String?) -> Void) {
         var attributes = [AWSCognitoIdentityUserAttributeType]()
         let emailAttr = AWSCognitoIdentityUserAttributeType()
         emailAttr!.name = "email"
@@ -142,25 +158,20 @@ class UserManager : NSObject {
         attributes.append(emailAttr!)
         self.email = email
         self.password = password
+        self.name = name
         NSLog("signing up")
         identityPool?.signUp(email, password: password, userAttributes: attributes, validationData: nil).continueWith(block: {(task) in
             
             if let error = task.error as NSError? {
-                callback((error.userInfo["message"] as? String) ?? "unknown error", nil)
+                let errorType = (error.userInfo["__type"] as? String) ?? "unknown type"
+                NSLog("errortype: " + errorType)
+                //TODO if (errorType == "UsernameExistsException") {
+                let errorMessage = (error.userInfo["message"] as? String) ?? "unknown error"
+                callback(errorMessage)
                 return nil
             }
-            guard let result = task.result else {
-                callback("task result was not set, and error wasn't set", nil)
-                return nil
-            }
-            // handle the case where user has to confirm his identity via email / SMS
-            if (result.user.confirmedStatus != AWSCognitoIdentityUserStatus.confirmed) {
-                let confirmAddress = (result.codeDeliveryDetails?.destination ?? "unknown")
-                NSLog("confirmation required: confirmation delivered to: " + confirmAddress)
-                callback(nil, confirmAddress)
-                return nil
-            }
-            callback(nil, nil)
+            
+            callback(nil)
             return nil
         })
     }
@@ -179,9 +190,16 @@ extension UserManager: AWSCognitoIdentityPasswordAuthentication {
     public func didCompleteStepWithError(_ error: Error?) {
         NSLog("didCompleteStepWithError called")
         if let error = error as NSError? {
-//                let errorType = error.userInfo["__type"] as? String
-            let errorMessage = error.userInfo["message"] as? String
-            self.loginDelegate?.handleLoginFailure(message: errorMessage ?? "Unknown error")
+            let errorType = (error.userInfo["__type"] as? String) ?? "unknown type"
+            NSLog("errortype: " + errorType)
+            if errorType == "UserNotConfirmedException" {
+                self.loginCallback?(nil, true)
+                self.loginCallback = nil
+                return
+            }
+            let errorMessage = (error.userInfo["message"] as? String) ?? "Unknown error"
+            self.loginCallback?(errorMessage, false)
+            self.loginCallback = nil
             return
         }
         

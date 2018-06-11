@@ -9,7 +9,6 @@ class ConfirmAccountViewController: LoadingViewController {
         
         self.navigationController?.setNavigationBarHidden(false, animated: true)
         self.emailLabel.text = userManager.getCurrentEmail()
-        userManager.loginDelegate = self
     }
     
     //TODO - use a numberpad instead of normal keybaord
@@ -26,26 +25,57 @@ class ConfirmAccountViewController: LoadingViewController {
             return
         }
         startLoading()
-        userManager.confirmAccount(code: code)
+        userManager.confirmAccount(code: code, callback: { error in
+            DispatchQueue.main.async {
+                self.stopLoading()
+                if let error = error {
+                    self.alert(error)
+                    return
+                }
+                userManager.signInExistingCreds(callback: {error, needsConfirm in
+                    
+                    if let error = error {
+                        self.alert(error, handler: { _ in
+                            self.navigationController?.popViewController(animated: true)
+                        })
+                        return
+                    }
+                    if (needsConfirm) {
+                        self.alert("recently confirmed user is not confirmed!? - Please restart the app and try again", handler: { _ in
+                            self.navigationController?.popViewController(animated: true)
+                        })
+                        return
+                    }
+                    userManager.setNameExisting(callback: { error in
+                        if let error = error {
+                            self.alert(error.localizedDescription)
+                            self.goHome()
+                            return
+                        }
+                        self.goHome()
+                    })
+                })
+                
+                self.alert("Account confirmed! Thanks!", handler: { _ in
+                    self.goHome()
+                })
+            
+            }
+        })
     }
-}
-
-extension ConfirmAccountViewController: LoginDelegate {
     
-    func handleLogin() {
-        DispatchQueue.main.async {
-            self.stopLoading()
-            self.alert("Account confirmed! Thanks!", handler: { _ in
-                self.goHome()
-            })
+    @IBAction func resendTouch() {
+        startLoading()
+        userManager.resendConfirmCode { error in
+            DispatchQueue.main.async {
+                self.stopLoading()
+                if let error = error {
+                    self.alert(error)
+                    return
+                }
+                self.alert("Confirmation code was resent.")
+                
+            }
         }
     }
-    
-    func handleLoginFailure(message: String) {
-        DispatchQueue.main.async {
-            self.stopLoading()
-            self.alert(message)
-        }
-    }
-    
 }

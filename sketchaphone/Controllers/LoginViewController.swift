@@ -24,7 +24,6 @@ class LoginViewController: LoadingViewController {
         super.viewWillAppear(true)
         self.navigationController?.setNavigationBarHidden(true, animated: true)
         showHideUIElements()
-        userManager.loginDelegate = self
     }
     
     func showHideUIElements() {
@@ -44,6 +43,8 @@ class LoginViewController: LoadingViewController {
     //TODO - use the email keyboard
     
     //TODO - use the remember passwords keyboard thing
+    
+    //TODO auto capitalize name field
     
     @IBAction func loginTouch() {
         
@@ -65,7 +66,28 @@ class LoginViewController: LoadingViewController {
         }
         startLoading()
         
-        userManager.signIn(email: email, password: password)
+        userManager.signIn(email: email, password: password, callback: { error, needsConfirm in
+            DispatchQueue.main.async {
+                if let error = error {
+                    self.stopLoading()
+                    self.alert(error)
+                    return
+                }
+                if (needsConfirm) {
+                    self.stopLoading()
+                    self.performSegue(withIdentifier: "confirm", sender: nil)
+                    return
+                }
+                self.stopLoading()
+                self.alert("You are signed in.", title: "Welcome back!", handler: { _ in
+                    //TODO grab the user's name
+                    self.nameField?.text = nil
+                    self.emailField?.text = nil
+                    self.passwordField?.text = nil
+                    self.goHome()
+                })
+            }
+        })
     }
     
     
@@ -95,7 +117,7 @@ class LoginViewController: LoadingViewController {
             return
         }
         startLoading()
-        userManager.signUp(email: email, password: password, name: name, callback: {(error, confirmation) in
+        userManager.signUp(email: email, password: password, name: name, callback: {(error) in
             
             DispatchQueue.main.async {
                 self.stopLoading()
@@ -103,14 +125,7 @@ class LoginViewController: LoadingViewController {
                     self.alert(error)
                     return
                 }
-                if (confirmation != nil) {
-                    self.performSegue(withIdentifier: "confirm", sender: nil)
-                    return
-                }
-                NSLog("no confirmation is required")
-                
-                //TODO - do i need to wait for full sign in?
-                self.goHome()
+                self.performSegue(withIdentifier: "confirm", sender: nil)
             }
         })
     }
@@ -120,28 +135,4 @@ class LoginViewController: LoadingViewController {
         showHideUIElements()
     }
 
-}
-
-
-extension LoginViewController: LoginDelegate {
-    
-    func handleLogin() {
-        DispatchQueue.main.async {
-            self.stopLoading()
-            self.nameField?.text = nil
-            self.emailField?.text = nil
-            self.passwordField?.text = nil
-            self.alert("You're signed in", title: "Welcome back!", handler: { _ in
-                self.goHome()
-            })
-        }
-    }
-    
-    func handleLoginFailure(message: String) {
-        DispatchQueue.main.async {
-            self.stopLoading()
-            self.alert(message)
-        }
-    }
-    
 }
