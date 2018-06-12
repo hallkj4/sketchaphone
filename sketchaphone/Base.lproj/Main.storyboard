@@ -22,7 +22,7 @@
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="dms-Ww-NRd">
                                 <rect key="frame" x="0.0" y="64" width="320" height="416"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="backgroundColor" red="0.66019021194968253" green="0.87573785559390316" blue="0.92168837790000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" textLabel="1sX-xq-qI2" detailTextLabel="7qP-5q-1c4" style="IBUITableViewCellStyleSubtitle" id="NdV-rN-hzR">
                                         <rect key="frame" x="0.0" y="28" width="320" height="44"/>
@@ -47,6 +47,7 @@
                                                 </label>
                                             </subviews>
                                         </tableViewCellContentView>
+                                        <color key="backgroundColor" red="0.51235103609999999" green="0.84975951910000003" blue="0.92168837790000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <connections>
                                             <segue destination="67R-YI-5RP" kind="show" identifier="details" id="UxJ-vx-zDj"/>
                                         </connections>
