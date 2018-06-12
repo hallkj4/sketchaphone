@@ -2,6 +2,8 @@ import UIKit
 import Kingfisher
 
 class GuessViewController: LoadingViewController, UIScrollViewDelegate, UITextFieldDelegate {
+    
+    
     let defaultText = "Describe the picture..."
     
     @IBOutlet weak var scrollView: UIScrollView!
@@ -39,6 +41,7 @@ class GuessViewController: LoadingViewController, UIScrollViewDelegate, UITextFi
             })
             return
         }
+        gamesManager.renewLockDelegate = self
         imageView.kf.setImage(with: imageURL)
         textField.textColor = .gray
         textField.text = defaultText
@@ -87,7 +90,7 @@ class GuessViewController: LoadingViewController, UIScrollViewDelegate, UITextFi
             self.startLoading()
             gamesManager.guess(phrase: self.textField.text!, callback: {
                 (error, didFinish) in
-                DispatchQueue.main.async(execute: {
+                DispatchQueue.main.async {
                     self.stopLoading()
                     if let error = error {
                         self.alert("error occured saving guess: \(error.localizedDescription)")
@@ -99,7 +102,7 @@ class GuessViewController: LoadingViewController, UIScrollViewDelegate, UITextFi
                     }
                     
                     self.goHome()
-                })
+                }
             })
         })
         
@@ -122,5 +125,11 @@ class GuessViewController: LoadingViewController, UIScrollViewDelegate, UITextFi
         default:
             NSLog("guess View: unhandled segue identifier: \(segue.identifier!)")
         }
+    }
+}
+
+extension GuessViewController: RenewLockDelegate {
+    func renewLockError(_ error: String) {
+        alert(error)
     }
 }

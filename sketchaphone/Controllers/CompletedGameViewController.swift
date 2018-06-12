@@ -13,14 +13,15 @@ class CompletedGameViewController: UIViewController {
             view.removeFromSuperview()
         }
         
-        if (game == nil) {
+        guard let game = game else {
             alert("Game not found.", handler: { _ in
                 self.navigationController?.popViewController(animated: true)
             })
             return
         }
+        completedGameManager.removeNew(game: game)
         var first = true
-        for turn in game!.turns {
+        for turn in game.turns {
             if (turn.phrase != nil) {
                 let label = UILabel()
                 if (first) {

@@ -27,7 +27,7 @@ class UserManager : NSObject {
     
     func fetchCurrentUser(_ callback: @escaping (String?) -> Void) {
         appSyncClient?.fetch(query: CurrentUserQuery(),  resultHandler: { (result, error) in
-            if let error = error as? AWSAppSyncClientError {
+            if let error = error {
                 callback(error.localizedDescription)
                 return
             }

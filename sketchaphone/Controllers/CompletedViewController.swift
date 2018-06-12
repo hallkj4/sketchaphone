@@ -1,6 +1,6 @@
 import UIKit
 
-class CompletedViewController: UIViewController, UITableViewDataSource, GameWatcher {
+class CompletedViewController: LoadingViewController, UITableViewDataSource, GameWatcher {
     
     @IBOutlet weak var tableView: UITableView!
     
@@ -9,26 +9,58 @@ class CompletedViewController: UIViewController, UITableViewDataSource, GameWatc
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationController?.setNavigationBarHidden(false, animated: true)
-        gamesManager.add(watcher: self)
+        completedGameManager.add(watcher: self)
+        startLoading()
+        completedGameManager.refetchCompleted()
     }
     
     func gamesUpdated() {
-        tableView.reloadData()
+        DispatchQueue.main.async {
+            self.stopLoading()
+            self.tableView.reloadData()
+        }
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return gamesManager.myCompletedGames.count
+        return completedGameManager.completedGameCount()
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let game = gamesManager.myCompletedGames[indexPath.row]
+        let game = completedGameManager.completedGameAt(indexPath.row)
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        var firstTurn = game.turns.first
-        cell.textLabel!.text = "Game created by \(firstTurn?.user.name ?? "unknown")"
-        cell.detailTextLabel!.text = "Starting phrase: \(firstTurn?.phrase ?? "unknown")"
         
+        let completed = game.turns.count >= gamesManager.numRounds
+        let firstTurn = game.turns.first
+        cell.textLabel!.text = "Game created by \(firstTurn?.user.name ?? "unknown")"
+        var detail = "\"" + getPhraseToShow(game: game) + "\""
+        if (completed) {
+            detail += " Completed"
+        }
+        if (completedGameManager.isNew(game: game)) {
+            detail += " New"
+        }
+        cell.detailTextLabel!.text = detail
         return cell
+    }
+    
+    private func findMyTurn(_ game: GameDetailed) -> GameDetailed.Turn? {
+        return game.turns.first { turn -> Bool in
+            return turn.user.id == userManager.currentUser?.id
+        }
+    }
+    
+    private func getPhraseToShow(game: GameDetailed) -> String {
+        if let myTurn = findMyTurn(game) {
+            if let myPhrase = myTurn.phrase {
+                return myPhrase
+            }
+            let previousTurn = game.turns[myTurn.order - 1]
+            if let prevPhrase = previousTurn.phrase {
+                return prevPhrase
+            }
+        }
+        return game.turns.first?.phrase ?? "unknown"
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -43,9 +75,27 @@ class CompletedViewController: UIViewController, UITableViewDataSource, GameWatc
                 return
             }
             let controller = segue.destination as! CompletedGameViewController
-            controller.game = gamesManager.myCompletedGames[indexPath.row]
+            
+            //TODO disallow clicks on uncompleted games
+            controller.game = completedGameManager.completedGameAt(indexPath.row)
         default:
             NSLog("completed games controller: unhandled segue identifier: \(segue.identifier!)")
+        }
+    }
+    
+    private func loadUserData() {
+        if (!userManager.currentUserFetched()) {
+            startLoading()
+            userManager.fetchCurrentUser({ error in
+                DispatchQueue.main.async {
+                    self.stopLoading()
+                    if let error = error {
+                        self.alert(error)
+                        return
+                    }
+                    self.tableView.reloadData()
+                }
+            })
         }
     }
 }

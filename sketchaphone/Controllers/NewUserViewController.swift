@@ -26,14 +26,14 @@ class NewUserViewController: LoadingViewController, UITextFieldDelegate {
             self.textField.isEnabled = false
             self.startLoading()
             userManager.set(name: self.textField.text!, callback: {(error) in
-                DispatchQueue.main.async(execute: {
+                DispatchQueue.main.async {
                     self.stopLoading()
                     if let error = error {
                         self.alert("could not set name: \(error.localizedDescription)")
                         return
                     }
                     self.dismiss(animated: true)
-                })
+                }
             })
         })
     }

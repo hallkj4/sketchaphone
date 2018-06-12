@@ -11,7 +11,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
     
-    
     var storyboard: UIStoryboard? {
         return UIStoryboard(name: "Main", bundle: nil)
     }
@@ -70,7 +69,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         return true
     }
-
 }
 
 extension AppDelegate: AWSCognitoIdentityInteractiveAuthenticationDelegate {

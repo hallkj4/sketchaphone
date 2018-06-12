@@ -70,6 +70,7 @@ class DrawViewController: LoadingViewController, UIScrollViewDelegate, GADInters
             })
             return
         }
+        gamesManager.renewLockDelegate = self
         phraseLabel.text = "Draw this: \(lastTurn!.phrase!)"
         
         setUpColors()
@@ -124,7 +125,7 @@ class DrawViewController: LoadingViewController, UIScrollViewDelegate, GADInters
         confirm("Are you ready to submit your drawing?", confirmedHandler: {
             self.startLoading()
             gamesManager.draw(image: self.imageView.image!, callback: {(error, completed) in
-                DispatchQueue.main.async(execute: {
+                DispatchQueue.main.async {
                     self.stopLoading()
                     if let error = error {
                         self.alert("drawing could not be saved: \(error)")
@@ -143,7 +144,7 @@ class DrawViewController: LoadingViewController, UIScrollViewDelegate, GADInters
                     
                     NSLog("Ad wasn't ready")
                     self.goHome()
-                })
+                }
             })
         })
     }
@@ -167,5 +168,12 @@ class DrawViewController: LoadingViewController, UIScrollViewDelegate, GADInters
         default:
             NSLog("draw View: unhandled segue identifier: \(segue.identifier!)")
         }
+    }
+}
+
+
+extension DrawViewController: RenewLockDelegate {
+    func renewLockError(_ error: String) {
+        alert(error)
     }
 }
