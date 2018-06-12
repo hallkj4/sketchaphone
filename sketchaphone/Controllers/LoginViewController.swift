@@ -64,28 +64,7 @@ class LoginViewController: LoadingViewController {
         }
         startLoading()
         
-        userManager.signIn(email: email, password: password, callback: { error, needsConfirm in
-            DispatchQueue.main.async {
-                if let error = error {
-                    self.stopLoading()
-                    self.alert(error)
-                    return
-                }
-                if (needsConfirm) {
-                    self.stopLoading()
-                    self.performSegue(withIdentifier: "confirm", sender: nil)
-                    return
-                }
-                self.stopLoading()
-                self.alert("You are signed in.", title: "Welcome back!", handler: { _ in
-                    //TODO grab the user's name
-                    self.nameField?.text = nil
-                    self.emailField?.text = nil
-                    self.passwordField?.text = nil
-                    self.goHome()
-                })
-            }
-        })
+        userManager.signIn(email: email, password: password, callback: handleSignIn)
     }
     
     
@@ -115,12 +94,20 @@ class LoginViewController: LoadingViewController {
             return
         }
         startLoading()
-        userManager.signUp(email: email, password: password, name: name, callback: {(error) in
+        userManager.signUp(email: email, password: password, name: name, callback: {(error, accountExists) in
             
             DispatchQueue.main.async {
                 self.stopLoading()
                 if let error = error {
                     self.alert(error)
+                    return
+                }
+                if (accountExists) {
+                    self.alert("That account already exisits. Attempting to sign you in.", handler: { _ in
+                        self.showLogin = true
+                        self.showHideUIElements()
+                        userManager.signInExistingCreds(callback: self.handleSignIn)
+                    })
                     return
                 }
                 self.performSegue(withIdentifier: "confirm", sender: nil)
@@ -133,6 +120,27 @@ class LoginViewController: LoadingViewController {
         showHideUIElements()
     }
 
+    private func handleSignIn(error: String?, needsConfirm: Bool) {
+        DispatchQueue.main.async {
+            if let error = error {
+                self.stopLoading()
+                self.alert(error)
+                return
+            }
+            if (needsConfirm) {
+                self.stopLoading()
+                self.performSegue(withIdentifier: "confirm", sender: nil)
+                return
+            }
+            self.stopLoading()
+            self.alert("You are signed in.", title: "Welcome back!", handler: { _ in
+                self.nameField?.text = nil
+                self.emailField?.text = nil
+                self.passwordField?.text = nil
+                self.goHome()
+            })
+        }
+    }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if (segue.identifier == nil) {

@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		4C0A0812203FA19F009FED9F /* GameDetailed.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 4C0A0811203FA19F009FED9F /* GameDetailed.graphql */; };
 		4C0A08142040B84A009FED9F /* schema.json in Resources */ = {isa = PBXBuildFile; fileRef = 4C0A08132040B849009FED9F /* schema.json */; };
-		4C0A08162040B8ED009FED9F /* OpenGames.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 4C0A08152040B8ED009FED9F /* OpenGames.graphql */; };
 		4C0A08182040B9AA009FED9F /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C0A08172040B9A9009FED9F /* API.swift */; };
 		4C0A081A2040C467009FED9F /* AppSyncConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C0A08192040C467009FED9F /* AppSyncConstants.swift */; };
 		4C27A03020C5FF2600449704 /* StoreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C27A02F20C5FF2600449704 /* StoreViewController.swift */; };
@@ -24,6 +23,7 @@
 		4C7EBF7520C9BB26006AE5C0 /* ResetPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C7EBF7420C9BB26006AE5C0 /* ResetPasswordViewController.swift */; };
 		4C7EBF7720C9F8EB006AE5C0 /* ConfirmAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C7EBF7620C9F8EB006AE5C0 /* ConfirmAccountViewController.swift */; };
 		4C7EBF7920C9FF30006AE5C0 /* ResetPasswordConfirmViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C7EBF7820C9FF30006AE5C0 /* ResetPasswordConfirmViewController.swift */; };
+		4C7EBF7B20D02C1E006AE5C0 /* CurrentUser.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 4C7EBF7A20D02C1E006AE5C0 /* CurrentUser.graphql */; };
 		4C8C6C77201E6F2600197CBB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C8C6C76201E6F2600197CBB /* AppDelegate.swift */; };
 		4C8C6C79201E6F2600197CBB /* JoinGameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C8C6C78201E6F2600197CBB /* JoinGameViewController.swift */; };
 		4C8C6C7C201E6F2600197CBB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4C8C6C7A201E6F2600197CBB /* Main.storyboard */; };
@@ -67,7 +67,6 @@
 		21BCC6768CDBEF17863D9228 /* Pods-sketchaphone.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-sketchaphone.release.xcconfig"; path = "Pods/Target Support Files/Pods-sketchaphone/Pods-sketchaphone.release.xcconfig"; sourceTree = "<group>"; };
 		4C0A0811203FA19F009FED9F /* GameDetailed.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = GameDetailed.graphql; sourceTree = "<group>"; };
 		4C0A08132040B849009FED9F /* schema.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = schema.json; sourceTree = "<group>"; };
-		4C0A08152040B8ED009FED9F /* OpenGames.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = OpenGames.graphql; sourceTree = "<group>"; };
 		4C0A08172040B9A9009FED9F /* API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		4C0A08192040C467009FED9F /* AppSyncConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSyncConstants.swift; sourceTree = "<group>"; };
 		4C27A02F20C5FF2600449704 /* StoreViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreViewController.swift; sourceTree = "<group>"; };
@@ -82,6 +81,7 @@
 		4C7EBF7420C9BB26006AE5C0 /* ResetPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPasswordViewController.swift; sourceTree = "<group>"; };
 		4C7EBF7620C9F8EB006AE5C0 /* ConfirmAccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmAccountViewController.swift; sourceTree = "<group>"; };
 		4C7EBF7820C9FF30006AE5C0 /* ResetPasswordConfirmViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPasswordConfirmViewController.swift; sourceTree = "<group>"; };
+		4C7EBF7A20D02C1E006AE5C0 /* CurrentUser.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = CurrentUser.graphql; sourceTree = "<group>"; };
 		4C8C6C73201E6F2600197CBB /* sketchaphone.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = sketchaphone.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4C8C6C76201E6F2600197CBB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4C8C6C78201E6F2600197CBB /* JoinGameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinGameViewController.swift; sourceTree = "<group>"; };
@@ -151,10 +151,10 @@
 		4C0A080E203FA155009FED9F /* Queries */ = {
 			isa = PBXGroup;
 			children = (
-				4C0A08152040B8ED009FED9F /* OpenGames.graphql */,
 				4CC9B4482040DE460079D202 /* InProgressTurns.graphql */,
 				4CC9B44A2040DE760079D202 /* CompletedGames.graphql */,
 				4CC9B44C2040DEFC0079D202 /* UserCompletedTurns.graphql */,
+				4C7EBF7A20D02C1E006AE5C0 /* CurrentUser.graphql */,
 			);
 			path = Queries;
 			sourceTree = "<group>";
@@ -380,13 +380,13 @@
 				4CC9B44B2040DE760079D202 /* CompletedGames.graphql in Resources */,
 				4CC9B4552040E0BC0079D202 /* ReleaseGame.graphql in Resources */,
 				4CC9B4452040DD670079D202 /* OpenGameDetailed.graphql in Resources */,
+				4C7EBF7B20D02C1E006AE5C0 /* CurrentUser.graphql in Resources */,
 				4CC9B4572040E0EC0079D202 /* SetName.graphql in Resources */,
 				4C8C6C81201E6F2600197CBB /* LaunchScreen.storyboard in Resources */,
 				4CB8B04620217DF900D0DD95 /* logo.png in Resources */,
 				4C0A0812203FA19F009FED9F /* GameDetailed.graphql in Resources */,
 				4C8C6C7E201E6F2600197CBB /* Assets.xcassets in Resources */,
 				4CC9B4512040DFC10079D202 /* TakeTurn.graphql in Resources */,
-				4C0A08162040B8ED009FED9F /* OpenGames.graphql in Resources */,
 				4C8C6C7C201E6F2600197CBB /* Main.storyboard in Resources */,
 				4CB8B04520217DF900D0DD95 /* logo.svg in Resources */,
 				4CC9B4472040DD890079D202 /* UserBasic.graphql in Resources */,

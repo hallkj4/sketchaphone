@@ -7,8 +7,13 @@ class SettingsViewController: LoadingViewController, UITextFieldDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-        nameField.text = userManager.currentUser?.name
         self.navigationController?.setNavigationBarHidden(false, animated: true)
+        updateUi()
+        loadUserData()
+    }
+    
+    private func updateUi() {
+        nameField.text = userManager.currentUser?.name
     }
     
     func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
@@ -48,4 +53,19 @@ class SettingsViewController: LoadingViewController, UITextFieldDelegate {
         })
     }
     
+    private func loadUserData() {
+        if (!userManager.currentUserFetched()) {
+            startLoading()
+            userManager.fetchCurrentUser({ error in
+                DispatchQueue.main.async {
+                    self.stopLoading()
+                    if let error = error {
+                        self.alert(error)
+                        return
+                    }
+                    self.updateUi()
+                }
+            })
+        }
+    }
 }

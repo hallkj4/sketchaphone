@@ -1,5 +1,5 @@
-import Foundation
 import AWSCognitoIdentityProvider
+import AWSAppSync
 
 class UserManager : NSObject {
     var identityPool: AWSCognitoIdentityUserPool?
@@ -19,6 +19,25 @@ class UserManager : NSObject {
     
     func isSignedIn() -> Bool {
         return identityPool?.currentUser()?.isSignedIn ?? false
+    }
+    
+    func currentUserFetched() -> Bool {
+        return currentUser != nil
+    }
+    
+    func fetchCurrentUser(_ callback: @escaping (String?) -> Void) {
+        appSyncClient?.fetch(query: CurrentUserQuery(),  resultHandler: { (result, error) in
+            if let error = error as? AWSAppSyncClientError {
+                callback(error.localizedDescription)
+                return
+            }
+            guard let userRaw = result?.data?.currentUser else {
+                callback("Current user was not returned.")
+                return
+            }
+            self.currentUser = userRaw.fragments.userBasic
+            callback(nil)
+        })
     }
     
     func promptSignIn() {
@@ -148,13 +167,15 @@ class UserManager : NSObject {
     
     func signOut() {
         NSLog("signing out")
-        let poolUser = identityPool?.currentUser()
         self.email = nil
         self.password = nil
+        self.name = nil
+        self.currentUser = nil
+        let poolUser = identityPool?.currentUser()
         poolUser?.signOut()
     }
     
-    func signUp(email: String, password: String, name: String, callback: @escaping (String?) -> Void) {
+    func signUp(email: String, password: String, name: String, callback: @escaping (String?, Bool) -> Void) {
         var attributes = [AWSCognitoIdentityUserAttributeType]()
         let emailAttr = AWSCognitoIdentityUserAttributeType()
         emailAttr!.name = "email"
@@ -168,14 +189,15 @@ class UserManager : NSObject {
             
             if let error = task.error as NSError? {
                 let errorType = (error.userInfo["__type"] as? String) ?? "unknown type"
-                NSLog("errortype: " + errorType)
-                //TODO if (errorType == "UsernameExistsException") {
+                if (errorType == "UsernameExistsException") {
+                    callback(nil, true)
+                }
                 let errorMessage = (error.userInfo["message"] as? String) ?? "unknown error"
-                callback(errorMessage)
+                callback(errorMessage, false)
                 return nil
             }
             
-            callback(nil)
+            callback(nil, false)
             return nil
         })
     }
@@ -185,7 +207,6 @@ class UserManager : NSObject {
 
 
 extension UserManager: AWSCognitoIdentityPasswordAuthentication {
-    
     public func getDetails(_ authenticationInput: AWSCognitoIdentityPasswordAuthenticationInput, passwordAuthenticationCompletionSource: AWSTaskCompletionSource<AWSCognitoIdentityPasswordAuthenticationDetails>) {
         self.passwordAuthenticationCompletion = passwordAuthenticationCompletionSource
         //TODO: update UI with: authenticationInput.lastKnownUsername

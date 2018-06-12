@@ -248,7 +248,7 @@ class GamesManager {
         }
         completedGamesNextToken = nil
         
-        appSyncClient!.fetch(query: CompletedGamesQuery(nextToken: nextToken) , resultHandler: { (result, error) in
+        appSyncClient!.fetch(query: CompletedGamesQuery(nextToken: nextToken), resultHandler: { (result, error) in
             if let error = error as? AWSAppSyncClientError {
                 print("Error occurred: \(error.localizedDescription )")
                 return
