@@ -30,13 +30,20 @@ class CompletedViewController: LoadingViewController, UITableViewDataSource, Gam
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
         
-        let completed = game.turns.count >= gamesManager.numRounds
+        
         let firstTurn = game.turns.first
         cell.textLabel!.text = "Game created by \(firstTurn?.user.name ?? "unknown")"
         var detail = "\"" + getPhraseToShow(game: game) + "\""
+        
+        let completed = game.turns.count >= gamesManager.numRounds
         if (completed) {
             detail += " Completed"
         }
+        else {
+            detail += " In Progress"
+            cell.selectionStyle = .none
+        }
+        
         if (completedGameManager.isNew(game: game)) {
             detail += " New"
         }
