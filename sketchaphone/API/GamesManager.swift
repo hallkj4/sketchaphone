@@ -48,20 +48,6 @@ class GamesManager {
     }
     
     func draw(image: UIImage, callback: @escaping (Error?, Bool) -> Void) {
-//        guard let game = currentGame else {
-//            callback(NilDataError("currentGame was nil"), false)
-//            return
-//        }
-//        let lastTurn = game.turns.last
-//        if (lastTurn == nil) {
-//            callback(GenericError("Error! game with no turns!"), false)
-//            return
-//        }
-//        if(lastTurn!.phrase == nil) {
-//            callback(GenericError("Error: game's last turn is not a phrase!"), false)
-//            return
-//        }
-        
         uploadDrawing(image: image, callback: {(drawing, error) in
             if let error = error {
                 callback(error, false)
@@ -122,7 +108,6 @@ class GamesManager {
     }
     
     private func writeToFile(key: String, image: UIImage) throws -> URL {
-        //TODO does this need to be async?
         guard let pngData = UIImagePNGRepresentation(image) else {
             throw GenericError("couldn't make PNG data from image")
         }
@@ -131,22 +116,7 @@ class GamesManager {
         return filePath
     }
     
-    
     func guess(phrase: String, callback: @escaping (Error?, Bool) -> Void) {
-//        guard let game = currentGame else {
-//            callback(NilDataError("currentGame was nil"), false)
-//            return
-//        }
-//        let lastTurn = game.turns.last
-//        if (lastTurn == nil) {
-//            callback(GenericError("Error! game with no turns!"), false)
-//            return
-//        }
-//        if (lastTurn!.drawing == nil) {
-//            callback(GenericError("Error: game's last turn is not a phrase!"), false)
-//            return
-//        }
-        
         appSyncClient!.perform(mutation: TakeTurnMutation(phrase: phrase), resultHandler: {(result, error) in
             if let error = error {
                 NSLog("unexpected error type" + error.localizedDescription)
@@ -173,20 +143,15 @@ class GamesManager {
         
     }
     
-    //TODO - what should the time limit be on drawing?
-    //TODO - prompt that you're running out of time
-    
     private func renewLock(callback: @escaping (OpenGameDetailed?, Error?) -> Void) {
         appSyncClient!.perform(mutation: RenewLockMutation(), resultHandler: {(result, error) in
-            //TODO: cleaner prompt for expected error
             if let error = error {
-                NSLog("error locking game: \(error.localizedDescription)")
+                NSLog("Error renewing lock on game: \(error.localizedDescription)")
                 callback(nil, error)
                 return
             }
             
             guard let game = result?.data?.renewLock.fragments.openGameDetailed else {
-                NSLog("did not get the locked game!")
                 callback(nil, NilDataError())
                 return
             }
@@ -195,8 +160,13 @@ class GamesManager {
     }
     
     func release() {
-        appSyncClient?.perform(mutation: ReleaseGameMutation())
-        //TODO callback
+        appSyncClient?.perform(mutation: ReleaseGameMutation(), resultHandler: {(result, error) in
+            if let error = error as? AWSAppSyncClientError {
+                NSLog("Error occurred: \(error.localizedDescription )")
+                return
+            }
+            NSLog("lock released successfully")
+        })
     }
     
     func add(watcher: GameWatcher) {
