@@ -25,26 +25,50 @@ class ResetPasswordConfirmViewController: LoadingViewController {
         }
         
         guard let password = passwordField.text else {
-            alert("Please enter the code from the email you recieved.")
+            alert(userManager.passwordMessage)
             return
         }
-        if (password == "") {
-            alert("Please enter the code from the email you recieved.")
+        if let error = userManager.validateNewPassword(password) {
+            alert(error)
             return
         }
         startLoading()
         userManager.resetPasswordConfirm(code: code, password: password) { (error) in
-            DispatchQueue.main.async {
-                self.stopLoading()
-                if let error = error {
+            if let error = error {
+                DispatchQueue.main.async {
+                    self.stopLoading()
                     self.alert(error)
                     return
                 }
-                self.alert("Password reset successfully!", handler: { _ in
+            }
+            DispatchQueue.main.async {
+                self.codeField.text = nil
+                self.passwordField.text = nil
+            }
+            self.doSignIn()
+        }
+    }
+    
+    private func doSignIn() {
+        userManager.signInExistingCreds(callback: { (error, needsConfirm) in
+            DispatchQueue.main.async {
+                self.stopLoading()
+                if let error = error {
+                    self.alert("Your password has been reset, but there was an error logging you in: " + error, handler: { _ in
+                        self.navigationController?.popViewController(animated: true)
+                    })
+                    return
+                }
+                if (needsConfirm) {
+                    self.alert("Email Confirmation - unknown error", handler: { _ in
+                        self.navigationController?.popViewController(animated: true)
+                    })
+                    return
+                }
+                self.alert("Your password has been reset and you have been signed in.", title: "Success", handler: {_ in
                     self.goHome()
                 })
-                
             }
-        }
+        })
     }
 }

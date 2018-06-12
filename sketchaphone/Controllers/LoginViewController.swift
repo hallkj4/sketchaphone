@@ -44,8 +44,6 @@ class LoginViewController: LoadingViewController {
     
     //TODO - use the remember passwords keyboard thing
     
-    //TODO auto capitalize name field
-    
     @IBAction func loginTouch() {
         
         guard let email = emailField.text else {
@@ -57,11 +55,11 @@ class LoginViewController: LoadingViewController {
             return
         }
         guard let password = passwordField.text else {
-            alert("A password of 6 or more characters is required.")
+            alert(userManager.passwordMessage)
             return
         }
-        if (password.count < 6) {
-            alert("A password of 6 or more characters is required.")
+        if let error = userManager.validateNewPassword(password) {
+            alert(error)
             return
         }
         startLoading()
@@ -101,11 +99,11 @@ class LoginViewController: LoadingViewController {
             return
         }
         guard let password = passwordField.text else {
-            alert("A password of 6 or more characters is required.")
+            alert(userManager.passwordMessage)
             return
         }
-        if (password.count < 6) {
-            alert("A password of 6 or more characters is required.")
+        if let error = userManager.validateNewPassword(password) {
+            alert(error)
             return
         }
         guard let name = nameField.text else {
@@ -135,4 +133,17 @@ class LoginViewController: LoadingViewController {
         showHideUIElements()
     }
 
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if (segue.identifier == nil) {
+            NSLog("nil segue from draw View")
+            return
+        }
+        switch segue.identifier! {
+        case "resetPass":
+            userManager.email = emailField.text
+        default:
+            NSLog("draw View: unhandled segue identifier: \(segue.identifier!)")
+        }
+    }
 }

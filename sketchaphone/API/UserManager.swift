@@ -4,7 +4,6 @@ import AWSCognitoIdentityProvider
 class UserManager : NSObject {
     var identityPool: AWSCognitoIdentityUserPool?
     
-    //TODO persist this?
     var currentUser: UserBasic?
     var email: String?
     var password: String?
@@ -42,9 +41,13 @@ class UserManager : NSObject {
         })
     }
     
+    let passwordMessage = "Password must be 8 or more characters."
     
-    func getCurrentEmail() -> String? {
-        return email
+    func validateNewPassword(_ password: String) -> String? {
+        if (password.count < 8) {
+            return passwordMessage
+        }
+        return nil
     }
     
     func set(name: String, callback: @escaping (Error?) -> Void) {
@@ -66,20 +69,6 @@ class UserManager : NSObject {
     func setNameExisting(callback: @escaping (Error?) -> Void) {
         let name = self.name ?? ("Player" + String(arc4random_uniform(9999)))
         set(name: name, callback: callback)
-    }
-    
-    func resetPassword(email: String, callback: @escaping (String?) -> Void) {
-        let user = identityPool?.getUser(email)
-        self.email = email
-        user?.forgotPassword().continueWith{(task: AWSTask) -> AnyObject? in
-            if let error = task.error as NSError? {
-                let message = error.userInfo["message"] as? String
-                callback(message ?? "unknown error")
-                return nil
-            }
-            callback(nil)
-            return nil
-        }
     }
     
     func confirmAccount(code: String, callback: @escaping (String?) -> Void) {
@@ -109,7 +98,22 @@ class UserManager : NSObject {
         })
     }
     
+    func resetPassword(email: String, callback: @escaping (String?) -> Void) {
+        let user = identityPool?.getUser(email)
+        self.email = email
+        user?.forgotPassword().continueWith{(task: AWSTask) -> AnyObject? in
+            if let error = task.error as NSError? {
+                let message = error.userInfo["message"] as? String
+                callback(message ?? "unknown error")
+                return nil
+            }
+            callback(nil)
+            return nil
+        }
+    }
+    
     func resetPasswordConfirm(code: String, password: String, callback: @escaping (String?) -> Void) {
+        self.password = password
         identityPool?.getUser(email!).confirmForgotPassword(code, password: password).continueWith(block: { (task) -> Any? in
             if let error = task.error as NSError? {
                 callback(error.userInfo["message"] as? String ?? "unknown error")

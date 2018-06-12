@@ -8,12 +8,8 @@ class ConfirmAccountViewController: LoadingViewController {
         super.viewWillAppear(animated)
         
         self.navigationController?.setNavigationBarHidden(false, animated: true)
-        self.emailLabel.text = userManager.getCurrentEmail()
+        self.emailLabel.text = userManager.email
     }
-    
-    //TODO - use a numberpad instead of normal keybaord
-    
-    //TODO resend confirmation - see: https://github.com/awslabs/aws-sdk-ios-samples/blob/master/CognitoYourUserPools-Sample/Swift/CognitoYourUserPoolsSample/ConfirmSignUpViewController.swift
     
     @IBAction func confirmTouch() {
         guard let code = codeField.text else {
@@ -26,41 +22,14 @@ class ConfirmAccountViewController: LoadingViewController {
         }
         startLoading()
         userManager.confirmAccount(code: code, callback: { error in
-            DispatchQueue.main.async {
-                self.stopLoading()
-                if let error = error {
+            if let error = error {
+                DispatchQueue.main.async {
+                    self.stopLoading()
                     self.alert(error)
-                    return
                 }
-                userManager.signInExistingCreds(callback: {error, needsConfirm in
-                    
-                    if let error = error {
-                        self.alert(error, handler: { _ in
-                            self.navigationController?.popViewController(animated: true)
-                        })
-                        return
-                    }
-                    if (needsConfirm) {
-                        self.alert("recently confirmed user is not confirmed!? - Please restart the app and try again", handler: { _ in
-                            self.navigationController?.popViewController(animated: true)
-                        })
-                        return
-                    }
-                    userManager.setNameExisting(callback: { error in
-                        if let error = error {
-                            self.alert(error.localizedDescription)
-                            self.goHome()
-                            return
-                        }
-                        self.goHome()
-                    })
-                })
-                
-                self.alert("Account confirmed! Thanks!", handler: { _ in
-                    self.goHome()
-                })
-            
+                return
             }
+            self.doSignIn()
         })
     }
     
@@ -74,8 +43,46 @@ class ConfirmAccountViewController: LoadingViewController {
                     return
                 }
                 self.alert("Confirmation code was resent.")
-                
             }
         }
+    }
+    
+    private func doSignIn() {
+        userManager.signInExistingCreds(callback: {error, needsConfirm in
+            DispatchQueue.main.async {
+                if let error = error {
+                    self.stopLoading()
+                    self.alert(error, handler: { _ in
+                        self.navigationController?.popViewController(animated: true)
+                    })
+                    return
+                }
+                if (needsConfirm) {
+                    self.stopLoading()
+                    self.alert("recently confirmed user is not confirmed!? - Please restart the app and try again", handler: { _ in
+                        self.navigationController?.popViewController(animated: true)
+                    })
+                    return
+                }
+                self.doSetName()
+            }
+        })
+    }
+    
+    private func doSetName() {
+        userManager.setNameExisting(callback: { error in
+            DispatchQueue.main.async {
+                self.stopLoading()
+                if let error = error {
+                    self.alert("Signed in, but could not set user's name: " + error.localizedDescription, handler: { _ in
+                        self.goHome()
+                    })
+                    return
+                }
+                self.alert("You're ready to play. Thanks!", title: "Account Confirmed", handler: { _ in
+                    self.goHome()
+                })
+            }
+        })
     }
 }

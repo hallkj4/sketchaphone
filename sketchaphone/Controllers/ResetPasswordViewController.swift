@@ -6,6 +6,7 @@ class ResetPasswordViewController: LoadingViewController {
         super.viewWillAppear(animated)
         
         self.navigationController?.setNavigationBarHidden(false, animated: true)
+        self.emailField.text = userManager.email
     }
     
     @IBAction func resetTouch() {
