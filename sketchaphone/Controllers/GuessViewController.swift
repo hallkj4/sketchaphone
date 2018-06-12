@@ -106,7 +106,7 @@ class GuessViewController: LoadingViewController, UIScrollViewDelegate, UITextFi
     }
     
     @IBAction func cancelTouch(_ sender: UIBarButtonItem) {
-        gamesManager.release()//TODO callback
+        gamesManager.release()
         self.goHome()
     }
     
