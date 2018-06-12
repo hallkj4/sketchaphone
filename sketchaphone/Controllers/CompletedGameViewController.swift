@@ -33,12 +33,13 @@ class CompletedGameViewController: UIViewController {
                 }
                 stackView.addArrangedSubview(label)
             }
-            else {
+            else { // drawing
                 let label = UILabel()
                 label.text = "\(turn.user.name) drew"
                 stackView.addArrangedSubview(label)
                 
                 let imageView = UIImageView()
+                imageView.backgroundColor = .white
                 imageView.kf.setImage(with: turn.imageURL())
                 stackView.addArrangedSubview(imageView)
             }
