@@ -49,6 +49,9 @@ class UserManager : NSObject {
     func waitForSignIn() {
         NSLog("waiting for user to be signed in")
         if (isSignedIn()) {
+            // this is a weird place, consider more delegates
+            completedGameManager.refetchCompleted()
+            
             self.loginCallback?(nil, false)
             self.loginCallback = nil
             return

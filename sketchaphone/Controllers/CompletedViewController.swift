@@ -11,6 +11,7 @@ class CompletedViewController: LoadingViewController, UITableViewDataSource, Gam
         self.navigationController?.setNavigationBarHidden(false, animated: true)
         completedGameManager.add(watcher: self)
         startLoading()
+        //TODO - track loading status in the completedGameManager
         completedGameManager.refetchCompleted()
     }
     
