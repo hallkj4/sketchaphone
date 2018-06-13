@@ -10,8 +10,6 @@ target 'sketchaphone' do
   
   pod 'AWSAppSync'
   pod 'AWSS3'
-#  pod 'AWSUserPoolsSignIn'
-#  pod 'AWSAuthUI'
   pod 'AWSCognitoIdentityProvider'
 
   pod 'Kingfisher'
