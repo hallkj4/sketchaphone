@@ -86,3 +86,10 @@ class ConfirmAccountViewController: LoadingViewController {
         })
     }
 }
+
+extension ConfirmAccountViewController: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        confirmTouch()
+        return false
+    }
+}

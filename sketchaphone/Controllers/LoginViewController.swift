@@ -38,14 +38,7 @@ class LoginViewController: LoadingViewController {
         loginButton.isHidden = !showLogin
     }
     
-    //TODO: handle user hitting return also
-    
-    //TODO - use the email keyboard
-    
-    //TODO - use the remember passwords keyboard thing
-    
     @IBAction func loginTouch() {
-        
         guard let email = emailField.text else {
             alert("Email is required.")
             return
@@ -153,5 +146,17 @@ class LoginViewController: LoadingViewController {
         default:
             NSLog("draw View: unhandled segue identifier: \(segue.identifier!)")
         }
+    }
+}
+
+extension LoginViewController: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        if (showLogin) {
+            loginTouch()
+        }
+        else {
+            getStartedTouch()
+        }
+        return false
     }
 }

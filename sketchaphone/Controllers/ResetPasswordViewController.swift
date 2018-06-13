@@ -31,3 +31,10 @@ class ResetPasswordViewController: LoadingViewController {
         }
     }
 }
+
+extension ResetPasswordViewController: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        resetTouch()
+        return false
+    }
+}

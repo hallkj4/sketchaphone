@@ -72,3 +72,11 @@ class ResetPasswordConfirmViewController: LoadingViewController {
         })
     }
 }
+
+extension ResetPasswordConfirmViewController: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        resetPasswordTouch()
+        return false
+    }
+}
+
