@@ -57,7 +57,7 @@ class UserManager : NSObject {
             return
         }
         NSLog("not signed in, waiting another second")
-        //TODO - this could get stuck...
+        //Note - this could get stuck...
         DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1), execute: {
             self.waitForSignIn()
         })
@@ -212,7 +212,6 @@ class UserManager : NSObject {
 extension UserManager: AWSCognitoIdentityPasswordAuthentication {
     public func getDetails(_ authenticationInput: AWSCognitoIdentityPasswordAuthenticationInput, passwordAuthenticationCompletionSource: AWSTaskCompletionSource<AWSCognitoIdentityPasswordAuthenticationDetails>) {
         self.passwordAuthenticationCompletion = passwordAuthenticationCompletionSource
-        //TODO: update UI with: authenticationInput.lastKnownUsername
     }
     
     public func didCompleteStepWithError(_ error: Error?) {

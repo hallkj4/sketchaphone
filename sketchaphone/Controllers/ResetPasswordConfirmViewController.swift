@@ -3,16 +3,11 @@ class ResetPasswordConfirmViewController: LoadingViewController {
     @IBOutlet weak var codeField: UITextField!
     @IBOutlet weak var passwordField: UITextField!
     
-    
-    //TODO - use a numberpad instead of normal keybaord
-    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         self.navigationController?.setNavigationBarHidden(false, animated: true)
     }
-    
-    //TODO resend confirmation - see: https://github.com/awslabs/aws-sdk-ios-samples/blob/master/CognitoYourUserPools-Sample/Swift/CognitoYourUserPoolsSample/ConfirmSignUpViewController.swift
     
     @IBAction func resetPasswordTouch() {
         guard let code = codeField.text else {
