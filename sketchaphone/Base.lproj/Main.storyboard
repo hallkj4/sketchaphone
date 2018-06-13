@@ -111,18 +111,33 @@
                                     <outlet property="dataSource" destination="heO-ie-tJR" id="95O-31-N0K"/>
                                 </connections>
                             </tableView>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="5GX-zc-Iam">
+                                <rect key="frame" x="0.0" y="74" width="320" height="20.5"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You haven't completed any games yet." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fJF-sX-LbL">
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="20.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                            </stackView>
                         </subviews>
                         <color key="backgroundColor" red="0.51235103609999999" green="0.84975951910000003" blue="0.92168837790000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="JEo-XP-5bq" firstAttribute="bottom" secondItem="dms-Ww-NRd" secondAttribute="bottom" id="0Wr-vL-HFr"/>
                             <constraint firstItem="dms-Ww-NRd" firstAttribute="trailing" secondItem="JEo-XP-5bq" secondAttribute="trailing" id="6Yr-wR-FL4"/>
                             <constraint firstItem="dms-Ww-NRd" firstAttribute="top" secondItem="JEo-XP-5bq" secondAttribute="top" id="PGd-Hj-EUD"/>
+                            <constraint firstItem="5GX-zc-Iam" firstAttribute="top" secondItem="JEo-XP-5bq" secondAttribute="top" constant="10" id="ReI-CG-i2U"/>
                             <constraint firstItem="dms-Ww-NRd" firstAttribute="leading" secondItem="JEo-XP-5bq" secondAttribute="leading" id="Z8V-zT-uQY"/>
+                            <constraint firstItem="JEo-XP-5bq" firstAttribute="trailing" secondItem="5GX-zc-Iam" secondAttribute="trailing" id="qaH-2c-xnA"/>
+                            <constraint firstItem="5GX-zc-Iam" firstAttribute="leading" secondItem="JEo-XP-5bq" secondAttribute="leading" id="vrk-wl-FZ4"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="JEo-XP-5bq"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="Completed" image="medal" id="mBW-41-8DB"/>
                     <connections>
+                        <outlet property="noGamesLabel" destination="fJF-sX-LbL" id="oMl-0B-ZR3"/>
                         <outlet property="tableView" destination="dms-Ww-NRd" id="ADw-FI-QPp"/>
                     </connections>
                 </viewController>

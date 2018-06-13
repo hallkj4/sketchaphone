@@ -1,25 +1,23 @@
 import UIKit
 
-class CompletedViewController: LoadingViewController, UITableViewDataSource, GameWatcher {
+class CompletedViewController: LoadingViewController, UITableViewDataSource {
     
     @IBOutlet weak var tableView: UITableView!
-    
-    //TODO: pagination
+    @IBOutlet weak var noGamesLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationController?.setNavigationBarHidden(false, animated: true)
         completedGameManager.add(watcher: self)
+        updateUI()
         startLoading()
         //TODO - track loading status in the completedGameManager
         completedGameManager.refetchCompleted()
     }
     
-    func gamesUpdated() {
-        DispatchQueue.main.async {
-            self.stopLoading()
-            self.tableView.reloadData()
-        }
+    private func updateUI() {
+        tableView.reloadData()
+        noGamesLabel.isHidden = completedGameManager.completedGameCount() > 0
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -74,3 +72,11 @@ class CompletedViewController: LoadingViewController, UITableViewDataSource, Gam
     }
 }
 
+extension CompletedViewController: GameWatcher {
+    func gamesUpdated() {
+        DispatchQueue.main.async {
+            self.stopLoading()
+            self.updateUI()
+        }
+    }
+}
