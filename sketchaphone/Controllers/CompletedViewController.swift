@@ -28,47 +28,13 @@ class CompletedViewController: LoadingViewController, UITableViewDataSource, Gam
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let game = completedGameManager.completedGameAt(indexPath.row)
-        
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        
-        
-        let firstTurn = game.turns.first
-        cell.textLabel!.text = "Game created by \(firstTurn?.user.name ?? "unknown")"
-        var detail = "\"" + getPhraseToShow(game: game) + "\""
-        
-        let completed = game.turns.count >= gamesManager.numRounds
-        if (completed) {
-            detail += " Completed"
+        guard let gameCell = cell as? CompletedGameTableViewCell else {
+            NSLog("cell was not type: CompletedGameTableViewCell")
+            return cell
         }
-        else {
-            detail += " In Progress"
-            cell.selectionStyle = .none
-        }
-        
-        if (completedGameManager.isNew(game: game)) {
-            detail += " New"
-        }
-        cell.detailTextLabel!.text = detail
-        return cell
-    }
-    
-    private func findMyTurn(_ game: GameDetailed) -> GameDetailed.Turn? {
-        return game.turns.first { turn -> Bool in
-            return turn.user.id == userManager.currentUser?.id
-        }
-    }
-    
-    private func getPhraseToShow(game: GameDetailed) -> String {
-        if let myTurn = findMyTurn(game) {
-            if let myPhrase = myTurn.phrase {
-                return myPhrase
-            }
-            let previousTurn = game.turns[myTurn.order - 1]
-            if let prevPhrase = previousTurn.phrase {
-                return prevPhrase
-            }
-        }
-        return game.turns.first?.phrase ?? "unknown"
+        gameCell.draw(game: game)
+        return gameCell
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

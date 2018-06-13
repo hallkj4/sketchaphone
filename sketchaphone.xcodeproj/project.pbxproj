@@ -15,6 +15,7 @@
 		4C27A03220C7012800449704 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C27A03120C7012800449704 /* HomeViewController.swift */; };
 		4C27A03420C706A800449704 /* JoinGame.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 4C27A03320C706A800449704 /* JoinGame.graphql */; };
 		4C27A03620C7196000449704 /* RulesInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C27A03520C7196000449704 /* RulesInfoViewController.swift */; };
+		4C4E7B2B20D16FEE006848A3 /* CompletedGameTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C4E7B2A20D16FEE006848A3 /* CompletedGameTableViewCell.swift */; };
 		4C6C961B201E796800A059E9 /* NewGameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C6C961A201E796800A059E9 /* NewGameViewController.swift */; };
 		4C6C961E201E7F8300A059E9 /* DrawableImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C6C961D201E7F8300A059E9 /* DrawableImageView.swift */; };
 		4C6C9622201E8C5800A059E9 /* DrawViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C6C9621201E8C5800A059E9 /* DrawViewController.swift */; };
@@ -75,6 +76,7 @@
 		4C27A03120C7012800449704 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		4C27A03320C706A800449704 /* JoinGame.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = JoinGame.graphql; sourceTree = "<group>"; };
 		4C27A03520C7196000449704 /* RulesInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RulesInfoViewController.swift; sourceTree = "<group>"; };
+		4C4E7B2A20D16FEE006848A3 /* CompletedGameTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompletedGameTableViewCell.swift; sourceTree = "<group>"; };
 		4C6C961A201E796800A059E9 /* NewGameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewGameViewController.swift; sourceTree = "<group>"; };
 		4C6C961D201E7F8300A059E9 /* DrawableImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawableImageView.swift; sourceTree = "<group>"; };
 		4C6C9621201E8C5800A059E9 /* DrawViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawViewController.swift; sourceTree = "<group>"; };
@@ -192,6 +194,7 @@
 			isa = PBXGroup;
 			children = (
 				4C6C961D201E7F8300A059E9 /* DrawableImageView.swift */,
+				4C4E7B2A20D16FEE006848A3 /* CompletedGameTableViewCell.swift */,
 			);
 			path = Elements;
 			sourceTree = "<group>";
@@ -502,6 +505,7 @@
 				4C7EBF7720C9F8EB006AE5C0 /* ConfirmAccountViewController.swift in Sources */,
 				4CF33D4A2022C51E00D311FF /* UserManager.swift in Sources */,
 				4C6C9626201E981B00A059E9 /* GuessViewController.swift in Sources */,
+				4C4E7B2B20D16FEE006848A3 /* CompletedGameTableViewCell.swift in Sources */,
 				4C8C6C79201E6F2600197CBB /* JoinGameViewController.swift in Sources */,
 				4CC9B45F204246BD0079D202 /* GenericError.swift in Sources */,
 				4CB8B0402020DEB600D0DD95 /* UIViewController.swift in Sources */,
