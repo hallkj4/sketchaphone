@@ -9,6 +9,21 @@ class ResetPasswordConfirmViewController: LoadingViewController {
         self.navigationController?.setNavigationBarHidden(false, animated: true)
     }
     
+    @IBAction func resendTouch() {
+        startLoading()
+        userManager.resendResetPassword { error in
+            DispatchQueue.main.async {
+                self.stopLoading()
+                if let error = error {
+                    self.alert(error)
+                    return
+                }
+                self.alert("Password reset email resent!")
+            }
+            
+        }
+    }
+    
     @IBAction func resetPasswordTouch() {
         guard let code = codeField.text else {
             alert("Please enter the code from the email you recieved.")
