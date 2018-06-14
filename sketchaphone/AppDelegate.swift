@@ -44,14 +44,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         
         let credentialsProvider = AWSCognitoCredentialsProvider(regionType: CognitoAWSRegion, identityPoolId: CognitoIdentityPoolId, identityProviderManager: pool)
+        userManager.setCredentialsProvider(credentialsProvider)
         NSLog("credentialsProvider: %@", credentialsProvider)
         
-
         let updatedConfiguration = AWSServiceConfiguration(region: AWSRegion, credentialsProvider: credentialsProvider)
         
-        
         AWSServiceManager.default().defaultServiceConfiguration = updatedConfiguration
-        
         
         do {
             // Initialize the AWS AppSync configuration

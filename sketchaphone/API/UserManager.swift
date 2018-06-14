@@ -3,6 +3,7 @@ import AWSAppSync
 
 class UserManager : NSObject {
     var identityPool: AWSCognitoIdentityUserPool?
+    var credentialsProvider: AWSCognitoCredentialsProvider?
     
     var currentUser: UserBasic?
     var email: String?
@@ -15,6 +16,10 @@ class UserManager : NSObject {
     
     func setPool(_ identityPool: AWSCognitoIdentityUserPool) {
         self.identityPool = identityPool
+    }
+    
+    func setCredentialsProvider(_ credentialsProvider: AWSCognitoCredentialsProvider) {
+        self.credentialsProvider = credentialsProvider
     }
     
     func isSignedIn() -> Bool {
@@ -187,8 +192,10 @@ class UserManager : NSObject {
         self.password = nil
         self.name = nil
         self.currentUser = nil
-        let poolUser = identityPool?.currentUser()
-        poolUser?.signOut()
+        completedGameManager.handleSignOut()
+        gamesManager.handleSignOut()
+        identityPool?.clearAll()
+        credentialsProvider?.clearKeychain()
     }
     
     func signUp(email: String, password: String, name: String, callback: @escaping (String?, Bool) -> Void) {

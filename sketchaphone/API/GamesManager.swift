@@ -186,5 +186,11 @@ class GamesManager {
         })
     }
     
+    func handleSignOut() {
+        self.currentGame = nil
+        self.renewLockDelegate = nil
+        stopRenewing()
+    }
+    
     
 }

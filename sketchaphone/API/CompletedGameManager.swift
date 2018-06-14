@@ -11,11 +11,11 @@ class CompletedGameManager {
     var inProgressGames = [OpenGameDetailed]()
     
     //    var completedGames = [GameDetailed]()
+    //    var completedGamesNextToken: String?
     var myCompletedGames = [GameDetailed]()
     
     var myNewlyCompletedGames = [GameDetailed]()
     
-    //    var completedGamesNextToken: String?
     var myCompletedGamesNextToken: String?
     
     private var watchers = [GameWatcher]()
@@ -94,6 +94,12 @@ class CompletedGameManager {
     
     func getMore() {
         fetchMyCompletedGames(nextPage: true)
+    }
+    
+    func handleSignOut() {
+        inProgressGames.removeAll()
+        myCompletedGames.removeAll()
+        myNewlyCompletedGames.removeAll()
     }
     
     private func fetchInProgressGames() {
