@@ -80,3 +80,10 @@ extension CompletedViewController: GameWatcher {
         }
     }
 }
+
+extension CompletedViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
+        let game = completedGameManager.completedGameAt(indexPath.row)
+        return game.turns.count >= gamesManager.numRounds
+    }
+}

@@ -109,6 +109,7 @@
                                 </prototypes>
                                 <connections>
                                     <outlet property="dataSource" destination="heO-ie-tJR" id="95O-31-N0K"/>
+                                    <outlet property="delegate" destination="heO-ie-tJR" id="qV1-S7-K7Q"/>
                                 </connections>
                             </tableView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="5GX-zc-Iam">
