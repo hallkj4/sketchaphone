@@ -19,7 +19,7 @@ class ResetPasswordViewController: LoadingViewController {
             return
         }
         startLoading()
-        userManager.resetPassword(email: email) { (error) in
+        userManager.resetPassword(email: email) { error in
             DispatchQueue.main.async {
                 self.stopLoading()
                 if let error = error {
