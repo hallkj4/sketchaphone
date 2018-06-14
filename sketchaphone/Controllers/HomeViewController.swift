@@ -12,7 +12,7 @@ class HomeViewController: LoadingViewController {
         
         completedGameManager.add(watcher: self)
         if (userManager.isSignedIn()) {
-            completedGameManager.refetchCompleted()
+            completedGameManager.refetchCompletedIfOld()
         }
     }
     

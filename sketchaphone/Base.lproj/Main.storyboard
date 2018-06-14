@@ -15,7 +15,7 @@
         <!--Completed Games-->
         <scene sceneID="7ZC-f3-hPD">
             <objects>
-                <viewController title="Completed Games" id="heO-ie-tJR" customClass="CompletedViewController" customModule="sketchaphone" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="CompletedViewController" title="Completed Games" id="heO-ie-tJR" customClass="CompletedViewController" customModule="sketchaphone" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8pa-19-5pT">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -242,7 +242,7 @@
                             </barButtonItem>
                             <barButtonItem image="flag" id="XFs-jD-glR">
                                 <connections>
-                                    <segue destination="q1l-eq-yla" kind="presentation" identifier="flag" id="bYq-59-xeO"/>
+                                    <segue destination="q1l-eq-yla" kind="show" identifier="flag" id="bYq-59-xeO"/>
                                 </connections>
                             </barButtonItem>
                         </rightBarButtonItems>
@@ -575,7 +575,7 @@
         <!--Completed Game View Controller-->
         <scene sceneID="dFV-tY-O4j">
             <objects>
-                <viewController id="67R-YI-5RP" customClass="CompletedGameViewController" customModule="sketchaphone" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="CompletedGameViewController" id="67R-YI-5RP" customClass="CompletedGameViewController" customModule="sketchaphone" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="xEX-86-zx0">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -616,7 +616,7 @@
                     <navigationItem key="navigationItem" id="dN6-uY-MCZ">
                         <barButtonItem key="rightBarButtonItem" image="flag" id="FsJ-6d-jch">
                             <connections>
-                                <segue destination="q1l-eq-yla" kind="presentation" identifier="flag" id="7hf-0Y-3Ut"/>
+                                <segue destination="q1l-eq-yla" kind="show" identifier="flag" id="7hf-0Y-3Ut"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -1275,34 +1275,14 @@
             </objects>
             <point key="canvasLocation" x="1268" y="-1363"/>
         </scene>
-        <!--Flag View Controller-->
+        <!--Flag Offensive Content-->
         <scene sceneID="uza-mu-CNW">
             <objects>
-                <viewController id="q1l-eq-yla" customClass="FlagViewController" customModule="sketchaphone" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Flag Offensive Content" id="q1l-eq-yla" customClass="FlagViewController" customModule="sketchaphone" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="eHK-8w-ka6">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IwN-tQ-XFo">
-                                <rect key="frame" x="0.0" y="20" width="320" height="44"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="44" id="dCs-xA-7vF"/>
-                                </constraints>
-                                <items>
-                                    <navigationItem title="Flag Offensive Content" id="aep-uQ-B5h">
-                                        <barButtonItem key="leftBarButtonItem" title="Cancel" id="trG-gz-WIg">
-                                            <connections>
-                                                <action selector="cancelTouch:" destination="q1l-eq-yla" id="ZrG-0W-CTK"/>
-                                            </connections>
-                                        </barButtonItem>
-                                        <barButtonItem key="rightBarButtonItem" title="Flag" id="9Hy-Ae-BJ5">
-                                            <connections>
-                                                <action selector="flagTouch:" destination="q1l-eq-yla" id="NUn-0Y-icx"/>
-                                            </connections>
-                                        </barButtonItem>
-                                    </navigationItem>
-                                </items>
-                            </navigationBar>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="lnc-Se-Rlr">
                                 <rect key="frame" x="40" y="148" width="240" height="128"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -1319,23 +1299,27 @@
                                     <constraint firstAttribute="height" constant="64" id="zWP-eS-Rwz"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
-                                <nil key="textColor"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" red="0.51235103609999999" green="0.84975951910000003" blue="0.92168837790000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="IwN-tQ-XFo" firstAttribute="trailing" secondItem="nxL-nY-CLG" secondAttribute="trailing" id="7nC-h4-Asv"/>
                             <constraint firstAttribute="trailing" secondItem="dfi-hA-PHe" secondAttribute="trailing" constant="10" id="OzE-P9-lfp"/>
-                            <constraint firstItem="IwN-tQ-XFo" firstAttribute="leading" secondItem="nxL-nY-CLG" secondAttribute="leading" id="RD5-Lj-I8t"/>
                             <constraint firstItem="lnc-Se-Rlr" firstAttribute="centerX" secondItem="nxL-nY-CLG" secondAttribute="centerX" id="Ug4-52-zOT"/>
-                            <constraint firstItem="dfi-hA-PHe" firstAttribute="top" secondItem="IwN-tQ-XFo" secondAttribute="bottom" constant="10" id="XHQ-Im-aSu"/>
                             <constraint firstItem="dfi-hA-PHe" firstAttribute="leading" secondItem="eHK-8w-ka6" secondAttribute="leading" constant="10" id="eH0-5h-orX"/>
-                            <constraint firstItem="IwN-tQ-XFo" firstAttribute="top" secondItem="nxL-nY-CLG" secondAttribute="top" id="ruv-NR-K7E"/>
+                            <constraint firstItem="dfi-hA-PHe" firstAttribute="top" secondItem="nxL-nY-CLG" secondAttribute="top" constant="10" id="vfi-J1-bWI"/>
                             <constraint firstItem="lnc-Se-Rlr" firstAttribute="top" secondItem="dfi-hA-PHe" secondAttribute="bottom" constant="10" id="wUC-ZP-UdS"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="nxL-nY-CLG"/>
                     </view>
+                    <navigationItem key="navigationItem" title="Flag Offensive Content" id="2qT-3M-T3N">
+                        <barButtonItem key="rightBarButtonItem" title="Flag" id="9Hy-Ae-BJ5">
+                            <connections>
+                                <action selector="flagTouch:" destination="q1l-eq-yla" id="NUn-0Y-icx"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="textField" destination="lnc-Se-Rlr" id="Gt6-sK-Egu"/>
                         <segue destination="pgS-fI-f6o" kind="unwind" identifier="backToNewGames" unwindAction="unwindSegueWithSegue:" id="pYd-8o-l0F"/>
@@ -1427,7 +1411,7 @@
                             </barButtonItem>
                             <barButtonItem image="flag" id="AUJ-le-bEt">
                                 <connections>
-                                    <segue destination="q1l-eq-yla" kind="presentation" identifier="flag" id="j0Q-fi-y9w"/>
+                                    <segue destination="q1l-eq-yla" kind="show" identifier="flag" id="j0Q-fi-y9w"/>
                                 </connections>
                             </barButtonItem>
                         </rightBarButtonItems>
@@ -1775,6 +1759,6 @@
         <image name="rules" width="33" height="33"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="j0Q-fi-y9w"/>
+        <segue reference="7hf-0Y-3Ut"/>
     </inferredMetricsTieBreakers>
 </document>

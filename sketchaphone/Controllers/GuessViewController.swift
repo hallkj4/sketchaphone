@@ -89,16 +89,20 @@ class GuessViewController: LoadingViewController, UIScrollViewDelegate, UITextFi
         confirm("Are you ready to submit your guess of '\(textField.text!)'?", confirmedHandler: {
             self.startLoading()
             gamesManager.guess(phrase: self.textField.text!, callback: {
-                (error, didFinish) in
+                (error, completedGame) in
                 DispatchQueue.main.async {
                     self.stopLoading()
                     if let error = error {
                         self.alert("error occured saving guess: \(error.localizedDescription)")
                         return
                     }
-                    
-                    if (didFinish) {
-                        //TODO segue to the completedgame controller
+                    guard let game = completedGame else {
+                        self.alert("Error: game was not set in response, but no errors were sent.")
+                        return
+                    }
+                    if (game.turns.count >= gamesManager.numRounds) {
+                        self.navigateTo(completedGame: game.fragments.gameDetailed)
+                        return
                     }
                     
                     self.goHome()

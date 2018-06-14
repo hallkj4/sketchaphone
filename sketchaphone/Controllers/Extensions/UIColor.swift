@@ -9,7 +9,6 @@ extension UIColor {
             return .black
         }
         
-        
         return .white
     }
 }

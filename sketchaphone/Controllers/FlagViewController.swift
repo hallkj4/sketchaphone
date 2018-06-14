@@ -9,12 +9,11 @@ class FlagViewController: LoadingViewController {
         super.viewWillAppear(animated)
         textField.text = ""
         textField.becomeFirstResponder()
-        
     }
     
     @IBAction func flagTouch(_ sender: UIBarButtonItem) {
         if (textField.text == nil || textField.text == "") {
-            alert("Reason cannot be blank")
+            alert("Reason cannot be blank.")
             return
         }
         startLoading()
@@ -28,15 +27,9 @@ class FlagViewController: LoadingViewController {
                     self.alert("Error occurred: \(error.localizedDescription)")
                     return
                 }
-                // go back to home
                 self.goHome()
             })
         })
-    }
-    
-    
-    @IBAction func cancelTouch(_ sender: UIBarButtonItem) {
-        self.navigationController?.popViewController(animated: true)
     }
 }
 

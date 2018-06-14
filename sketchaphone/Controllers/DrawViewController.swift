@@ -8,6 +8,7 @@ class DrawViewController: LoadingViewController, UIScrollViewDelegate, GADInters
     @IBOutlet weak var editBar: UIStackView!
     
     var interstitial: GADInterstitial!
+    var completedGame: OpenGameDetailed?
     
     var colors: [UIColor]?
     let limitedColors: [UIColor] = [.black, .white]
@@ -15,7 +16,6 @@ class DrawViewController: LoadingViewController, UIScrollViewDelegate, GADInters
     var colorButtons = [UIButton]()
     
     override func viewDidLoad() {
-        
         super.viewDidLoad()
     }
     
@@ -90,11 +90,11 @@ class DrawViewController: LoadingViewController, UIScrollViewDelegate, GADInters
     }
     
     func interstitialDidDismissScreen(_ ad: GADInterstitial) {
-        self.goHome()
+        doDone()
     }
     func interstitial(_ ad: GADInterstitial, didFailToReceiveAdWithError error: GADRequestError) {
         NSLog("interstitial:didFailToReceiveAdWithError: \(error.localizedDescription)")
-        self.goHome()
+        doDone()
     }
     
     func viewForZooming(in scrollView: UIScrollView) -> UIView? {
@@ -124,15 +124,16 @@ class DrawViewController: LoadingViewController, UIScrollViewDelegate, GADInters
     @IBAction func submitTouch(_ sender: UIBarButtonItem) {
         confirm("Are you ready to submit your drawing?", confirmedHandler: {
             self.startLoading()
-            gamesManager.draw(image: self.imageView.image!, callback: {(error, completed) in
+            gamesManager.draw(image: self.imageView.image!, callback: {(error, completedGame) in
                 DispatchQueue.main.async {
                     self.stopLoading()
+                    self.completedGame = completedGame
                     if let error = error {
                         self.alert("drawing could not be saved: \(error)")
                         return
                     }
                     if (inAppPurchaseModel.hasPurchasedNoAds()) {
-                        self.goHome()
+                        self.doDone()
                         return
                     }
                     if (self.interstitial.isReady) {
@@ -140,13 +141,24 @@ class DrawViewController: LoadingViewController, UIScrollViewDelegate, GADInters
                         return
                     }
                     
-                    //TODO -check if the drawing is done...
-                    
                     NSLog("Ad wasn't ready")
-                    self.goHome()
+                    self.doDone()
                 }
             })
         })
+    }
+    
+    private func doDone() {
+        guard let game = completedGame?.fragments.gameDetailed else {
+            goHome()
+            return
+        }
+        if (game.turns.count < gamesManager.numRounds) {
+            goHome()
+            return
+        }
+        
+        navigateTo(completedGame: game)
     }
     
     @IBAction func cancelTouch(_ sender: UIBarButtonItem) {
@@ -170,7 +182,6 @@ class DrawViewController: LoadingViewController, UIScrollViewDelegate, GADInters
         }
     }
 }
-
 
 extension DrawViewController: RenewLockDelegate {
     func renewLockError(_ error: String) {

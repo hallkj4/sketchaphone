@@ -2,12 +2,12 @@ import AWSAppSync
 
 let completedGameManager = CompletedGameManager()
 
-protocol GameWatcher {
+protocol GameWatcher: AnyObject {
     func gamesUpdated()
 }
 
 class CompletedGameManager {
-
+    
     var inProgressGames = [OpenGameDetailed]()
     
     //    var completedGames = [GameDetailed]()
@@ -21,6 +21,12 @@ class CompletedGameManager {
     private var watchers = [GameWatcher]()
     func add(watcher: GameWatcher) {
         watchers.append(watcher)
+    }
+    
+    func remove(watcher: GameWatcher) {
+        if let index = watchers.index(where: {$0 === watcher}) {
+            watchers.remove(at: index)
+        }
     }
     
     private func notifyWatchers() {
@@ -54,10 +60,13 @@ class CompletedGameManager {
         }
         notifyWatchers()
     }
-    
-    func refetchCompleted() {
-        fetchInProgressGames()
-        fetchMyCompletedGames()
+    private var lastTimeIFetchedGames: Date?
+    func refetchCompletedIfOld() {
+        if (lastTimeIFetchedGames == nil || lastTimeIFetchedGames! < Date(timeIntervalSinceNow: -60)) {
+            lastTimeIFetchedGames = Date()
+            fetchInProgressGames()
+            fetchMyCompletedGames()
+        }
     }
     
     func completedGameCount() -> Int {

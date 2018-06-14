@@ -39,10 +39,10 @@ class GamesManager {
         })
     }
     
-    func draw(image: UIImage, callback: @escaping (Error?, Bool) -> Void) {
+    func draw(image: UIImage, callback: @escaping (Error?, OpenGameDetailed?) -> Void) {
         uploadDrawing(image: image, callback: {(drawing, error) in
             if let error = error {
-                callback(error, false)
+                callback(error, nil)
                 return
             }
             appSyncClient!.perform(mutation: TakeTurnMutation(drawing: drawing), resultHandler: {(result, error) in
@@ -87,28 +87,28 @@ class GamesManager {
         return filePath
     }
     
-    func guess(phrase: String, callback: @escaping (Error?, Bool) -> Void) {
+    func guess(phrase: String, callback: @escaping (Error?, OpenGameDetailed?) -> Void) {
         appSyncClient!.perform(mutation: TakeTurnMutation(phrase: phrase), resultHandler: {(result, error) in
             self.takeTurnCallback(result: result, error: error, callback: callback)
         })
     }
     
-    private func takeTurnCallback(result: GraphQLResult<TakeTurnMutation.Data>?, error: Error?, callback: @escaping (Error?, Bool) -> Void) {
+    private func takeTurnCallback(result: GraphQLResult<TakeTurnMutation.Data>?, error: Error?, callback: @escaping (Error?, OpenGameDetailed?) -> Void) {
         if let error = error {
             NSLog("unexpected error type" + error.localizedDescription)
-            callback(error, false)
+            callback(error, nil)
             return
         }
         
-        guard let newGame = result?.data?.takeTurn else {
+        guard let game = result?.data?.takeTurn else {
             NSLog("game data was not sent")
-            callback(NilDataError(), false)
+            callback(NilDataError(), nil)
             return
         }
         
         stopRenewing()
-        completedGameManager.appendCompleted(game: newGame.fragments.openGameDetailed)
-        callback(nil, newGame.turns.count >= self.numRounds)
+        completedGameManager.appendCompleted(game: game.fragments.openGameDetailed)
+        callback(nil, game.fragments.openGameDetailed)
     }
     
     private func renewLock(timer: Timer) {
@@ -146,6 +146,7 @@ class GamesManager {
                 NSLog("Error occurred: \(error.localizedDescription )")
                 return
             }
+            self.currentGame = nil
             
             NSLog("lock released successfully")
         })
@@ -191,6 +192,4 @@ class GamesManager {
         self.renewLockDelegate = nil
         stopRenewing()
     }
-    
-    
 }

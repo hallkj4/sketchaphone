@@ -8,11 +8,19 @@ class CompletedViewController: LoadingViewController, UITableViewDataSource {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationController?.setNavigationBarHidden(false, animated: true)
-        completedGameManager.add(watcher: self)
+        loadUserData()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        completedGameManager.refetchCompletedIfOld()
         updateUI()
-        startLoading()
-        //TODO - track loading status in the completedGameManager
-        completedGameManager.refetchCompleted()
+        completedGameManager.add(watcher: self)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        completedGameManager.remove(watcher: self)
     }
     
     private func updateUI() {
@@ -57,17 +65,15 @@ class CompletedViewController: LoadingViewController, UITableViewDataSource {
     
     private func loadUserData() {
         if (!userManager.currentUserFetched()) {
-            startLoading()
-            userManager.fetchCurrentUser({ error in
+            userManager.fetchCurrentUser { error in
                 DispatchQueue.main.async {
-                    self.stopLoading()
                     if let error = error {
                         self.alert(error)
                         return
                     }
                     self.tableView.reloadData()
                 }
-            })
+            }
         }
     }
 }
@@ -75,7 +81,6 @@ class CompletedViewController: LoadingViewController, UITableViewDataSource {
 extension CompletedViewController: GameWatcher {
     func gamesUpdated() {
         DispatchQueue.main.async {
-            self.stopLoading()
             self.updateUI()
         }
     }
