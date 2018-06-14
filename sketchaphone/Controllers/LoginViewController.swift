@@ -125,11 +125,11 @@ class LoginViewController: LoadingViewController {
                 self.performSegue(withIdentifier: "confirm", sender: nil)
                 return
             }
+            self.nameField?.text = nil
+            self.emailField?.text = nil
+            self.passwordField?.text = nil
             self.stopLoading()
             self.alert("You are signed in.", title: "Welcome back!", handler: { _ in
-                self.nameField?.text = nil
-                self.emailField?.text = nil
-                self.passwordField?.text = nil
                 self.goHome()
             })
         }
@@ -137,14 +137,16 @@ class LoginViewController: LoadingViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if (segue.identifier == nil) {
-            NSLog("nil segue from draw View")
+            NSLog("nil segue from login View")
             return
         }
         switch segue.identifier! {
         case "resetPass":
             userManager.email = emailField.text
+        case "confirm":
+            ()
         default:
-            NSLog("draw View: unhandled segue identifier: \(segue.identifier!)")
+            NSLog("login View: unhandled segue identifier: \(segue.identifier!)")
         }
     }
 }
