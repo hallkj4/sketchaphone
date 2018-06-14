@@ -30,7 +30,7 @@ class NewGameViewController: LoadingViewController, UITextFieldDelegate {
             self.textField.isEnabled = false
             self.startLoading()
             gamesManager.new(phrase: self.textField.text!, callback: {(error) in
-                DispatchQueue.main.async(execute: {
+                DispatchQueue.main.async {
                     self.stopLoading()
                     if let error = error {
                         self.alert("game could not be created: \(error.localizedDescription)")
@@ -39,7 +39,7 @@ class NewGameViewController: LoadingViewController, UITextFieldDelegate {
                     self.alert("Your game was created!", title: "Success", handler: { _ in
                         self.navigationController?.popViewController(animated: true)
                     })
-                })
+                }
             })
         })
     }
