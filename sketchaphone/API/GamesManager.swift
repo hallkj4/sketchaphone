@@ -152,18 +152,6 @@ class GamesManager {
         })
     }
     
-    func flag(game: GameDetailed, reason: String, callback: @escaping (Error?) -> Void) {
-        appSyncClient?.perform(mutation: FlagGameMutation(gameId: game.id, reason: reason), resultHandler: {(result, error) in
-            if let error = error {
-                print("Error occurred: \(error.localizedDescription )")
-                callback(error)
-                return
-            }
-            callback(nil)
-            completedGameManager.removeFlagged(game: game)
-        })
-    }
-    
     func joinGame(delegate: JoinGameDelgate) {
         NSLog("attempting to join a game")
         appSyncClient!.perform(mutation: JoinGameMutation(), resultHandler: { (result, error) in

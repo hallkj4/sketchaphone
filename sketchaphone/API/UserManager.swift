@@ -1,7 +1,7 @@
 import AWSCognitoIdentityProvider
 import AWSAppSync
 
-class UserManager : NSObject {
+class UserManager: NSObject {
     var identityPool: AWSCognitoIdentityUserPool?
     var credentialsProvider: AWSCognitoCredentialsProvider?
     
@@ -31,7 +31,7 @@ class UserManager : NSObject {
     }
     
     func fetchCurrentUser(_ callback: @escaping (String?) -> Void) {
-        appSyncClient?.fetch(query: CurrentUserQuery(),  resultHandler: { (result, error) in
+        appSyncClient?.fetch(query: CurrentUserQuery(), cachePolicy: .fetchIgnoringCacheData, resultHandler: { (result, error) in
             if let error = error {
                 callback(error.localizedDescription)
                 return
@@ -54,8 +54,8 @@ class UserManager : NSObject {
     func waitForSignIn() {
         NSLog("waiting for user to be signed in")
         if (isSignedIn()) {
-            // this is a weird place, consider more delegates
-            completedGameManager.refetchCompletedIfOld()
+            completedGameManager.handleSignIn()
+            flagManager.handleSignIn()
             
             self.loginCallback?(nil, false)
             self.loginCallback = nil
@@ -194,7 +194,9 @@ class UserManager : NSObject {
         self.currentUser = nil
         completedGameManager.handleSignOut()
         gamesManager.handleSignOut()
+        flagManager.handleSignOut()
         identityPool?.clearAll()
+        LocalSQLiteManager.sharedInstance.clearMisc()
         credentialsProvider?.clearKeychain()
     }
     

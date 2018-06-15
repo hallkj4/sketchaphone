@@ -25,7 +25,7 @@ class CompletedGameTableViewCell: UITableViewCell {
             turnsCount.text = String(game.turns.count) + "/" + String(gamesManager.numRounds)
         }
         
-        newLabel.isHidden = !completedGameManager.isNew(game: game)
+        newLabel.isHidden = !completedGameManager.isNew(gameId: game.id)
     }
     
     

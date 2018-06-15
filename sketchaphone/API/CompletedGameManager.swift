@@ -14,7 +14,7 @@ class CompletedGameManager {
     //    var completedGamesNextToken: String?
     var myCompletedGames = [GameDetailed]()
     
-    var myNewlyCompletedGames = [GameDetailed]()
+    var myNewlyCompletedGames = Set<String>()
     
     var myCompletedGamesNextToken: String?
     
@@ -35,14 +35,16 @@ class CompletedGameManager {
         }
     }
     
-    func removeFlagged(game: GameDetailed) {
+    func removeFlagged(gameId: String) {
         var removed = false
-        if let index = inProgressGames.index(where: {$0.id == game.id}) {
+        if let index = inProgressGames.index(where: {$0.id == gameId}) {
             inProgressGames.remove(at: index)
             removed = true
         }
-        if let index = myCompletedGames.index(where: {$0.id == game.id}) {
+        if let index = myCompletedGames.index(where: {$0.id == gameId}) {
             myCompletedGames.remove(at: index)
+            LocalSQLiteManager.sharedInstance.delete(completedGameId: gameId)
+            removeNew(gameId: gameId)
             removed = true
         }
         if (removed) {
@@ -53,17 +55,18 @@ class CompletedGameManager {
     func appendCompleted(game: OpenGameDetailed) {
         if (game.turns.count >= gamesManager.numRounds) {
             myCompletedGames.append(game.fragments.gameDetailed)
-            myNewlyCompletedGames.append(game.fragments.gameDetailed)
+            myNewlyCompletedGames.insert(game.id)
         }
         else {
             inProgressGames.append(game)
         }
         notifyWatchers()
     }
+    
     private var lastTimeIFetchedGames: Date?
     func refetchCompletedIfOld() {
         if (lastTimeIFetchedGames == nil || lastTimeIFetchedGames! < Date(timeIntervalSinceNow: -60)) {
-            lastTimeIFetchedGames = Date()
+            self.lastTimeIFetchedGames = Date()
             fetchInProgressGames()
             fetchMyCompletedGames()
         }
@@ -80,17 +83,13 @@ class CompletedGameManager {
         return myCompletedGames[i - inProgressGames.count]
     }
     
-    func isNew(game: GameDetailed) -> Bool {
-        return myNewlyCompletedGames.contains(where: { g -> Bool in
-            return game.id == g.id
-        })
+    func isNew(gameId: String) -> Bool {
+        return myNewlyCompletedGames.contains(gameId)
     }
     
-    func removeNew(game: GameDetailed) {
-        if let i = myNewlyCompletedGames.index(where: { g -> Bool in
-            return g.id == game.id
-        }) {
-            myNewlyCompletedGames.remove(at: i)
+    func removeNew(gameId: String) {
+        if (myNewlyCompletedGames.remove(gameId) != nil) {
+            LocalSQLiteManager.sharedInstance.delete(newlyCompletedGameId: gameId)
             DispatchQueue.main.async {
                 self.notifyWatchers()
             }
@@ -105,15 +104,27 @@ class CompletedGameManager {
         fetchMyCompletedGames(nextPage: true)
     }
     
+    
+    func handleStartUpSignedIn() {
+        self.myCompletedGames = LocalSQLiteManager.sharedInstance.getCompletedGames()
+        self.myNewlyCompletedGames = LocalSQLiteManager.sharedInstance.getNewlyCompletedGameIds()
+    }
+    
+    func handleSignIn() {
+        //nothing right now - loading will happen in the home screen and completed view
+    }
+    
     func handleSignOut() {
         inProgressGames.removeAll()
         myCompletedGames.removeAll()
         myNewlyCompletedGames.removeAll()
+        LocalSQLiteManager.sharedInstance.clearCompletedGames()
+        LocalSQLiteManager.sharedInstance.clearNewlyCompletedGames()
     }
     
     private func fetchInProgressGames() {
         NSLog("fetching inprogress games")
-        appSyncClient!.fetch(query: InProgressTurnsQuery(), resultHandler: { (result, error) in
+        appSyncClient!.fetch(query: InProgressTurnsQuery(), cachePolicy: .fetchIgnoringCacheData, resultHandler: { (result, error) in
             if let error = error {
                 print("Error occurred: \(error.localizedDescription )")
                 return
@@ -122,7 +133,8 @@ class CompletedGameManager {
                 NSLog("inprogressTurns was null")
                 return
             }
-            self.inProgressGames = inProgressTurns.map({$0.game.fragments.openGameDetailed})
+            let games = inProgressTurns.map({$0.game.fragments.openGameDetailed})
+            self.inProgressGames = games
             NSLog("got \(self.inProgressGames.count) inProgress games")
             self.notifyWatchers()
         })
@@ -135,7 +147,7 @@ class CompletedGameManager {
         }
         myCompletedGamesNextToken = nil
         
-        appSyncClient!.fetch(query: MyCompletedTurnsQuery(nextToken: nextToken) , resultHandler: { (result, error) in
+        appSyncClient!.fetch(query: MyCompletedTurnsQuery(nextToken: nextToken), cachePolicy: .fetchIgnoringCacheData, resultHandler: { (result, error) in
             if let error = error {
                 NSLog("Error occurred: \(error.localizedDescription )")
                 return
@@ -148,18 +160,21 @@ class CompletedGameManager {
             NSLog("got " + String(turnsRaw.count) + " completed turns")
             
             let games = turnsRaw.map{$0.game.fragments.gameDetailed}
-            games.forEach({ newGame in
-                let new = !self.myCompletedGames.contains(where: { game -> Bool in
-                    return game.id == newGame.id
-                })
+            for newGame in games {
+                if (flagManager.isFlagged(gameId: newGame.id)) {
+                    continue
+                }
+                let new = !self.myCompletedGames.contains(where: { $0.id == newGame.id })
                 if (new) {
                     if (!nextPage) {
                         newFound = true
-                        self.myNewlyCompletedGames.append(newGame)
+                        self.myNewlyCompletedGames.insert(newGame.id)
+                        LocalSQLiteManager.sharedInstance.persist(newlyCompletedGameId: newGame.id)
                     }
                     self.myCompletedGames.append(newGame)
+                    LocalSQLiteManager.sharedInstance.persist(completedGame: newGame)
                 }
-            })
+            }
             self.myCompletedGamesNextToken = result?.data?.myCompletedTurns.nextToken
             
             if (newFound) {

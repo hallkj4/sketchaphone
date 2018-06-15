@@ -28,6 +28,10 @@ class NewGameViewController: LoadingViewController, UITextFieldDelegate {
         }
         confirm("Are you sure you want to start a new game with the phrase '\(textField.text!)'", confirmedHandler: {
             self.textField.isEnabled = false
+            if (networkOffline()) {
+                self.alert("No network connection.")
+                return
+            }
             self.startLoading()
             gamesManager.new(phrase: self.textField.text!, callback: {(error) in
                 DispatchQueue.main.async {

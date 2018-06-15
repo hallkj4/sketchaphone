@@ -19,7 +19,7 @@ class CompletedGameViewController: UIViewController {
             })
             return
         }
-        completedGameManager.removeNew(game: game)
+        completedGameManager.removeNew(gameId: game.id)
         var first = true
         for turn in game.turns {
             if (turn.phrase != nil) {

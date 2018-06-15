@@ -55,6 +55,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             // Initialize the AWS AppSync configuration
             let appSyncConfig = try AWSAppSyncClientConfiguration(url: AppSyncEndpointURL, serviceRegion: AWSRegion, credentialsProvider: credentialsProvider)
             
+            
             // Initialize the AppSync client
             appSyncClient = try AWSAppSyncClient(appSyncConfig: appSyncConfig)
             
@@ -65,6 +66,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             NSLog("Error initializing appsync client. Error: %@", error as NSError)
         }
         
+        if (userManager.isSignedIn()) {
+            flagManager.handleStartUpSignedIn()
+            completedGameManager.handleStartUpSignedIn()
+        }
         return true
     }
 }

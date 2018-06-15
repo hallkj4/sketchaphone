@@ -11,9 +11,6 @@ class HomeViewController: LoadingViewController {
         super.viewDidLoad()
         
         completedGameManager.add(watcher: self)
-        if (userManager.isSignedIn()) {
-            completedGameManager.refetchCompletedIfOld()
-        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -21,6 +18,9 @@ class HomeViewController: LoadingViewController {
         
         self.navigationController?.setNavigationBarHidden(true, animated: true)
         updateButtonsForSignIn()
+        if (userManager.isSignedIn()) {
+            completedGameManager.refetchCompletedIfOld()
+        }
     }
     
     func updateButtonsForSignIn() {

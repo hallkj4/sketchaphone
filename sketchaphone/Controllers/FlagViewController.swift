@@ -20,7 +20,7 @@ class FlagViewController: LoadingViewController {
         if (gamesManager.currentGame != nil) {
             gamesManager.release()
         }
-        gamesManager.flag(game: game!, reason: textField.text, callback: {(error) in
+        flagManager.flag(game: game!, reason: textField.text, callback: {(error) in
             DispatchQueue.main.async(execute: {
                 self.stopLoading()
                 if let error = error {

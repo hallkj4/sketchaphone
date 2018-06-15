@@ -1,0 +1,11 @@
+query myFlags($nextToken: String) {
+    myFlags(nextToken: $nextToken) {
+        flags {
+            gameId
+            createdAt
+        }
+        nextToken
+    }
+}
+
+

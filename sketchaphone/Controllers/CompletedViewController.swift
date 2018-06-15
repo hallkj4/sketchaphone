@@ -55,8 +55,6 @@ class CompletedViewController: LoadingViewController, UITableViewDataSource {
                 return
             }
             let controller = segue.destination as! CompletedGameViewController
-            
-            //TODO disallow clicks on uncompleted games
             controller.game = completedGameManager.completedGameAt(indexPath.row)
         default:
             NSLog("completed games controller: unhandled segue identifier: \(segue.identifier!)")

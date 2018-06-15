@@ -9,6 +9,13 @@ class JoinGameViewController: LoadingViewController, JoinGameDelgate {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.setNavigationBarHidden(true, animated: true)
+        if (networkOffline()) {
+            alert("No network connection.", handler: { _ in
+                self.goHome()
+            })
+            return
+        }
+        
         gamesManager.joinGame(delegate: self)
     }
     
@@ -18,7 +25,6 @@ class JoinGameViewController: LoadingViewController, JoinGameDelgate {
             couldNotJoinGame(message: "currentGame was nil")
             return
         }
-        
         DispatchQueue.main.async(execute: {
             if (game.turns.count % 2 == 1) {
                 self.performSegue(withIdentifier: "draw", sender: nil)
@@ -31,7 +37,7 @@ class JoinGameViewController: LoadingViewController, JoinGameDelgate {
     func couldNotJoinGame(message: String) {
         DispatchQueue.main.async(execute: {
             self.alert(message, handler: { _ in
-                self.navigationController?.popViewController(animated: true)
+                self.goHome()
             })
         })
     }

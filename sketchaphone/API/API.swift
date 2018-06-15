@@ -4442,6 +4442,142 @@ public final class MyCompletedTurnsQuery: GraphQLQuery {
   }
 }
 
+public final class MyFlagsQuery: GraphQLQuery {
+  public static let operationString =
+    "query myFlags($nextToken: String) {\n  myFlags(nextToken: $nextToken) {\n    __typename\n    flags {\n      __typename\n      gameId\n      createdAt\n    }\n    nextToken\n  }\n}"
+
+  public var nextToken: String?
+
+  public init(nextToken: String? = nil) {
+    self.nextToken = nextToken
+  }
+
+  public var variables: GraphQLMap? {
+    return ["nextToken": nextToken]
+  }
+
+  public struct Data: GraphQLSelectionSet {
+    public static let possibleTypes = ["Query"]
+
+    public static let selections: [GraphQLSelection] = [
+      GraphQLField("myFlags", arguments: ["nextToken": GraphQLVariable("nextToken")], type: .nonNull(.object(MyFlag.selections))),
+    ]
+
+    public var snapshot: Snapshot
+
+    public init(snapshot: Snapshot) {
+      self.snapshot = snapshot
+    }
+
+    public init(myFlags: MyFlag) {
+      self.init(snapshot: ["__typename": "Query", "myFlags": myFlags.snapshot])
+    }
+
+    public var myFlags: MyFlag {
+      get {
+        return MyFlag(snapshot: snapshot["myFlags"]! as! Snapshot)
+      }
+      set {
+        snapshot.updateValue(newValue.snapshot, forKey: "myFlags")
+      }
+    }
+
+    public struct MyFlag: GraphQLSelectionSet {
+      public static let possibleTypes = ["FlagConnection"]
+
+      public static let selections: [GraphQLSelection] = [
+        GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+        GraphQLField("flags", type: .nonNull(.list(.nonNull(.object(Flag.selections))))),
+        GraphQLField("nextToken", type: .scalar(String.self)),
+      ]
+
+      public var snapshot: Snapshot
+
+      public init(snapshot: Snapshot) {
+        self.snapshot = snapshot
+      }
+
+      public init(flags: [Flag], nextToken: String? = nil) {
+        self.init(snapshot: ["__typename": "FlagConnection", "flags": flags.map { $0.snapshot }, "nextToken": nextToken])
+      }
+
+      public var __typename: String {
+        get {
+          return snapshot["__typename"]! as! String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "__typename")
+        }
+      }
+
+      public var flags: [Flag] {
+        get {
+          return (snapshot["flags"] as! [Snapshot]).map { Flag(snapshot: $0) }
+        }
+        set {
+          snapshot.updateValue(newValue.map { $0.snapshot }, forKey: "flags")
+        }
+      }
+
+      public var nextToken: String? {
+        get {
+          return snapshot["nextToken"] as? String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "nextToken")
+        }
+      }
+
+      public struct Flag: GraphQLSelectionSet {
+        public static let possibleTypes = ["Flag"]
+
+        public static let selections: [GraphQLSelection] = [
+          GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+          GraphQLField("gameId", type: .nonNull(.scalar(GraphQLID.self))),
+          GraphQLField("createdAt", type: .nonNull(.scalar(String.self))),
+        ]
+
+        public var snapshot: Snapshot
+
+        public init(snapshot: Snapshot) {
+          self.snapshot = snapshot
+        }
+
+        public init(gameId: GraphQLID, createdAt: String) {
+          self.init(snapshot: ["__typename": "Flag", "gameId": gameId, "createdAt": createdAt])
+        }
+
+        public var __typename: String {
+          get {
+            return snapshot["__typename"]! as! String
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "__typename")
+          }
+        }
+
+        public var gameId: GraphQLID {
+          get {
+            return snapshot["gameId"]! as! GraphQLID
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "gameId")
+          }
+        }
+
+        public var createdAt: String {
+          get {
+            return snapshot["createdAt"]! as! String
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "createdAt")
+          }
+        }
+      }
+    }
+  }
+}
+
 public final class UserCompletedTurnsQuery: GraphQLQuery {
   public static let operationString =
     "query userCompletedTurns($userId: ID!, $limit: Int, $nextToken: String) {\n  userCompletedTurns(userId: $userId, limit: $limit, nextToken: $nextToken) {\n    __typename\n    turns {\n      __typename\n      game {\n        __typename\n        ...GameDetailed\n      }\n    }\n    nextToken\n  }\n}"
