@@ -86,6 +86,11 @@ class GuessViewController: LoadingViewController, UIScrollViewDelegate, UITextFi
             alert("You have to type something.")
             return
         }
+        
+        if (networkOffline()) {
+            alert("No network connection.")
+            return
+        }
         confirm("Are you ready to submit your guess of '\(textField.text!)'?", confirmedHandler: {
             self.startLoading()
             gamesManager.guess(phrase: self.textField.text!, callback: {

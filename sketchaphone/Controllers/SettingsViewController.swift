@@ -36,6 +36,10 @@ class SettingsViewController: LoadingViewController, UITextFieldDelegate {
             return false
         }
         self.view.endEditing(true)
+        if (networkOffline()) {
+            alert("No network connection. Name could not be changed")
+            return false
+        }
         startLoading()
         userManager.set(name: nameField.text!, callback: {(error) in
             self.stopLoading()

@@ -123,6 +123,10 @@ class DrawViewController: LoadingViewController, UIScrollViewDelegate, GADInters
     
     @IBAction func submitTouch(_ sender: UIBarButtonItem) {
         confirm("Are you ready to submit your drawing?", confirmedHandler: {
+            if (networkOffline()) {
+                self.alert("No network connection.")
+                return
+            }
             self.startLoading()
             gamesManager.draw(image: self.imageView.image!, callback: {(error, completedGame) in
                 DispatchQueue.main.async {
