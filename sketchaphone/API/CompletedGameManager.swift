@@ -199,7 +199,9 @@ class CompletedGameManager {
 
     
     func handleStartUpSignedIn() {
-        self.myCompletedGames = LocalSQLiteManager.sharedInstance.getCompletedGames()
+        self.myCompletedGames = LocalSQLiteManager.sharedInstance.getCompletedGames().sorted(by: { g1, g2 -> Bool in
+            return Int(g1.turns.last?.createdAt ?? "0") ?? 0 > Int(g2.turns.last?.createdAt ?? "0") ?? 0
+        })
         self.myNewlyCompletedGames = LocalSQLiteManager.sharedInstance.getNewlyCompletedGameIds()
     }
     

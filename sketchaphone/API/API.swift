@@ -289,6 +289,7 @@ public final class JoinGameMutation: GraphQLMutation {
           GraphQLField("user", type: .nonNull(.object(User.selections))),
           GraphQLField("phrase", type: .scalar(String.self)),
           GraphQLField("drawing", type: .object(Drawing.selections)),
+          GraphQLField("createdAt", type: .nonNull(.scalar(String.self))),
         ]
 
         public var snapshot: Snapshot
@@ -297,12 +298,12 @@ public final class JoinGameMutation: GraphQLMutation {
           self.snapshot = snapshot
         }
 
-        public static func makeOpenTurn(order: Int, user: User, phrase: String? = nil, drawing: Drawing? = nil) -> Turn {
-          return Turn(snapshot: ["__typename": "OpenTurn", "order": order, "user": user.snapshot, "phrase": phrase, "drawing": drawing.flatMap { $0.snapshot }])
+        public static func makeOpenTurn(order: Int, user: User, phrase: String? = nil, drawing: Drawing? = nil, createdAt: String) -> Turn {
+          return Turn(snapshot: ["__typename": "OpenTurn", "order": order, "user": user.snapshot, "phrase": phrase, "drawing": drawing.flatMap { $0.snapshot }, "createdAt": createdAt])
         }
 
-        public static func makeCompletedTurn(order: Int, user: User, phrase: String? = nil, drawing: Drawing? = nil) -> Turn {
-          return Turn(snapshot: ["__typename": "CompletedTurn", "order": order, "user": user.snapshot, "phrase": phrase, "drawing": drawing.flatMap { $0.snapshot }])
+        public static func makeCompletedTurn(order: Int, user: User, phrase: String? = nil, drawing: Drawing? = nil, createdAt: String) -> Turn {
+          return Turn(snapshot: ["__typename": "CompletedTurn", "order": order, "user": user.snapshot, "phrase": phrase, "drawing": drawing.flatMap { $0.snapshot }, "createdAt": createdAt])
         }
 
         public var __typename: String {
@@ -347,6 +348,15 @@ public final class JoinGameMutation: GraphQLMutation {
           }
           set {
             snapshot.updateValue(newValue?.snapshot, forKey: "drawing")
+          }
+        }
+
+        public var createdAt: String {
+          get {
+            return snapshot["createdAt"]! as! String
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "createdAt")
           }
         }
 
@@ -757,6 +767,7 @@ public final class RenewLockMutation: GraphQLMutation {
           GraphQLField("user", type: .nonNull(.object(User.selections))),
           GraphQLField("phrase", type: .scalar(String.self)),
           GraphQLField("drawing", type: .object(Drawing.selections)),
+          GraphQLField("createdAt", type: .nonNull(.scalar(String.self))),
         ]
 
         public var snapshot: Snapshot
@@ -765,12 +776,12 @@ public final class RenewLockMutation: GraphQLMutation {
           self.snapshot = snapshot
         }
 
-        public static func makeOpenTurn(order: Int, user: User, phrase: String? = nil, drawing: Drawing? = nil) -> Turn {
-          return Turn(snapshot: ["__typename": "OpenTurn", "order": order, "user": user.snapshot, "phrase": phrase, "drawing": drawing.flatMap { $0.snapshot }])
+        public static func makeOpenTurn(order: Int, user: User, phrase: String? = nil, drawing: Drawing? = nil, createdAt: String) -> Turn {
+          return Turn(snapshot: ["__typename": "OpenTurn", "order": order, "user": user.snapshot, "phrase": phrase, "drawing": drawing.flatMap { $0.snapshot }, "createdAt": createdAt])
         }
 
-        public static func makeCompletedTurn(order: Int, user: User, phrase: String? = nil, drawing: Drawing? = nil) -> Turn {
-          return Turn(snapshot: ["__typename": "CompletedTurn", "order": order, "user": user.snapshot, "phrase": phrase, "drawing": drawing.flatMap { $0.snapshot }])
+        public static func makeCompletedTurn(order: Int, user: User, phrase: String? = nil, drawing: Drawing? = nil, createdAt: String) -> Turn {
+          return Turn(snapshot: ["__typename": "CompletedTurn", "order": order, "user": user.snapshot, "phrase": phrase, "drawing": drawing.flatMap { $0.snapshot }, "createdAt": createdAt])
         }
 
         public var __typename: String {
@@ -815,6 +826,15 @@ public final class RenewLockMutation: GraphQLMutation {
           }
           set {
             snapshot.updateValue(newValue?.snapshot, forKey: "drawing")
+          }
+        }
+
+        public var createdAt: String {
+          get {
+            return snapshot["createdAt"]! as! String
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "createdAt")
           }
         }
 
@@ -1259,6 +1279,7 @@ public final class StartGameMutation: GraphQLMutation {
           GraphQLField("user", type: .nonNull(.object(User.selections))),
           GraphQLField("phrase", type: .scalar(String.self)),
           GraphQLField("drawing", type: .object(Drawing.selections)),
+          GraphQLField("createdAt", type: .nonNull(.scalar(String.self))),
         ]
 
         public var snapshot: Snapshot
@@ -1267,12 +1288,12 @@ public final class StartGameMutation: GraphQLMutation {
           self.snapshot = snapshot
         }
 
-        public static func makeOpenTurn(order: Int, user: User, phrase: String? = nil, drawing: Drawing? = nil) -> Turn {
-          return Turn(snapshot: ["__typename": "OpenTurn", "order": order, "user": user.snapshot, "phrase": phrase, "drawing": drawing.flatMap { $0.snapshot }])
+        public static func makeOpenTurn(order: Int, user: User, phrase: String? = nil, drawing: Drawing? = nil, createdAt: String) -> Turn {
+          return Turn(snapshot: ["__typename": "OpenTurn", "order": order, "user": user.snapshot, "phrase": phrase, "drawing": drawing.flatMap { $0.snapshot }, "createdAt": createdAt])
         }
 
-        public static func makeCompletedTurn(order: Int, user: User, phrase: String? = nil, drawing: Drawing? = nil) -> Turn {
-          return Turn(snapshot: ["__typename": "CompletedTurn", "order": order, "user": user.snapshot, "phrase": phrase, "drawing": drawing.flatMap { $0.snapshot }])
+        public static func makeCompletedTurn(order: Int, user: User, phrase: String? = nil, drawing: Drawing? = nil, createdAt: String) -> Turn {
+          return Turn(snapshot: ["__typename": "CompletedTurn", "order": order, "user": user.snapshot, "phrase": phrase, "drawing": drawing.flatMap { $0.snapshot }, "createdAt": createdAt])
         }
 
         public var __typename: String {
@@ -1317,6 +1338,15 @@ public final class StartGameMutation: GraphQLMutation {
           }
           set {
             snapshot.updateValue(newValue?.snapshot, forKey: "drawing")
+          }
+        }
+
+        public var createdAt: String {
+          get {
+            return snapshot["createdAt"]! as! String
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "createdAt")
           }
         }
 
@@ -1629,11 +1659,13 @@ public final class StartGameMutation: GraphQLMutation {
             GraphQLField("user", type: .nonNull(.object(User.selections))),
             GraphQLField("phrase", type: .scalar(String.self)),
             GraphQLField("drawing", type: .object(Drawing.selections)),
+            GraphQLField("createdAt", type: .nonNull(.scalar(String.self))),
             GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
             GraphQLField("order", type: .nonNull(.scalar(Int.self))),
             GraphQLField("user", type: .nonNull(.object(User.selections))),
             GraphQLField("phrase", type: .scalar(String.self)),
             GraphQLField("drawing", type: .object(Drawing.selections)),
+            GraphQLField("createdAt", type: .nonNull(.scalar(String.self))),
           ]
 
           public var snapshot: Snapshot
@@ -1642,12 +1674,12 @@ public final class StartGameMutation: GraphQLMutation {
             self.snapshot = snapshot
           }
 
-          public static func makeOpenTurn(order: Int, user: User, phrase: String? = nil, drawing: Drawing? = nil) -> Turn {
-            return Turn(snapshot: ["__typename": "OpenTurn", "order": order, "user": user.snapshot, "phrase": phrase, "drawing": drawing.flatMap { $0.snapshot }])
+          public static func makeOpenTurn(order: Int, user: User, phrase: String? = nil, drawing: Drawing? = nil, createdAt: String) -> Turn {
+            return Turn(snapshot: ["__typename": "OpenTurn", "order": order, "user": user.snapshot, "phrase": phrase, "drawing": drawing.flatMap { $0.snapshot }, "createdAt": createdAt])
           }
 
-          public static func makeCompletedTurn(order: Int, user: User, phrase: String? = nil, drawing: Drawing? = nil) -> Turn {
-            return Turn(snapshot: ["__typename": "CompletedTurn", "order": order, "user": user.snapshot, "phrase": phrase, "drawing": drawing.flatMap { $0.snapshot }])
+          public static func makeCompletedTurn(order: Int, user: User, phrase: String? = nil, drawing: Drawing? = nil, createdAt: String) -> Turn {
+            return Turn(snapshot: ["__typename": "CompletedTurn", "order": order, "user": user.snapshot, "phrase": phrase, "drawing": drawing.flatMap { $0.snapshot }, "createdAt": createdAt])
           }
 
           public var __typename: String {
@@ -1692,6 +1724,15 @@ public final class StartGameMutation: GraphQLMutation {
             }
             set {
               snapshot.updateValue(newValue?.snapshot, forKey: "drawing")
+            }
+          }
+
+          public var createdAt: String {
+            get {
+              return snapshot["createdAt"]! as! String
+            }
+            set {
+              snapshot.updateValue(newValue, forKey: "createdAt")
             }
           }
 
@@ -2033,6 +2074,7 @@ public final class TakeTurnMutation: GraphQLMutation {
           GraphQLField("user", type: .nonNull(.object(User.selections))),
           GraphQLField("phrase", type: .scalar(String.self)),
           GraphQLField("drawing", type: .object(Drawing.selections)),
+          GraphQLField("createdAt", type: .nonNull(.scalar(String.self))),
         ]
 
         public var snapshot: Snapshot
@@ -2041,12 +2083,12 @@ public final class TakeTurnMutation: GraphQLMutation {
           self.snapshot = snapshot
         }
 
-        public static func makeOpenTurn(order: Int, user: User, phrase: String? = nil, drawing: Drawing? = nil) -> Turn {
-          return Turn(snapshot: ["__typename": "OpenTurn", "order": order, "user": user.snapshot, "phrase": phrase, "drawing": drawing.flatMap { $0.snapshot }])
+        public static func makeOpenTurn(order: Int, user: User, phrase: String? = nil, drawing: Drawing? = nil, createdAt: String) -> Turn {
+          return Turn(snapshot: ["__typename": "OpenTurn", "order": order, "user": user.snapshot, "phrase": phrase, "drawing": drawing.flatMap { $0.snapshot }, "createdAt": createdAt])
         }
 
-        public static func makeCompletedTurn(order: Int, user: User, phrase: String? = nil, drawing: Drawing? = nil) -> Turn {
-          return Turn(snapshot: ["__typename": "CompletedTurn", "order": order, "user": user.snapshot, "phrase": phrase, "drawing": drawing.flatMap { $0.snapshot }])
+        public static func makeCompletedTurn(order: Int, user: User, phrase: String? = nil, drawing: Drawing? = nil, createdAt: String) -> Turn {
+          return Turn(snapshot: ["__typename": "CompletedTurn", "order": order, "user": user.snapshot, "phrase": phrase, "drawing": drawing.flatMap { $0.snapshot }, "createdAt": createdAt])
         }
 
         public var __typename: String {
@@ -2091,6 +2133,15 @@ public final class TakeTurnMutation: GraphQLMutation {
           }
           set {
             snapshot.updateValue(newValue?.snapshot, forKey: "drawing")
+          }
+        }
+
+        public var createdAt: String {
+          get {
+            return snapshot["createdAt"]! as! String
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "createdAt")
           }
         }
 
@@ -2403,11 +2454,13 @@ public final class TakeTurnMutation: GraphQLMutation {
             GraphQLField("user", type: .nonNull(.object(User.selections))),
             GraphQLField("phrase", type: .scalar(String.self)),
             GraphQLField("drawing", type: .object(Drawing.selections)),
+            GraphQLField("createdAt", type: .nonNull(.scalar(String.self))),
             GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
             GraphQLField("order", type: .nonNull(.scalar(Int.self))),
             GraphQLField("user", type: .nonNull(.object(User.selections))),
             GraphQLField("phrase", type: .scalar(String.self)),
             GraphQLField("drawing", type: .object(Drawing.selections)),
+            GraphQLField("createdAt", type: .nonNull(.scalar(String.self))),
           ]
 
           public var snapshot: Snapshot
@@ -2416,12 +2469,12 @@ public final class TakeTurnMutation: GraphQLMutation {
             self.snapshot = snapshot
           }
 
-          public static func makeOpenTurn(order: Int, user: User, phrase: String? = nil, drawing: Drawing? = nil) -> Turn {
-            return Turn(snapshot: ["__typename": "OpenTurn", "order": order, "user": user.snapshot, "phrase": phrase, "drawing": drawing.flatMap { $0.snapshot }])
+          public static func makeOpenTurn(order: Int, user: User, phrase: String? = nil, drawing: Drawing? = nil, createdAt: String) -> Turn {
+            return Turn(snapshot: ["__typename": "OpenTurn", "order": order, "user": user.snapshot, "phrase": phrase, "drawing": drawing.flatMap { $0.snapshot }, "createdAt": createdAt])
           }
 
-          public static func makeCompletedTurn(order: Int, user: User, phrase: String? = nil, drawing: Drawing? = nil) -> Turn {
-            return Turn(snapshot: ["__typename": "CompletedTurn", "order": order, "user": user.snapshot, "phrase": phrase, "drawing": drawing.flatMap { $0.snapshot }])
+          public static func makeCompletedTurn(order: Int, user: User, phrase: String? = nil, drawing: Drawing? = nil, createdAt: String) -> Turn {
+            return Turn(snapshot: ["__typename": "CompletedTurn", "order": order, "user": user.snapshot, "phrase": phrase, "drawing": drawing.flatMap { $0.snapshot }, "createdAt": createdAt])
           }
 
           public var __typename: String {
@@ -2466,6 +2519,15 @@ public final class TakeTurnMutation: GraphQLMutation {
             }
             set {
               snapshot.updateValue(newValue?.snapshot, forKey: "drawing")
+            }
+          }
+
+          public var createdAt: String {
+            get {
+              return snapshot["createdAt"]! as! String
+            }
+            set {
+              snapshot.updateValue(newValue, forKey: "createdAt")
             }
           }
 
@@ -2834,6 +2896,7 @@ public final class CompletedGamesQuery: GraphQLQuery {
             GraphQLField("user", type: .nonNull(.object(User.selections))),
             GraphQLField("phrase", type: .scalar(String.self)),
             GraphQLField("drawing", type: .object(Drawing.selections)),
+            GraphQLField("createdAt", type: .nonNull(.scalar(String.self))),
           ]
 
           public var snapshot: Snapshot
@@ -2842,12 +2905,12 @@ public final class CompletedGamesQuery: GraphQLQuery {
             self.snapshot = snapshot
           }
 
-          public static func makeOpenTurn(order: Int, user: User, phrase: String? = nil, drawing: Drawing? = nil) -> Turn {
-            return Turn(snapshot: ["__typename": "OpenTurn", "order": order, "user": user.snapshot, "phrase": phrase, "drawing": drawing.flatMap { $0.snapshot }])
+          public static func makeOpenTurn(order: Int, user: User, phrase: String? = nil, drawing: Drawing? = nil, createdAt: String) -> Turn {
+            return Turn(snapshot: ["__typename": "OpenTurn", "order": order, "user": user.snapshot, "phrase": phrase, "drawing": drawing.flatMap { $0.snapshot }, "createdAt": createdAt])
           }
 
-          public static func makeCompletedTurn(order: Int, user: User, phrase: String? = nil, drawing: Drawing? = nil) -> Turn {
-            return Turn(snapshot: ["__typename": "CompletedTurn", "order": order, "user": user.snapshot, "phrase": phrase, "drawing": drawing.flatMap { $0.snapshot }])
+          public static func makeCompletedTurn(order: Int, user: User, phrase: String? = nil, drawing: Drawing? = nil, createdAt: String) -> Turn {
+            return Turn(snapshot: ["__typename": "CompletedTurn", "order": order, "user": user.snapshot, "phrase": phrase, "drawing": drawing.flatMap { $0.snapshot }, "createdAt": createdAt])
           }
 
           public var __typename: String {
@@ -2892,6 +2955,15 @@ public final class CompletedGamesQuery: GraphQLQuery {
             }
             set {
               snapshot.updateValue(newValue?.snapshot, forKey: "drawing")
+            }
+          }
+
+          public var createdAt: String {
+            get {
+              return snapshot["createdAt"]! as! String
+            }
+            set {
+              snapshot.updateValue(newValue, forKey: "createdAt")
             }
           }
 
@@ -3359,6 +3431,7 @@ public final class InProgressTurnsQuery: GraphQLQuery {
             GraphQLField("user", type: .nonNull(.object(User.selections))),
             GraphQLField("phrase", type: .scalar(String.self)),
             GraphQLField("drawing", type: .object(Drawing.selections)),
+            GraphQLField("createdAt", type: .nonNull(.scalar(String.self))),
           ]
 
           public var snapshot: Snapshot
@@ -3367,12 +3440,12 @@ public final class InProgressTurnsQuery: GraphQLQuery {
             self.snapshot = snapshot
           }
 
-          public static func makeOpenTurn(order: Int, user: User, phrase: String? = nil, drawing: Drawing? = nil) -> Turn {
-            return Turn(snapshot: ["__typename": "OpenTurn", "order": order, "user": user.snapshot, "phrase": phrase, "drawing": drawing.flatMap { $0.snapshot }])
+          public static func makeOpenTurn(order: Int, user: User, phrase: String? = nil, drawing: Drawing? = nil, createdAt: String) -> Turn {
+            return Turn(snapshot: ["__typename": "OpenTurn", "order": order, "user": user.snapshot, "phrase": phrase, "drawing": drawing.flatMap { $0.snapshot }, "createdAt": createdAt])
           }
 
-          public static func makeCompletedTurn(order: Int, user: User, phrase: String? = nil, drawing: Drawing? = nil) -> Turn {
-            return Turn(snapshot: ["__typename": "CompletedTurn", "order": order, "user": user.snapshot, "phrase": phrase, "drawing": drawing.flatMap { $0.snapshot }])
+          public static func makeCompletedTurn(order: Int, user: User, phrase: String? = nil, drawing: Drawing? = nil, createdAt: String) -> Turn {
+            return Turn(snapshot: ["__typename": "CompletedTurn", "order": order, "user": user.snapshot, "phrase": phrase, "drawing": drawing.flatMap { $0.snapshot }, "createdAt": createdAt])
           }
 
           public var __typename: String {
@@ -3417,6 +3490,15 @@ public final class InProgressTurnsQuery: GraphQLQuery {
             }
             set {
               snapshot.updateValue(newValue?.snapshot, forKey: "drawing")
+            }
+          }
+
+          public var createdAt: String {
+            get {
+              return snapshot["createdAt"]! as! String
+            }
+            set {
+              snapshot.updateValue(newValue, forKey: "createdAt")
             }
           }
 
@@ -3729,11 +3811,13 @@ public final class InProgressTurnsQuery: GraphQLQuery {
               GraphQLField("user", type: .nonNull(.object(User.selections))),
               GraphQLField("phrase", type: .scalar(String.self)),
               GraphQLField("drawing", type: .object(Drawing.selections)),
+              GraphQLField("createdAt", type: .nonNull(.scalar(String.self))),
               GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
               GraphQLField("order", type: .nonNull(.scalar(Int.self))),
               GraphQLField("user", type: .nonNull(.object(User.selections))),
               GraphQLField("phrase", type: .scalar(String.self)),
               GraphQLField("drawing", type: .object(Drawing.selections)),
+              GraphQLField("createdAt", type: .nonNull(.scalar(String.self))),
             ]
 
             public var snapshot: Snapshot
@@ -3742,12 +3826,12 @@ public final class InProgressTurnsQuery: GraphQLQuery {
               self.snapshot = snapshot
             }
 
-            public static func makeOpenTurn(order: Int, user: User, phrase: String? = nil, drawing: Drawing? = nil) -> Turn {
-              return Turn(snapshot: ["__typename": "OpenTurn", "order": order, "user": user.snapshot, "phrase": phrase, "drawing": drawing.flatMap { $0.snapshot }])
+            public static func makeOpenTurn(order: Int, user: User, phrase: String? = nil, drawing: Drawing? = nil, createdAt: String) -> Turn {
+              return Turn(snapshot: ["__typename": "OpenTurn", "order": order, "user": user.snapshot, "phrase": phrase, "drawing": drawing.flatMap { $0.snapshot }, "createdAt": createdAt])
             }
 
-            public static func makeCompletedTurn(order: Int, user: User, phrase: String? = nil, drawing: Drawing? = nil) -> Turn {
-              return Turn(snapshot: ["__typename": "CompletedTurn", "order": order, "user": user.snapshot, "phrase": phrase, "drawing": drawing.flatMap { $0.snapshot }])
+            public static func makeCompletedTurn(order: Int, user: User, phrase: String? = nil, drawing: Drawing? = nil, createdAt: String) -> Turn {
+              return Turn(snapshot: ["__typename": "CompletedTurn", "order": order, "user": user.snapshot, "phrase": phrase, "drawing": drawing.flatMap { $0.snapshot }, "createdAt": createdAt])
             }
 
             public var __typename: String {
@@ -3792,6 +3876,15 @@ public final class InProgressTurnsQuery: GraphQLQuery {
               }
               set {
                 snapshot.updateValue(newValue?.snapshot, forKey: "drawing")
+              }
+            }
+
+            public var createdAt: String {
+              get {
+                return snapshot["createdAt"]! as! String
+              }
+              set {
+                snapshot.updateValue(newValue, forKey: "createdAt")
               }
             }
 
@@ -4201,6 +4294,7 @@ public final class MyCompletedTurnsQuery: GraphQLQuery {
               GraphQLField("user", type: .nonNull(.object(User.selections))),
               GraphQLField("phrase", type: .scalar(String.self)),
               GraphQLField("drawing", type: .object(Drawing.selections)),
+              GraphQLField("createdAt", type: .nonNull(.scalar(String.self))),
             ]
 
             public var snapshot: Snapshot
@@ -4209,12 +4303,12 @@ public final class MyCompletedTurnsQuery: GraphQLQuery {
               self.snapshot = snapshot
             }
 
-            public static func makeOpenTurn(order: Int, user: User, phrase: String? = nil, drawing: Drawing? = nil) -> Turn {
-              return Turn(snapshot: ["__typename": "OpenTurn", "order": order, "user": user.snapshot, "phrase": phrase, "drawing": drawing.flatMap { $0.snapshot }])
+            public static func makeOpenTurn(order: Int, user: User, phrase: String? = nil, drawing: Drawing? = nil, createdAt: String) -> Turn {
+              return Turn(snapshot: ["__typename": "OpenTurn", "order": order, "user": user.snapshot, "phrase": phrase, "drawing": drawing.flatMap { $0.snapshot }, "createdAt": createdAt])
             }
 
-            public static func makeCompletedTurn(order: Int, user: User, phrase: String? = nil, drawing: Drawing? = nil) -> Turn {
-              return Turn(snapshot: ["__typename": "CompletedTurn", "order": order, "user": user.snapshot, "phrase": phrase, "drawing": drawing.flatMap { $0.snapshot }])
+            public static func makeCompletedTurn(order: Int, user: User, phrase: String? = nil, drawing: Drawing? = nil, createdAt: String) -> Turn {
+              return Turn(snapshot: ["__typename": "CompletedTurn", "order": order, "user": user.snapshot, "phrase": phrase, "drawing": drawing.flatMap { $0.snapshot }, "createdAt": createdAt])
             }
 
             public var __typename: String {
@@ -4259,6 +4353,15 @@ public final class MyCompletedTurnsQuery: GraphQLQuery {
               }
               set {
                 snapshot.updateValue(newValue?.snapshot, forKey: "drawing")
+              }
+            }
+
+            public var createdAt: String {
+              get {
+                return snapshot["createdAt"]! as! String
+              }
+              set {
+                snapshot.updateValue(newValue, forKey: "createdAt")
               }
             }
 
@@ -4798,6 +4901,7 @@ public final class UserCompletedTurnsQuery: GraphQLQuery {
               GraphQLField("user", type: .nonNull(.object(User.selections))),
               GraphQLField("phrase", type: .scalar(String.self)),
               GraphQLField("drawing", type: .object(Drawing.selections)),
+              GraphQLField("createdAt", type: .nonNull(.scalar(String.self))),
             ]
 
             public var snapshot: Snapshot
@@ -4806,12 +4910,12 @@ public final class UserCompletedTurnsQuery: GraphQLQuery {
               self.snapshot = snapshot
             }
 
-            public static func makeOpenTurn(order: Int, user: User, phrase: String? = nil, drawing: Drawing? = nil) -> Turn {
-              return Turn(snapshot: ["__typename": "OpenTurn", "order": order, "user": user.snapshot, "phrase": phrase, "drawing": drawing.flatMap { $0.snapshot }])
+            public static func makeOpenTurn(order: Int, user: User, phrase: String? = nil, drawing: Drawing? = nil, createdAt: String) -> Turn {
+              return Turn(snapshot: ["__typename": "OpenTurn", "order": order, "user": user.snapshot, "phrase": phrase, "drawing": drawing.flatMap { $0.snapshot }, "createdAt": createdAt])
             }
 
-            public static func makeCompletedTurn(order: Int, user: User, phrase: String? = nil, drawing: Drawing? = nil) -> Turn {
-              return Turn(snapshot: ["__typename": "CompletedTurn", "order": order, "user": user.snapshot, "phrase": phrase, "drawing": drawing.flatMap { $0.snapshot }])
+            public static func makeCompletedTurn(order: Int, user: User, phrase: String? = nil, drawing: Drawing? = nil, createdAt: String) -> Turn {
+              return Turn(snapshot: ["__typename": "CompletedTurn", "order": order, "user": user.snapshot, "phrase": phrase, "drawing": drawing.flatMap { $0.snapshot }, "createdAt": createdAt])
             }
 
             public var __typename: String {
@@ -4856,6 +4960,15 @@ public final class UserCompletedTurnsQuery: GraphQLQuery {
               }
               set {
                 snapshot.updateValue(newValue?.snapshot, forKey: "drawing")
+              }
+            }
+
+            public var createdAt: String {
+              get {
+                return snapshot["createdAt"]! as! String
+              }
+              set {
+                snapshot.updateValue(newValue, forKey: "createdAt")
               }
             }
 
@@ -5041,7 +5154,7 @@ public final class UserCompletedTurnsQuery: GraphQLQuery {
 
 public struct GameDetailed: GraphQLFragment {
   public static let fragmentString =
-    "fragment GameDetailed on Game {\n  __typename\n  id\n  turns {\n    __typename\n    order\n    user {\n      __typename\n      ...UserBasic\n    }\n    phrase\n    drawing {\n      __typename\n      key\n      bucket\n      region\n    }\n  }\n  flags {\n    __typename\n    userId\n    reason\n  }\n}"
+    "fragment GameDetailed on Game {\n  __typename\n  id\n  turns {\n    __typename\n    order\n    user {\n      __typename\n      ...UserBasic\n    }\n    phrase\n    drawing {\n      __typename\n      key\n      bucket\n      region\n    }\n    createdAt\n  }\n  flags {\n    __typename\n    userId\n    reason\n  }\n}"
 
   public static let possibleTypes = ["CompletedGame", "OpenGame"]
 
@@ -5111,6 +5224,7 @@ public struct GameDetailed: GraphQLFragment {
       GraphQLField("user", type: .nonNull(.object(User.selections))),
       GraphQLField("phrase", type: .scalar(String.self)),
       GraphQLField("drawing", type: .object(Drawing.selections)),
+      GraphQLField("createdAt", type: .nonNull(.scalar(String.self))),
     ]
 
     public var snapshot: Snapshot
@@ -5119,12 +5233,12 @@ public struct GameDetailed: GraphQLFragment {
       self.snapshot = snapshot
     }
 
-    public static func makeOpenTurn(order: Int, user: User, phrase: String? = nil, drawing: Drawing? = nil) -> Turn {
-      return Turn(snapshot: ["__typename": "OpenTurn", "order": order, "user": user.snapshot, "phrase": phrase, "drawing": drawing.flatMap { $0.snapshot }])
+    public static func makeOpenTurn(order: Int, user: User, phrase: String? = nil, drawing: Drawing? = nil, createdAt: String) -> Turn {
+      return Turn(snapshot: ["__typename": "OpenTurn", "order": order, "user": user.snapshot, "phrase": phrase, "drawing": drawing.flatMap { $0.snapshot }, "createdAt": createdAt])
     }
 
-    public static func makeCompletedTurn(order: Int, user: User, phrase: String? = nil, drawing: Drawing? = nil) -> Turn {
-      return Turn(snapshot: ["__typename": "CompletedTurn", "order": order, "user": user.snapshot, "phrase": phrase, "drawing": drawing.flatMap { $0.snapshot }])
+    public static func makeCompletedTurn(order: Int, user: User, phrase: String? = nil, drawing: Drawing? = nil, createdAt: String) -> Turn {
+      return Turn(snapshot: ["__typename": "CompletedTurn", "order": order, "user": user.snapshot, "phrase": phrase, "drawing": drawing.flatMap { $0.snapshot }, "createdAt": createdAt])
     }
 
     public var __typename: String {
@@ -5169,6 +5283,15 @@ public struct GameDetailed: GraphQLFragment {
       }
       set {
         snapshot.updateValue(newValue?.snapshot, forKey: "drawing")
+      }
+    }
+
+    public var createdAt: String {
+      get {
+        return snapshot["createdAt"]! as! String
+      }
+      set {
+        snapshot.updateValue(newValue, forKey: "createdAt")
       }
     }
 
@@ -5448,6 +5571,7 @@ public struct OpenGameDetailed: GraphQLFragment {
       GraphQLField("user", type: .nonNull(.object(User.selections))),
       GraphQLField("phrase", type: .scalar(String.self)),
       GraphQLField("drawing", type: .object(Drawing.selections)),
+      GraphQLField("createdAt", type: .nonNull(.scalar(String.self))),
     ]
 
     public var snapshot: Snapshot
@@ -5456,12 +5580,12 @@ public struct OpenGameDetailed: GraphQLFragment {
       self.snapshot = snapshot
     }
 
-    public static func makeOpenTurn(order: Int, user: User, phrase: String? = nil, drawing: Drawing? = nil) -> Turn {
-      return Turn(snapshot: ["__typename": "OpenTurn", "order": order, "user": user.snapshot, "phrase": phrase, "drawing": drawing.flatMap { $0.snapshot }])
+    public static func makeOpenTurn(order: Int, user: User, phrase: String? = nil, drawing: Drawing? = nil, createdAt: String) -> Turn {
+      return Turn(snapshot: ["__typename": "OpenTurn", "order": order, "user": user.snapshot, "phrase": phrase, "drawing": drawing.flatMap { $0.snapshot }, "createdAt": createdAt])
     }
 
-    public static func makeCompletedTurn(order: Int, user: User, phrase: String? = nil, drawing: Drawing? = nil) -> Turn {
-      return Turn(snapshot: ["__typename": "CompletedTurn", "order": order, "user": user.snapshot, "phrase": phrase, "drawing": drawing.flatMap { $0.snapshot }])
+    public static func makeCompletedTurn(order: Int, user: User, phrase: String? = nil, drawing: Drawing? = nil, createdAt: String) -> Turn {
+      return Turn(snapshot: ["__typename": "CompletedTurn", "order": order, "user": user.snapshot, "phrase": phrase, "drawing": drawing.flatMap { $0.snapshot }, "createdAt": createdAt])
     }
 
     public var __typename: String {
@@ -5506,6 +5630,15 @@ public struct OpenGameDetailed: GraphQLFragment {
       }
       set {
         snapshot.updateValue(newValue?.snapshot, forKey: "drawing")
+      }
+    }
+
+    public var createdAt: String {
+      get {
+        return snapshot["createdAt"]! as! String
+      }
+      set {
+        snapshot.updateValue(newValue, forKey: "createdAt")
       }
     }
 
@@ -5803,6 +5936,7 @@ public struct OpenGameDetailed: GraphQLFragment {
         GraphQLField("user", type: .nonNull(.object(User.selections))),
         GraphQLField("phrase", type: .scalar(String.self)),
         GraphQLField("drawing", type: .object(Drawing.selections)),
+        GraphQLField("createdAt", type: .nonNull(.scalar(String.self))),
       ]
 
       public var snapshot: Snapshot
@@ -5811,12 +5945,12 @@ public struct OpenGameDetailed: GraphQLFragment {
         self.snapshot = snapshot
       }
 
-      public static func makeOpenTurn(order: Int, user: User, phrase: String? = nil, drawing: Drawing? = nil) -> Turn {
-        return Turn(snapshot: ["__typename": "OpenTurn", "order": order, "user": user.snapshot, "phrase": phrase, "drawing": drawing.flatMap { $0.snapshot }])
+      public static func makeOpenTurn(order: Int, user: User, phrase: String? = nil, drawing: Drawing? = nil, createdAt: String) -> Turn {
+        return Turn(snapshot: ["__typename": "OpenTurn", "order": order, "user": user.snapshot, "phrase": phrase, "drawing": drawing.flatMap { $0.snapshot }, "createdAt": createdAt])
       }
 
-      public static func makeCompletedTurn(order: Int, user: User, phrase: String? = nil, drawing: Drawing? = nil) -> Turn {
-        return Turn(snapshot: ["__typename": "CompletedTurn", "order": order, "user": user.snapshot, "phrase": phrase, "drawing": drawing.flatMap { $0.snapshot }])
+      public static func makeCompletedTurn(order: Int, user: User, phrase: String? = nil, drawing: Drawing? = nil, createdAt: String) -> Turn {
+        return Turn(snapshot: ["__typename": "CompletedTurn", "order": order, "user": user.snapshot, "phrase": phrase, "drawing": drawing.flatMap { $0.snapshot }, "createdAt": createdAt])
       }
 
       public var __typename: String {
@@ -5861,6 +5995,15 @@ public struct OpenGameDetailed: GraphQLFragment {
         }
         set {
           snapshot.updateValue(newValue?.snapshot, forKey: "drawing")
+        }
+      }
+
+      public var createdAt: String {
+        get {
+          return snapshot["createdAt"]! as! String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "createdAt")
         }
       }
 
