@@ -102,7 +102,7 @@ class UserManager: NSObject {
         NSLog("confirming account")
         identityPool?.getUser(email!).confirmSignUp(code).continueWith(block: { (task) -> Any? in
             if let error = task.error as NSError? {
-                let errorMessage = error.userInfo["message"] as? String ?? "unknown error"
+                let errorMessage = error.userInfo["message"] as? String ?? error.localizedDescription
                 NSLog("error confirming account: " + errorMessage)
                 callback(errorMessage)
                 return nil
@@ -117,7 +117,7 @@ class UserManager: NSObject {
     func resendConfirmCode(callback: @escaping (String?) -> Void) {
         identityPool?.getUser(email!).resendConfirmationCode().continueWith(block: { (task) -> Any? in
             if let error = task.error as NSError? {
-                callback(error.userInfo["message"] as? String ?? "unknown error")
+                callback(error.userInfo["message"] as? String ?? error.localizedDescription)
                 return nil
             }
             callback(nil)
@@ -131,7 +131,7 @@ class UserManager: NSObject {
         user?.forgotPassword().continueWith{(task: AWSTask) -> AnyObject? in
             if let error = task.error as NSError? {
                 let errorType = (error.userInfo["__type"] as? String) ?? "unknown type"
-                var errorMessage = (error.userInfo["message"] as? String) ?? "unknown error"
+                var errorMessage = (error.userInfo["message"] as? String) ?? error.localizedDescription
                 if (errorType == "InvalidParameterException") {
                     errorMessage = "Email address is invalid"
                 }
@@ -155,7 +155,7 @@ class UserManager: NSObject {
         self.password = password
         identityPool?.getUser(email!).confirmForgotPassword(code, password: password).continueWith(block: { (task) -> Any? in
             if let error = task.error as NSError? {
-                let errorMessage = (error.userInfo["message"] as? String) ?? "unknown error"
+                let errorMessage = (error.userInfo["message"] as? String) ?? error.localizedDescription
                 callback(errorMessage)
                 return nil
             }
@@ -217,7 +217,7 @@ class UserManager: NSObject {
                 if (errorType == "UsernameExistsException") {
                     callback(nil, true)
                 }
-                var errorMessage = (error.userInfo["message"] as? String) ?? "unknown error"
+                var errorMessage = (error.userInfo["message"] as? String) ?? error.localizedDescription
                 if (errorType == "InvalidParameterException") {
                     errorMessage = "Email address is invalid"
                 }
@@ -246,7 +246,7 @@ extension UserManager: AWSCognitoIdentityPasswordAuthentication {
                 self.loginCallback = nil
                 return
             }
-            var errorMessage = (error.userInfo["message"] as? String) ?? "Unknown error"
+            var errorMessage = (error.userInfo["message"] as? String) ?? error.localizedDescription
             
             if (errorType == "InvalidParameterException") {
                 errorMessage = "Email address is invalid"
