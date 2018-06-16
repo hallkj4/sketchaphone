@@ -8,15 +8,16 @@ protocol GameWatcher: AnyObject {
 
 class CompletedGameManager {
     
-    var inProgressGames = [OpenGameDetailed]()
+    private var inProgressGames = [OpenGameDetailed]()
     
     //    var completedGames = [GameDetailed]()
     //    var completedGamesNextToken: String?
-    var myCompletedGames = [GameDetailed]()
+    private var myCompletedGames = [GameDetailed]()
     
     var myNewlyCompletedGames = Set<String>()
     
-    var myCompletedGamesNextToken: String?
+    private var myCompletedGamesNextToken: String?
+    private var lastTimeIFetchedGames: Date?
     
     private var watchers = [GameWatcher]()
     func add(watcher: GameWatcher) {
@@ -47,6 +48,10 @@ class CompletedGameManager {
             removeNew(gameId: gameId)
             removed = true
         }
+        if (myNewlyCompletedGames.remove(gameId) != nil) {
+            LocalSQLiteManager.sharedInstance.delete(newlyCompletedGameId: gameId)
+            removed = true
+        }
         if (removed) {
             notifyWatchers()
         }
@@ -54,8 +59,7 @@ class CompletedGameManager {
     
     func appendCompleted(game: OpenGameDetailed) {
         if (game.turns.count >= gamesManager.numRounds) {
-            myCompletedGames.append(game.fragments.gameDetailed)
-            myNewlyCompletedGames.insert(game.id)
+            myCompletedGames.insert(game.fragments.gameDetailed, at: 0)
         }
         else {
             inProgressGames.append(game)
@@ -63,7 +67,6 @@ class CompletedGameManager {
         notifyWatchers()
     }
     
-    private var lastTimeIFetchedGames: Date?
     func refetchCompletedIfOld() {
         if (lastTimeIFetchedGames == nil || lastTimeIFetchedGames! < Date(timeIntervalSinceNow: -60)) {
             self.lastTimeIFetchedGames = Date()
@@ -102,24 +105,6 @@ class CompletedGameManager {
     
     func getMore() {
         fetchMyCompletedGames(nextPage: true)
-    }
-    
-    
-    func handleStartUpSignedIn() {
-        self.myCompletedGames = LocalSQLiteManager.sharedInstance.getCompletedGames()
-        self.myNewlyCompletedGames = LocalSQLiteManager.sharedInstance.getNewlyCompletedGameIds()
-    }
-    
-    func handleSignIn() {
-        //nothing right now - loading will happen in the home screen and completed view
-    }
-    
-    func handleSignOut() {
-        inProgressGames.removeAll()
-        myCompletedGames.removeAll()
-        myNewlyCompletedGames.removeAll()
-        LocalSQLiteManager.sharedInstance.clearCompletedGames()
-        LocalSQLiteManager.sharedInstance.clearNewlyCompletedGames()
     }
     
     private func fetchInProgressGames() {
@@ -166,12 +151,15 @@ class CompletedGameManager {
                 }
                 let new = !self.myCompletedGames.contains(where: { $0.id == newGame.id })
                 if (new) {
+                    newFound = true
                     if (!nextPage) {
-                        newFound = true
                         self.myNewlyCompletedGames.insert(newGame.id)
                         LocalSQLiteManager.sharedInstance.persist(newlyCompletedGameId: newGame.id)
+                        self.myCompletedGames.insert(newGame, at: 0)
                     }
-                    self.myCompletedGames.append(newGame)
+                    else {
+                        self.myCompletedGames.append(newGame)
+                    }
                     LocalSQLiteManager.sharedInstance.persist(completedGame: newGame)
                 }
             }
@@ -208,5 +196,23 @@ class CompletedGameManager {
     //            self.notifyWatchers()
     //        })
     //    }
+
     
+    func handleStartUpSignedIn() {
+        self.myCompletedGames = LocalSQLiteManager.sharedInstance.getCompletedGames()
+        self.myNewlyCompletedGames = LocalSQLiteManager.sharedInstance.getNewlyCompletedGameIds()
+    }
+    
+    func handleSignIn() {
+        //nothing right now - loading will happen in the home screen and completed view
+    }
+    
+    func handleSignOut() {
+        self.lastTimeIFetchedGames = nil
+        inProgressGames.removeAll()
+        myCompletedGames.removeAll()
+        myNewlyCompletedGames.removeAll()
+        LocalSQLiteManager.sharedInstance.clearCompletedGames()
+        LocalSQLiteManager.sharedInstance.clearNewlyCompletedGames()
+    }
 }

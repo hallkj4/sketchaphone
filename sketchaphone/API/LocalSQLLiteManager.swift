@@ -62,6 +62,7 @@ class LocalSQLiteManager {
 //    }
     
     func persist(completedGame: GameDetailed) {
+        NSLog("writing game \(completedGame.id)")
         do {
             let completedGameSerializedData = try JSONSerialization.data(withJSONObject: completedGame.jsonObject, options: [])
             let completedGameSerializedString = String(data: completedGameSerializedData, encoding: .utf8)!
@@ -74,6 +75,7 @@ class LocalSQLiteManager {
     }
     
     func delete(completedGameId: GraphQLID) {
+        NSLog("deleting game \(completedGameId)")
         do {
             try db.run(completedGamesTable.where(self.completedGameId == completedGameId).delete())
         }
@@ -164,6 +166,7 @@ class LocalSQLiteManager {
     
     //start newly completed game table operations
     func persist(newlyCompletedGameId: GraphQLID) {
+        NSLog("writing newlyCompletedGameId \(newlyCompletedGameId)")
         do {
             let insert = newlyCompletedGamesTable.insert(self.newlyCompletedGameId <- newlyCompletedGameId)
             try db.run(insert)
@@ -174,6 +177,7 @@ class LocalSQLiteManager {
     }
     
     func delete(newlyCompletedGameId: GraphQLID) {
+        NSLog("deleting newlyCompletedGameId \(newlyCompletedGameId)")
         do {
             try db.run(newlyCompletedGamesTable.where(self.newlyCompletedGameId == newlyCompletedGameId).delete())
         }
@@ -184,7 +188,7 @@ class LocalSQLiteManager {
     
     func clearNewlyCompletedGames() {
         do {
-            try db.run(flagsTable.delete())
+            try db.run(newlyCompletedGamesTable.delete())
         }
         catch let error {
             NSLog("error clearing all existing flags: \(error)")
@@ -197,6 +201,7 @@ class LocalSQLiteManager {
             let rows = try db.prepare(newlyCompletedGamesTable)
             
             for row in rows {
+                NSLog("read newlyCompletedGameId from database \(row[newlyCompletedGameId])")
                 gameIds.insert(row[newlyCompletedGameId])
             }
         }
