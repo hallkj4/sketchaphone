@@ -3,6 +3,7 @@ import UIKit
 class DrawableImageView: UIImageView {
     var lastPoint = CGPoint.zero
     var swiped = false
+    var started = true
     var didDraw = false
     var multitouching = false
     var color = UIColor.black
@@ -17,11 +18,18 @@ class DrawableImageView: UIImageView {
             return
         }
         multitouching = false
+        started = true
         lastPoint = touches.first!.location(in: self)
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-        if (multitouching) {
+        if (!started || multitouching) {
+            return
+        }
+        
+        if (touches.count != 1) {
+            multitouching = true
+            finishDraw()
             return
         }
         
@@ -29,6 +37,7 @@ class DrawableImageView: UIImageView {
         let currentPoint = touch.location(in: self)
         if (!didDraw && lastPoint.distance(currentPoint) > 20.0) {
             multitouching = true
+            finishDraw()
             return
         }
         
@@ -42,10 +51,22 @@ class DrawableImageView: UIImageView {
         if (multitouching) {
             return
         }
+        
+        if (touches.count != 1) {
+            multitouching = true
+            finishDraw()
+            return
+        }
         if !swiped {
             // draw a single point
             drawLineFrom(fromPoint: lastPoint, toPoint: lastPoint)
         }
+        finishDraw()
+    }
+    
+    
+    private func finishDraw() {
+        started = false
         if (didDraw) {
             didDraw = false
             putUndo()
