@@ -13,7 +13,6 @@ class CompletedViewController: LoadingViewController, UITableViewDataSource {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        completedGameManager.refetchCompletedIfOld()
         updateUI()
         completedGameManager.add(watcher: self)
     }

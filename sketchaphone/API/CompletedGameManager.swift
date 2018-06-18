@@ -16,8 +16,11 @@ class CompletedGameManager {
     
     var myNewlyCompletedGames = Set<String>()
     
+    private var refetchTimer: Timer?
     private var myCompletedGamesNextToken: String?
     private var lastTimeIFetchedGames: Date?
+    
+    
     
     private var watchers = [GameWatcher]()
     func add(watcher: GameWatcher) {
@@ -67,7 +70,7 @@ class CompletedGameManager {
         notifyWatchers()
     }
     
-    func refetchCompletedIfOld() {
+    func refetchCompletedIfOld(timer: Timer? = nil) {
         if (lastTimeIFetchedGames == nil || lastTimeIFetchedGames! < Date(timeIntervalSinceNow: -60)) {
             self.lastTimeIFetchedGames = Date()
             fetchInProgressGames()
@@ -203,18 +206,31 @@ class CompletedGameManager {
             return Int(g1.turns.last?.createdAt ?? "0") ?? 0 > Int(g2.turns.last?.createdAt ?? "0") ?? 0
         })
         self.myNewlyCompletedGames = LocalSQLiteManager.sharedInstance.getNewlyCompletedGameIds()
+        startPeriodicChecks()
     }
     
     func handleSignIn() {
-        //nothing right now - loading will happen in the home screen and completed view
+        startPeriodicChecks()
     }
     
     func handleSignOut() {
+        stopPeriodicChecks()
         self.lastTimeIFetchedGames = nil
         inProgressGames.removeAll()
         myCompletedGames.removeAll()
         myNewlyCompletedGames.removeAll()
         LocalSQLiteManager.sharedInstance.clearCompletedGames()
         LocalSQLiteManager.sharedInstance.clearNewlyCompletedGames()
+    }
+    
+    
+    private func startPeriodicChecks() {
+        self.refetchCompletedIfOld()
+        self.refetchTimer = Timer.scheduledTimer(withTimeInterval: 60.0, repeats: true, block: self.refetchCompletedIfOld)
+    }
+    
+    private func stopPeriodicChecks() {
+        self.refetchTimer?.invalidate()
+        self.refetchTimer = nil
     }
 }
