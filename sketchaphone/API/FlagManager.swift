@@ -95,8 +95,10 @@ class FlagManager {
     }
     
     private func addFlaggedGameId(_ gameId: String) {
-        flaggedGameIds.insert(gameId)
+        let insertion = flaggedGameIds.insert(gameId)
+        if (insertion.inserted) {
+            LocalSQLiteManager.sharedInstance.persist(flaggedGameId: gameId)
+        }
         completedGameManager.removeFlagged(gameId: gameId)
-        LocalSQLiteManager.sharedInstance.persist(flaggedGameId: gameId)
     }
 }
