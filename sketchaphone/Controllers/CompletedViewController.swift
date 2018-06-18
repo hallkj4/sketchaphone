@@ -33,6 +33,9 @@ class CompletedViewController: LoadingViewController, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if (completedGameManager.hasMore() && indexPath.row >= (completedGameManager.completedGameCount() - 1)) {
+            completedGameManager.getMore()
+        }
         let game = completedGameManager.completedGameAt(indexPath.row)
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
         guard let gameCell = cell as? CompletedGameTableViewCell else {
