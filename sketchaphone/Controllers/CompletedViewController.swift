@@ -29,6 +29,9 @@ class CompletedViewController: LoadingViewController, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if (completedGameManager.hasMore() && completedGameManager.completedGameCount() == 0) {
+            completedGameManager.getMore()
+        }
         return completedGameManager.completedGameCount()
     }
     
