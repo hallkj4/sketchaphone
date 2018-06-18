@@ -211,13 +211,13 @@ class LocalSQLiteManager {
         return gameIds
     }
     
-    
     func putMisc(key: String, value: String) {
         do {
+            try db.run(miscTable.where(miscKey == key).delete())
             try db.run(miscTable.insert(miscKey <- key, miscValue <- value))
         }
         catch {
-            NSLog("error persisting token")
+            NSLog("error persisting token: \(key), \(value)")
         }
     }
     
@@ -226,7 +226,7 @@ class LocalSQLiteManager {
             try db.run(miscTable.delete())  // Delete all the existing records
         }
         catch {
-            NSLog("error persisting rankings")
+            NSLog("error clearing ranking")
         }
     }
     
