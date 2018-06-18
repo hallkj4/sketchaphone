@@ -73,6 +73,7 @@
 
 /* Begin PBXFileReference section */
 		21BCC6768CDBEF17863D9228 /* Pods-sketchaphone.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-sketchaphone.release.xcconfig"; path = "Pods/Target Support Files/Pods-sketchaphone/Pods-sketchaphone.release.xcconfig"; sourceTree = "<group>"; };
+		4C0249DB20D8322C00F338B7 /* sketchaphone.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = sketchaphone.entitlements; sourceTree = "<group>"; };
 		4C0A0811203FA19F009FED9F /* GameDetailed.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = GameDetailed.graphql; sourceTree = "<group>"; };
 		4C0A08132040B849009FED9F /* schema.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = schema.json; sourceTree = "<group>"; };
 		4C0A08172040B9A9009FED9F /* API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
@@ -231,6 +232,7 @@
 		4C8C6C75201E6F2600197CBB /* sketchaphone */ = {
 			isa = PBXGroup;
 			children = (
+				4C0249DB20D8322C00F338B7 /* sketchaphone.entitlements */,
 				4CB722F1201EC9E400015EB8 /* Icons */,
 				4C8C6C88201E71FE00197CBB /* API */,
 				4C8C6C89201E724200197CBB /* Controllers */,
@@ -367,6 +369,9 @@
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.InAppPurchase = {
+								enabled = 1;
+							};
+							com.apple.Push = {
 								enabled = 1;
 							};
 						};
@@ -680,6 +685,7 @@
 			baseConfigurationReference = C509E8721A4A7054D2441345 /* Pods-sketchaphone.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = sketchaphone/sketchaphone.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = NTDFC8PLCC;
 				INFOPLIST_FILE = sketchaphone/Info.plist;
@@ -697,6 +703,7 @@
 			baseConfigurationReference = 21BCC6768CDBEF17863D9228 /* Pods-sketchaphone.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = sketchaphone/sketchaphone.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = NTDFC8PLCC;
 				INFOPLIST_FILE = sketchaphone/Info.plist;
