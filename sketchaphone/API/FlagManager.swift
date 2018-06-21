@@ -29,6 +29,7 @@ class FlagManager {
     
     func handleSignOut() {
         LocalSQLiteManager.sharedInstance.clearFlags()
+        LocalSQLiteManager.sharedInstance.deleteMisc(key: "mostRecentFlagCheck")
         flaggedGameIds.removeAll()
         self.mostRecentCheck = nil
         self.loaded = false

@@ -83,8 +83,17 @@ class SettingsViewController: LoadingViewController, UITextFieldDelegate {
     
     @IBAction func signOutTouch() {
         confirm("Are you sure you want to sign out?", confirmedHandler: {
-            userManager.signOut()
-            self.navigationController?.popViewController(animated: true)
+            self.startLoading()
+            userManager.signOut({ error in
+                DispatchQueue.main.async {
+                    self.stopLoading()
+                    if let error = error {
+                        self.alert("Error signing you out: " + error)
+                        return
+                    }
+                    self.navigationController?.popViewController(animated: true)
+                }
+            })
         })
     }
     

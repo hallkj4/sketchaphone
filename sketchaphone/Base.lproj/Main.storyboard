@@ -1014,8 +1014,8 @@
                                                 <rect key="frame" x="0.0" y="348.5" width="300" height="46"/>
                                                 <subviews>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JFV-fu-Ugs">
-                                                        <rect key="frame" x="0.0" y="0.0" width="86.5" height="46"/>
-                                                        <state key="normal" title="reset password">
+                                                        <rect key="frame" x="0.0" y="0.0" width="88.5" height="46"/>
+                                                        <state key="normal" title="Reset password">
                                                             <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         </state>
                                                         <connections>
@@ -1023,7 +1023,7 @@
                                                         </connections>
                                                     </button>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LOh-y8-zZP">
-                                                        <rect key="frame" x="86.5" y="0.0" width="136" height="46"/>
+                                                        <rect key="frame" x="88.5" y="0.0" width="135" height="46"/>
                                                         <color key="backgroundColor" red="0.92549318079999998" green="0.8048755527" blue="0.51112228630000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="28"/>
                                                         <inset key="contentEdgeInsets" minX="10" minY="6" maxX="10" maxY="6"/>
@@ -1046,7 +1046,7 @@
                                                         </connections>
                                                     </button>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gva-vM-117">
-                                                        <rect key="frame" x="222.5" y="0.0" width="77.5" height="46"/>
+                                                        <rect key="frame" x="223.5" y="0.0" width="76.5" height="46"/>
                                                         <color key="backgroundColor" red="0.92549318079999998" green="0.8048755527" blue="0.51112228630000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="28"/>
                                                         <inset key="contentEdgeInsets" minX="10" minY="6" maxX="10" maxY="6"/>

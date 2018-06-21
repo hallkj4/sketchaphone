@@ -58,8 +58,7 @@ class UserManager: NSObject {
     func waitForSignIn() {
         NSLog("waiting for user to be signed in")
         if (isSignedIn()) {
-            completedGameManager.handleSignIn()
-            flagManager.handleSignIn()
+            completeSignIn()
             
             self.loginCallback?(nil, false)
             self.loginCallback = nil
@@ -99,6 +98,10 @@ class UserManager: NSObject {
     
     
     func set(deviceToken: String?, callback: @escaping (Error?) -> Void) {
+        if (networkOffline()) {
+            callback(NoNetworkError())
+            return
+        }
         appSyncClient?.perform(mutation: SetDeviceTokenMutation(token: deviceToken), resultHandler: {(result, error) in
             if let error = error {
                 callback(error)
@@ -129,6 +132,7 @@ class UserManager: NSObject {
             }
             
             NSLog("account confirmed successfully")
+            self.handleSignUp()
             callback(nil)
             return nil
         })
@@ -206,22 +210,49 @@ class UserManager: NSObject {
         signIn(email: email, password: password, callback: callback)
     }
     
-    func signOut() {
+    func signOut(_ callback: @escaping (String?) -> Void) {
         NSLog("signing out")
+        if (!pushEnabled) {
+            completeSignOut()
+            callback(nil)
+            return
+        }
+        set(deviceToken: nil, callback: { error in
+            if let error = error {
+                callback(error.localizedDescription)
+                return
+            }
+            self.completeSignOut()
+            callback(nil)
+        })
+    }
+
+    private func completeSignOut() {
         self.email = nil
         self.password = nil
         self.name = nil
         self.currentUser = nil
+        self.pushEnabled = false
+        LocalSQLiteManager.sharedInstance.deleteMisc(key: "pushEnabled")
         completedGameManager.handleSignOut()
         gamesManager.handleSignOut()
         flagManager.handleSignOut()
         identityPool?.clearAll()
-        LocalSQLiteManager.sharedInstance.clearMisc()
         credentialsProvider?.clearKeychain()
+    }
+    
+    private func completeSignIn() {
+        completedGameManager.handleSignIn()
+        flagManager.handleSignIn()
+        getNotificationSettings()
     }
     
     func handleStartUp() {
         self.pushEnabled = LocalSQLiteManager.sharedInstance.getMisc(key: "pushEnabled") != nil
+        getNotificationSettings()
+    }
+    
+    private func handleSignUp() {
         getNotificationSettings()
     }
     
@@ -255,6 +286,9 @@ class UserManager: NSObject {
     }
     
     private func getNotificationSettings() {
+        if (!isSignedIn()) {
+            return
+        }
         UNUserNotificationCenter.current().getNotificationSettings { (settings) in
             print("Notification settings: \(settings)")
             if settings.authorizationStatus == .authorized {
