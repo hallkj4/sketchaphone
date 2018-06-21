@@ -221,6 +221,16 @@ class LocalSQLiteManager {
         }
     }
     
+    func deleteMisc(key: String) {
+        NSLog("deleting misc key \(key)")
+        do {
+            try db.run(miscTable.where(self.miscKey == key).delete())
+        }
+        catch let error {
+            NSLog("error deleting misc for key: \(key): \(error)")
+        }
+    }
+    
     func clearMisc() {
         do {
             try db.run(miscTable.delete())  // Delete all the existing records

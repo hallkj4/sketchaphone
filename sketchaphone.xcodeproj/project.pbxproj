@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4C0249DD20D9C5DD00F338B7 /* SetDeviceToken.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 4C0249DC20D9C5DD00F338B7 /* SetDeviceToken.graphql */; };
 		4C0A0812203FA19F009FED9F /* GameDetailed.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 4C0A0811203FA19F009FED9F /* GameDetailed.graphql */; };
 		4C0A08142040B84A009FED9F /* schema.json in Resources */ = {isa = PBXBuildFile; fileRef = 4C0A08132040B849009FED9F /* schema.json */; };
 		4C0A08182040B9AA009FED9F /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C0A08172040B9A9009FED9F /* API.swift */; };
@@ -74,6 +75,7 @@
 /* Begin PBXFileReference section */
 		21BCC6768CDBEF17863D9228 /* Pods-sketchaphone.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-sketchaphone.release.xcconfig"; path = "Pods/Target Support Files/Pods-sketchaphone/Pods-sketchaphone.release.xcconfig"; sourceTree = "<group>"; };
 		4C0249DB20D8322C00F338B7 /* sketchaphone.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = sketchaphone.entitlements; sourceTree = "<group>"; };
+		4C0249DC20D9C5DD00F338B7 /* SetDeviceToken.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = SetDeviceToken.graphql; sourceTree = "<group>"; };
 		4C0A0811203FA19F009FED9F /* GameDetailed.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = GameDetailed.graphql; sourceTree = "<group>"; };
 		4C0A08132040B849009FED9F /* schema.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = schema.json; sourceTree = "<group>"; };
 		4C0A08172040B9A9009FED9F /* API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
@@ -188,6 +190,7 @@
 				4CC9B4562040E0EC0079D202 /* SetName.graphql */,
 				4CC9B4582040E1210079D202 /* FlagGame.graphql */,
 				4C27A03320C706A800449704 /* JoinGame.graphql */,
+				4C0249DC20D9C5DD00F338B7 /* SetDeviceToken.graphql */,
 			);
 			path = Mutations;
 			sourceTree = "<group>";
@@ -416,6 +419,7 @@
 				4CB8B04620217DF900D0DD95 /* logo.png in Resources */,
 				4C7EBF7D20D05119006AE5C0 /* MyCompletedTurns.graphql in Resources */,
 				4C0A0812203FA19F009FED9F /* GameDetailed.graphql in Resources */,
+				4C0249DD20D9C5DD00F338B7 /* SetDeviceToken.graphql in Resources */,
 				4C8C6C7E201E6F2600197CBB /* Assets.xcassets in Resources */,
 				4CC9B4512040DFC10079D202 /* TakeTurn.graphql in Resources */,
 				4C8C6C7C201E6F2600197CBB /* Main.storyboard in Resources */,

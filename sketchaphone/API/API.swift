@@ -1016,6 +1016,48 @@ public final class RenewLockMutation: GraphQLMutation {
   }
 }
 
+public final class SetDeviceTokenMutation: GraphQLMutation {
+  public static let operationString =
+    "mutation setDeviceToken($token: String) {\n  setDeviceToken(token: $token)\n}"
+
+  public var token: String?
+
+  public init(token: String? = nil) {
+    self.token = token
+  }
+
+  public var variables: GraphQLMap? {
+    return ["token": token]
+  }
+
+  public struct Data: GraphQLSelectionSet {
+    public static let possibleTypes = ["Mutation"]
+
+    public static let selections: [GraphQLSelection] = [
+      GraphQLField("setDeviceToken", arguments: ["token": GraphQLVariable("token")], type: .nonNull(.scalar(Bool.self))),
+    ]
+
+    public var snapshot: Snapshot
+
+    public init(snapshot: Snapshot) {
+      self.snapshot = snapshot
+    }
+
+    public init(setDeviceToken: Bool) {
+      self.init(snapshot: ["__typename": "Mutation", "setDeviceToken": setDeviceToken])
+    }
+
+    public var setDeviceToken: Bool {
+      get {
+        return snapshot["setDeviceToken"]! as! Bool
+      }
+      set {
+        snapshot.updateValue(newValue, forKey: "setDeviceToken")
+      }
+    }
+  }
+}
+
 public final class SetNameMutation: GraphQLMutation {
   public static let operationString =
     "mutation setName($name: String!) {\n  setName(name: $name) {\n    __typename\n    ...UserBasic\n  }\n}"

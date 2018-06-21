@@ -504,19 +504,19 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="30" translatesAutoresizingMaskIntoConstraints="NO" id="xJD-TW-Q3M">
-                                <rect key="frame" x="10" y="74" width="300" height="96"/>
+                                <rect key="frame" x="10" y="74" width="300" height="162"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="4bH-uh-yAX">
-                                        <rect key="frame" x="20" y="0.0" width="260" height="30"/>
+                                        <rect key="frame" x="16.5" y="0.0" width="267" height="30"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2ZG-jc-3Bs">
-                                                <rect key="frame" x="0.0" y="0.0" width="50" height="30"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="57" height="30"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="PVJ-Wa-J8d">
-                                                <rect key="frame" x="60" y="0.0" width="200" height="30"/>
+                                                <rect key="frame" x="67" y="0.0" width="200" height="30"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="200" id="ho2-pL-rYV"/>
                                                 </constraints>
@@ -529,8 +529,18 @@
                                             </textField>
                                         </subviews>
                                     </stackView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Owr-QD-Ffi">
+                                        <rect key="frame" x="51.5" y="60" width="197" height="36"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                        <state key="normal" title="Push Notifications: Off">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="pushNotifButtTouch" destination="JTk-IM-Z4t" eventType="touchUpInside" id="MdC-dA-sv6"/>
+                                        </connections>
+                                    </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jQ1-5v-iRC">
-                                        <rect key="frame" x="102" y="60" width="96" height="36"/>
+                                        <rect key="frame" x="102" y="126" width="96" height="36"/>
                                         <color key="backgroundColor" red="0.92549318079999998" green="0.8048755527" blue="0.51112228630000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                         <inset key="contentEdgeInsets" minX="10" minY="6" maxX="10" maxY="6"/>
@@ -566,6 +576,7 @@
                     </view>
                     <connections>
                         <outlet property="nameField" destination="PVJ-Wa-J8d" id="nJL-n3-mTb"/>
+                        <outlet property="pushNotifButt" destination="Owr-QD-Ffi" id="Tb4-Yf-K2R"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="55X-0S-VSD" userLabel="First Responder" sceneMemberID="firstResponder"/>

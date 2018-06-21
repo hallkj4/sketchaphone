@@ -1,16 +1,20 @@
 import AWSCognitoIdentityProvider
 import AWSAppSync
+import UserNotifications
 
 class UserManager: NSObject {
     var identityPool: AWSCognitoIdentityUserPool?
     var credentialsProvider: AWSCognitoCredentialsProvider?
     
-    var currentUser: UserBasic?
+    public private(set) var currentUser: UserBasic?
     var email: String?
-    var password: String?
-    var name: String?
+    private var password: String?
+    private var name: String?
     
-    var loginCallback: ((String?, Bool) -> Void)?
+    public private(set) var pushEnabled = false
+    
+    private var loginCallback: ((String?, Bool) -> Void)?
+    private var enablePushCallback: ((String?) -> Void)?
     
     var passwordAuthenticationCompletion: AWSTaskCompletionSource<AWSCognitoIdentityPasswordAuthenticationDetails>?
     
@@ -89,6 +93,22 @@ class UserManager: NSObject {
             }
             
             self.currentUser = userRaw.fragments.userBasic
+            callback(nil)
+        })
+    }
+    
+    
+    func set(deviceToken: String?, callback: @escaping (Error?) -> Void) {
+        appSyncClient?.perform(mutation: SetDeviceTokenMutation(token: deviceToken), resultHandler: {(result, error) in
+            if let error = error {
+                callback(error)
+                return
+            }
+            if (result?.data?.setDeviceToken != true) {
+                callback(NilDataError())
+                return
+            }
+            
             callback(nil)
         })
     }
@@ -200,6 +220,56 @@ class UserManager: NSObject {
         credentialsProvider?.clearKeychain()
     }
     
+    func handleStartUp() {
+        self.pushEnabled = LocalSQLiteManager.sharedInstance.getMisc(key: "pushEnabled") != nil
+        getNotificationSettings()
+    }
+    
+    func enablePushNotifications(_ callback: @escaping (String?) -> Void) {
+        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) {
+            (granted, err) in
+            if let err = err {
+                callback(err.localizedDescription)
+                return
+            }
+            NSLog("Permission granted: \(granted)")
+            
+            guard granted else { return }
+            self.enablePushCallback = callback
+            self.getNotificationSettings()
+        }
+    }
+    
+    func disablePushNotifications(_ callback: ((String?) -> Void)? = nil) {
+        self.set(deviceToken: nil) { err in
+            if let err = err {
+                NSLog("error setting device token: " + err.localizedDescription)
+                callback?(err.localizedDescription)
+                return
+            }
+            UIApplication.shared.unregisterForRemoteNotifications()
+            LocalSQLiteManager.sharedInstance.deleteMisc(key: "pushEnabled")
+            self.pushEnabled = false
+            callback?(nil)
+        }
+    }
+    
+    private func getNotificationSettings() {
+        UNUserNotificationCenter.current().getNotificationSettings { (settings) in
+            print("Notification settings: \(settings)")
+            if settings.authorizationStatus == .authorized {
+                if (!self.pushEnabled) {
+                    UIApplication.shared.registerForRemoteNotifications()
+                }
+            }
+            else {
+                if (self.pushEnabled) {
+                    self.disablePushNotifications()
+                }
+            }
+        }
+    }
+    
     func signUp(email: String, password: String, name: String, callback: @escaping (String?, Bool) -> Void) {
         var attributes = [AWSCognitoIdentityUserAttributeType]()
         let emailAttr = AWSCognitoIdentityUserAttributeType()
@@ -258,5 +328,28 @@ extension UserManager: AWSCognitoIdentityPasswordAuthentication {
         
         waitForSignIn()
     }
+}
+
+extension UserManager: PushNotificationRegistrationDelegate {
+    func didRegisterForPushNotifications(token: String) {
+        if (!isSignedIn()) {
+            NSLog("can't do this while signed out")
+            return
+        }
+        set(deviceToken: token) { err in
+            if let err = err {
+                NSLog("error setting deviceToken: " + err.localizedDescription)
+                self.enablePushCallback?(err.localizedDescription)
+                return
+            }
+            self.pushEnabled = true
+            LocalSQLiteManager.sharedInstance.putMisc(key: "pushEnabled", value: "true")
+            self.enablePushCallback?(nil)
+        }
+    }
     
+    func failedToRegisterForPushNotifications(error: Error) {
+        NSLog("failedToRegisterForPushNotifications: " + error.localizedDescription)
+        enablePushCallback?(error.localizedDescription)
+    }
 }

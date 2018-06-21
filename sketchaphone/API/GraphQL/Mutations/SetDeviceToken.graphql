@@ -1,0 +1,3 @@
+mutation setDeviceToken($token: String) {
+    setDeviceToken(token: $token)
+}

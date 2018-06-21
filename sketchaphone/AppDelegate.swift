@@ -7,6 +7,11 @@ import UserNotifications
 
 var userManager = UserManager()
 
+protocol PushNotificationRegistrationDelegate {
+    func didRegisterForPushNotifications(token: String)
+    func failedToRegisterForPushNotifications(error: Error)
+}
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
@@ -42,8 +47,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         NSLog("cognito pool username: \(pool.currentUser()?.username ?? "unknown")")
         pool.delegate = self
         
-        
-        
         let credentialsProvider = AWSCognitoCredentialsProvider(regionType: CognitoAWSRegion, identityPoolId: CognitoIdentityPoolId, identityProviderManager: pool)
         userManager.setCredentialsProvider(credentialsProvider)
         NSLog("credentialsProvider: %@", credentialsProvider)
@@ -71,9 +74,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             flagManager.handleStartUpSignedIn()
             completedGameManager.handleStartUpSignedIn()
         }
+        userManager.handleStartUp()
         
-        //TODO probably move this so it doesn't prompt for apn at launch
-        registerForPushNotifications()
         return true
     }
     
@@ -85,31 +87,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         let token = tokenParts.joined()
         print("Device Token: \(token)")
+        userManager.didRegisterForPushNotifications(token: token)
     }
     
     func application(_ application: UIApplication,
                      didFailToRegisterForRemoteNotificationsWithError error: Error) {
-        print("Failed to register: \(error)")
-    }
-    
-    func registerForPushNotifications() {
-        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) {
-            (granted, error) in
-            //TODO handle error
-            
-            print("Permission granted: \(granted)")
-            
-            guard granted else { return }
-            self.getNotificationSettings()
-        }
-    }
-    
-    func getNotificationSettings() {
-        UNUserNotificationCenter.current().getNotificationSettings { (settings) in
-            print("Notification settings: \(settings)")
-            guard settings.authorizationStatus == .authorized else { return }
-            UIApplication.shared.registerForRemoteNotifications()
-        }
+        userManager.failedToRegisterForPushNotifications(error: error)
     }
 }
 

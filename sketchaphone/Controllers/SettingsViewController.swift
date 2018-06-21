@@ -5,6 +5,7 @@ class SettingsViewController: LoadingViewController, UITextFieldDelegate {
     
     @IBOutlet weak var nameField: UITextField!
     
+    @IBOutlet weak var pushNotifButt: UIButton!
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         self.navigationController?.setNavigationBarHidden(false, animated: true)
@@ -14,6 +15,12 @@ class SettingsViewController: LoadingViewController, UITextFieldDelegate {
     
     private func updateUi() {
         nameField.text = userManager.currentUser?.name
+        if (userManager.pushEnabled) {
+            pushNotifButt.setTitle("Push Notifications: On", for: .normal)
+        }
+        else {
+            pushNotifButt.setTitle("Push Notifications: Off", for: .normal)
+        }
     }
     
     func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
@@ -48,6 +55,30 @@ class SettingsViewController: LoadingViewController, UITextFieldDelegate {
             }
         })
         return true
+    }
+    
+    @IBAction func pushNotifButtTouch() {
+        if (userManager.pushEnabled) {
+            confirm("Are you sure you want to disable push notifications for doodle game?", confirmedHandler: {
+                self.startLoading()
+                userManager.disablePushNotifications({ (err) in
+                    self.stopLoading()
+                    if let err = err {
+                        self.alert(err)
+                        return
+                    }
+                    self.updateUi()
+                })
+            })
+            return
+        }
+        userManager.enablePushNotifications { err in
+            if let err = err {
+                self.alert(err)
+                return
+            }
+            self.updateUi()
+        }
     }
     
     @IBAction func signOutTouch() {
