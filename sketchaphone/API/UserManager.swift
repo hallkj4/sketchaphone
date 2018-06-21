@@ -259,7 +259,9 @@ class UserManager: NSObject {
             print("Notification settings: \(settings)")
             if settings.authorizationStatus == .authorized {
                 if (!self.pushEnabled) {
-                    UIApplication.shared.registerForRemoteNotifications()
+                    DispatchQueue.main.async {
+                        UIApplication.shared.registerForRemoteNotifications()
+                    }
                 }
             }
             else {

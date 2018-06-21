@@ -25,21 +25,21 @@ class JoinGameViewController: LoadingViewController, JoinGameDelgate {
             couldNotJoinGame(message: "currentGame was nil")
             return
         }
-        DispatchQueue.main.async(execute: {
+        DispatchQueue.main.async {
             if (game.turns.count % 2 == 1) {
                 self.performSegue(withIdentifier: "draw", sender: nil)
                 return
             }
             self.performSegue(withIdentifier: "guess", sender: nil)
-        })
+        }
     }
     
     func couldNotJoinGame(message: String) {
-        DispatchQueue.main.async(execute: {
+        DispatchQueue.main.async {
             self.alert(message, handler: { _ in
                 self.goHome()
             })
-        })
+        }
     }
 }
 
