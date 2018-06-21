@@ -70,6 +70,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             NSLog("Error initializing appsync client. Error: %@", error as NSError)
         }
         
+        completedGameManager.add(watcher: BadgeCountManager.shared)
+        
         if (userManager.isSignedIn()) {
             flagManager.handleStartUpSignedIn()
             completedGameManager.handleStartUpSignedIn()

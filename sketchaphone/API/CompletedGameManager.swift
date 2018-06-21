@@ -221,6 +221,7 @@ class CompletedGameManager {
         myNewlyCompletedGames.removeAll()
         LocalSQLiteManager.sharedInstance.clearCompletedGames()
         LocalSQLiteManager.sharedInstance.clearNewlyCompletedGames()
+        notifyWatchers()
     }
     
     

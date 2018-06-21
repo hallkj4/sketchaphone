@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		4C0249DD20D9C5DD00F338B7 /* SetDeviceToken.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 4C0249DC20D9C5DD00F338B7 /* SetDeviceToken.graphql */; };
 		4C0249DF20DC4EB200F338B7 /* NoNetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C0249DE20DC4EB200F338B7 /* NoNetworkError.swift */; };
+		4C0249E120DC5ABD00F338B7 /* BadgeCountManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C0249E020DC5ABD00F338B7 /* BadgeCountManager.swift */; };
 		4C0A0812203FA19F009FED9F /* GameDetailed.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 4C0A0811203FA19F009FED9F /* GameDetailed.graphql */; };
 		4C0A08142040B84A009FED9F /* schema.json in Resources */ = {isa = PBXBuildFile; fileRef = 4C0A08132040B849009FED9F /* schema.json */; };
 		4C0A08182040B9AA009FED9F /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C0A08172040B9A9009FED9F /* API.swift */; };
@@ -78,6 +79,7 @@
 		4C0249DB20D8322C00F338B7 /* sketchaphone.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = sketchaphone.entitlements; sourceTree = "<group>"; };
 		4C0249DC20D9C5DD00F338B7 /* SetDeviceToken.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = SetDeviceToken.graphql; sourceTree = "<group>"; };
 		4C0249DE20DC4EB200F338B7 /* NoNetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoNetworkError.swift; sourceTree = "<group>"; };
+		4C0249E020DC5ABD00F338B7 /* BadgeCountManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgeCountManager.swift; sourceTree = "<group>"; };
 		4C0A0811203FA19F009FED9F /* GameDetailed.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = GameDetailed.graphql; sourceTree = "<group>"; };
 		4C0A08132040B849009FED9F /* schema.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = schema.json; sourceTree = "<group>"; };
 		4C0A08172040B9A9009FED9F /* API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
@@ -248,6 +250,7 @@
 				4C8C6C82201E6F2600197CBB /* Info.plist */,
 				4CF33D55202E80BB00D311FF /* InAppPurchaseBase.swift */,
 				4CF33D57202EA7BE00D311FF /* InAppPurchaseModel.swift */,
+				4C0249E020DC5ABD00F338B7 /* BadgeCountManager.swift */,
 			);
 			path = sketchaphone;
 			sourceTree = "<group>";
@@ -526,6 +529,7 @@
 				4CC9B45D2040F77F0079D202 /* NilDataError.swift in Sources */,
 				4C7EBF7920C9FF30006AE5C0 /* ResetPasswordConfirmViewController.swift in Sources */,
 				4CB8B04A20218CD700D0DD95 /* UIColor.swift in Sources */,
+				4C0249E120DC5ABD00F338B7 /* BadgeCountManager.swift in Sources */,
 				4CF33D4E202A657E00D311FF /* FlagViewController.swift in Sources */,
 				4CF33D52202A792800D311FF /* SettingsViewController.swift in Sources */,
 				4C6C9622201E8C5800A059E9 /* DrawViewController.swift in Sources */,
