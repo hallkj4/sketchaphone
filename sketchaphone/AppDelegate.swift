@@ -69,6 +69,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         catch {
             NSLog("Error initializing appsync client. Error: %@", error as NSError)
         }
+        UNUserNotificationCenter.current().delegate = NotificationsDelegate.shared
         
         completedGameManager.add(watcher: BadgeCountManager.shared)
         

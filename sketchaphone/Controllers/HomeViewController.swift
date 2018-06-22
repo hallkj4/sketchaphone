@@ -18,6 +18,7 @@ class HomeViewController: LoadingViewController {
         
         self.navigationController?.setNavigationBarHidden(true, animated: true)
         updateButtonsForSignIn()
+        NotificationsDelegate.shared.pushNotifications()
     }
     
     func updateButtonsForSignIn() {
