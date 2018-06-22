@@ -41,7 +41,17 @@ class NewGameViewController: LoadingViewController, UITextFieldDelegate {
                         return
                     }
                     self.alert("Your game was created!", title: "Success", handler: { _ in
-                        self.navigationController?.popViewController(animated: true)
+                        userManager.conditionallyPromptForPush({ err in
+                            DispatchQueue.main.async {
+                                if let err = err {
+                                    self.alert(err, handler: {_ in
+                                        self.goHome()
+                                    })
+                                    return
+                                }
+                                self.goHome()
+                            }
+                        })
                     })
                 }
             })

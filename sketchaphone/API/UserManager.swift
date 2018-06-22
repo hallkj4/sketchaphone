@@ -12,6 +12,7 @@ class UserManager: NSObject {
     private var name: String?
     
     public private(set) var pushEnabled = false
+    private var shouldPromptForPush = false
     
     private var loginCallback: ((String?, Bool) -> Void)?
     private var enablePushCallback: ((String?) -> Void)?
@@ -249,11 +250,30 @@ class UserManager: NSObject {
     
     func handleStartUp() {
         self.pushEnabled = LocalSQLiteManager.sharedInstance.getMisc(key: "pushEnabled") != nil
+        self.shouldPromptForPush = LocalSQLiteManager.sharedInstance.getMisc(key: "shouldPromptForPush") != nil
         getNotificationSettings()
     }
     
     private func handleSignUp() {
         getNotificationSettings()
+        if (!pushEnabled) {
+            self.shouldPromptForPush = true
+            LocalSQLiteManager.sharedInstance.putMisc(key: "shouldPromptForPush", value: "true")
+        }
+    }
+    
+    func conditionallyPromptForPush(_ callback: @escaping (String?) -> Void) {
+        if(pushEnabled) {
+            callback(nil)
+            return
+        }
+        if(!shouldPromptForPush) {
+            callback(nil)
+            return
+        }
+        self.shouldPromptForPush = false
+        LocalSQLiteManager.sharedInstance.deleteMisc(key: "shouldPromptForPush")
+        enablePushNotifications(callback)
     }
     
     func enablePushNotifications(_ callback: @escaping (String?) -> Void) {

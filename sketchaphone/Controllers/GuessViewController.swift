@@ -109,8 +109,17 @@ class GuessViewController: LoadingViewController, UIScrollViewDelegate, UITextFi
                         self.navigateTo(completedGame: game.fragments.gameDetailed)
                         return
                     }
-                    
-                    self.goHome()
+                    userManager.conditionallyPromptForPush({ err in
+                        DispatchQueue.main.async {
+                            if let err = err {
+                                self.alert(err, handler: {_ in
+                                    self.goHome()
+                                })
+                                return
+                            }
+                            self.goHome()
+                        }
+                    })
                 }
             })
         })
