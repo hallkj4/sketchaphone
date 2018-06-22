@@ -43,6 +43,19 @@ class NotificationsDelegate: NSObject, UNUserNotificationCenterDelegate {
             return
         }
         NSLog("game id found: " + gameId)
+        
+        guard let rootViewController = UIApplication.shared.keyWindow?.rootViewController as? UINavigationController else {
+            NSLog("the root was not a navigation controller!?")
+            completionHandler()
+            return
+        }
+        guard let topController = rootViewController.topViewController else {
+            NSLog("no topViewController")
+            completionHandler()
+            return
+        }
+        
+        topController.navigateTo(completedGameId: gameId)
         completionHandler()
     }
     

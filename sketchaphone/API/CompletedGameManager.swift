@@ -78,6 +78,11 @@ class CompletedGameManager {
         }
     }
     
+    func forceRefetch(_ callback: @escaping () -> Void) {
+        self.lastTimeIFetchedGames = nil
+        fetchMyCompletedGames(callback: callback)
+    }
+    
     func completedGameCount() -> Int {
         return inProgressGames.count + myCompletedGames.count
     }
@@ -87,6 +92,10 @@ class CompletedGameManager {
             return inProgressGames[i].fragments.gameDetailed
         }
         return myCompletedGames[i - inProgressGames.count]
+    }
+    
+    func getCompletedGame(by gameId: String) -> GameDetailed? {
+        return myCompletedGames.first(where: {$0.id == gameId})
     }
     
     func isNew(gameId: String) -> Bool {
@@ -128,7 +137,7 @@ class CompletedGameManager {
         })
     }
     
-    private func fetchMyCompletedGames(nextPage: Bool = false) {
+    private func fetchMyCompletedGames(nextPage: Bool = false, callback: (() -> Void)? = nil) {
         var nextToken: String? = nil
         if (nextPage) {
             nextToken = myCompletedGamesNextToken
@@ -138,10 +147,12 @@ class CompletedGameManager {
         appSyncClient!.fetch(query: MyCompletedTurnsQuery(nextToken: nextToken), cachePolicy: .fetchIgnoringCacheData, resultHandler: { (result, error) in
             if let error = error {
                 NSLog("Error occurred: \(error.localizedDescription )")
+                callback?()
                 return
             }
             guard let turnsRaw = result?.data?.myCompletedTurns.turns else {
                 NSLog("completed turns was null")
+                callback?()
                 return
             }
             var newFound = false
@@ -171,6 +182,7 @@ class CompletedGameManager {
             if (newFound) {
                 self.notifyWatchers()
             }
+            callback?()
         })
     }
     

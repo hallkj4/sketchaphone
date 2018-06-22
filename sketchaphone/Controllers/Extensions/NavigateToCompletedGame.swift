@@ -5,6 +5,24 @@ protocol NavigateToCompletedGame {
 }
 
 extension UIViewController: NavigateToCompletedGame {
+    
+    func navigateTo(completedGameId: String) {
+        if let completedGame = completedGameManager.getCompletedGame(by: completedGameId) {
+            navigateTo(completedGame: completedGame)
+            return
+        }
+        NSLog("game was not found - refetching")
+        completedGameManager.forceRefetch({
+            if let completedGame = completedGameManager.getCompletedGame(by: completedGameId) {
+                self.navigateTo(completedGame: completedGame)
+                return
+            }
+            NSLog("game " + completedGameId + " was not found")
+            self.alert("Could not find game, sorry.")
+        })
+        
+    }
+    
     func navigateTo(completedGame: GameDetailed) {
         guard let rootController = self.navigationController?.viewControllers[0] else {
             NSLog("Could not get root view controller")
