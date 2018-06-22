@@ -28,6 +28,24 @@ class NotificationsDelegate: NSObject, UNUserNotificationCenterDelegate {
         completionHandler(.alert)
     }
     
+    func userNotificationCenter(_ center: UNUserNotificationCenter,
+                                didReceive response: UNNotificationResponse,
+                                withCompletionHandler completionHandler: @escaping () -> Void) {
+        let userInfo = response.notification.request.content.userInfo
+        guard let aps = userInfo["aps"] as? [String: AnyObject] else {
+            NSLog("aps was not a hash?")
+            completionHandler()
+            return
+        }
+        guard let gameId = aps["gameId"] as? String else {
+            NSLog("game id was not attached to the message")
+            completionHandler()
+            return
+        }
+        NSLog("game id found: " + gameId)
+        completionHandler()
+    }
+    
     func pushNotifications() {
         while let notification = buffer.popLast() {
             UNUserNotificationCenter.current().add(notification.request, withCompletionHandler: nil)
