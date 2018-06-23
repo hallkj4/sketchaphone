@@ -21,7 +21,7 @@ class HomeViewController: LoadingViewController {
         self.navigationController?.setNavigationBarHidden(true, animated: true)
         updateButtonsForSignIn()
         NotificationsDelegate.shared.pushNotifications()
-        Analytics.logEvent("homeScreen", parameters: nil)
+        Analytics.logEvent(AnalyticsEventViewItem, parameters: [AnalyticsParameterItemName: "home"])
     }
     
     func updateButtonsForSignIn() {

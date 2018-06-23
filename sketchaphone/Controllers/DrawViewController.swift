@@ -84,8 +84,8 @@ class DrawViewController: LoadingViewController, UIScrollViewDelegate, GADInters
         if (inAppPurchaseModel.hasPurchasedNoAds()) {
             return
         }
-        interstitial = GADInterstitial(adUnitID: "ca-app-pub-3940256099942544/4411468910")
-        //TODO - use this for prod ca-app-pub-6287206061979264/9009711661
+        interstitial = GADInterstitial(adUnitID: "ca-app-pub-6287206061979264/9009711661")
+        //NOTE: code for testing: ca-app-pub-3940256099942544/4411468910
         interstitial.delegate = self
         let request = GADRequest()
         interstitial.load(request)
@@ -160,8 +160,7 @@ class DrawViewController: LoadingViewController, UIScrollViewDelegate, GADInters
         })
     }
     
-    private func doDone() {
-        Analytics.logEvent("drew", parameters: nil)
+    private func doDone() {Analytics.logEvent(AnalyticsEventViewItem, parameters: [AnalyticsParameterItemName: "drew"])
         guard let game = completedGame?.fragments.gameDetailed else {
             goHome()
             return

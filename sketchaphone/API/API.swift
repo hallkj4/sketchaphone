@@ -1018,23 +1018,25 @@ public final class RenewLockMutation: GraphQLMutation {
 
 public final class SetDeviceTokenMutation: GraphQLMutation {
   public static let operationString =
-    "mutation setDeviceToken($token: String) {\n  setDeviceToken(token: $token)\n}"
+    "mutation setDeviceToken($token: String, $sandbox: Boolean) {\n  setDeviceToken(token: $token, sandbox: $sandbox)\n}"
 
   public var token: String?
+  public var sandbox: Bool?
 
-  public init(token: String? = nil) {
+  public init(token: String? = nil, sandbox: Bool? = nil) {
     self.token = token
+    self.sandbox = sandbox
   }
 
   public var variables: GraphQLMap? {
-    return ["token": token]
+    return ["token": token, "sandbox": sandbox]
   }
 
   public struct Data: GraphQLSelectionSet {
     public static let possibleTypes = ["Mutation"]
 
     public static let selections: [GraphQLSelection] = [
-      GraphQLField("setDeviceToken", arguments: ["token": GraphQLVariable("token")], type: .nonNull(.scalar(Bool.self))),
+      GraphQLField("setDeviceToken", arguments: ["token": GraphQLVariable("token"), "sandbox": GraphQLVariable("sandbox")], type: .nonNull(.scalar(Bool.self))),
     ]
 
     public var snapshot: Snapshot

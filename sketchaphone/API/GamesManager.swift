@@ -17,7 +17,7 @@ class GamesManager {
     private var renewLockTimer: Timer?
     var renewLockDelegate: RenewLockDelegate?
     
-    let numRounds = 4 //TODO - update this to 9
+    let numRounds = 9
     
     func new(phrase: String, callback: @escaping (Error?) -> Void) {
         NSLog("attempting to create game: " + phrase)

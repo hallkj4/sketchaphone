@@ -105,7 +105,12 @@ class UserManager: NSObject {
             callback(NoNetworkError())
             return
         }
-        appSyncClient?.perform(mutation: SetDeviceTokenMutation(token: deviceToken), resultHandler: {(result, error) in
+        #if DEBUG
+        let sandbox = true
+        #else
+        let sandbox = false
+        #endif
+        appSyncClient?.perform(mutation: SetDeviceTokenMutation(token: deviceToken, sandbox: sandbox), resultHandler: {(result, error) in
             if let error = error {
                 callback(error)
                 return
@@ -240,14 +245,14 @@ class UserManager: NSObject {
         completedGameManager.handleSignOut()
         gamesManager.handleSignOut()
         flagManager.handleSignOut()
-        Analytics.logEvent("sign_out", parameters: nil)
+        Analytics.logEvent(AnalyticsEventViewItem, parameters: [AnalyticsParameterItemName: "signOut"])
         Analytics.setUserID(nil)
         identityPool?.clearAll()
         credentialsProvider?.clearKeychain()
     }
     
     private func completeSignIn() {
-        Analytics.logEvent("sign_in", parameters: nil)
+        Analytics.logEvent(AnalyticsEventLogin, parameters: nil)
         completedGameManager.handleSignIn()
         flagManager.handleSignIn()
         getNotificationSettings()
@@ -261,7 +266,7 @@ class UserManager: NSObject {
     
     private func handleSignUp() {
         getNotificationSettings()
-        Analytics.logEvent("sign_up", parameters: nil)
+        Analytics.logEvent(AnalyticsEventSignUp, parameters: [AnalyticsParameterSignUpMethod: "email"])
         if (!pushEnabled) {
             self.shouldPromptForPush = true
             LocalSQLiteManager.sharedInstance.putMisc(key: "shouldPromptForPush", value: "true")
@@ -407,7 +412,7 @@ extension UserManager: PushNotificationRegistrationDelegate {
             }
             self.pushEnabled = true
             LocalSQLiteManager.sharedInstance.putMisc(key: "pushEnabled", value: "true")
-            Analytics.logEvent("enabled_push", parameters: nil)
+            Analytics.logEvent(AnalyticsEventViewItem, parameters: [AnalyticsParameterItemName: "enabledPush"])
             self.enablePushCallback?(nil)
         }
     }

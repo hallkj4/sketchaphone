@@ -106,7 +106,7 @@ class GuessViewController: LoadingViewController, UIScrollViewDelegate, UITextFi
                         self.alert("Error: game was not set in response, but no errors were sent.")
                         return
                     }
-                    Analytics.logEvent("guessed", parameters: nil)
+                    Analytics.logEvent(AnalyticsEventViewItem, parameters: [AnalyticsParameterItemName: "guessed"])
                     if (game.turns.count >= gamesManager.numRounds) {
                         self.navigateTo(completedGame: game.fragments.gameDetailed)
                         return

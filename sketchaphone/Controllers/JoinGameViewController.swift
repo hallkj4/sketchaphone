@@ -16,7 +16,7 @@ class JoinGameViewController: LoadingViewController, JoinGameDelgate {
             })
             return
         }
-        Analytics.logEvent("joiningGame", parameters: nil)
+        Analytics.logEvent(AnalyticsEventViewItem, parameters: [AnalyticsParameterItemName: "joiningGame"])
         
         gamesManager.joinGame(delegate: self)
     }

@@ -41,7 +41,7 @@ class NewGameViewController: LoadingViewController, UITextFieldDelegate {
                         self.alert("game could not be created: \(error.localizedDescription)")
                         return
                     }
-                    Analytics.logEvent("createdGame", parameters: nil)
+                    Analytics.logEvent(AnalyticsEventViewItem, parameters: [AnalyticsParameterItemName: "createdGame"])
                     self.alert("Your game was created!", title: "Success", handler: { _ in
                         userManager.conditionallyPromptForPush({ err in
                             DispatchQueue.main.async {
