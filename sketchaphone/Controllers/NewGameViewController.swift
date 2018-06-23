@@ -1,4 +1,5 @@
 import UIKit
+import Firebase
 
 class NewGameViewController: LoadingViewController, UITextFieldDelegate {
     
@@ -40,6 +41,7 @@ class NewGameViewController: LoadingViewController, UITextFieldDelegate {
                         self.alert("game could not be created: \(error.localizedDescription)")
                         return
                     }
+                    Analytics.logEvent("createdGame", parameters: nil)
                     self.alert("Your game was created!", title: "Success", handler: { _ in
                         userManager.conditionallyPromptForPush({ err in
                             DispatchQueue.main.async {

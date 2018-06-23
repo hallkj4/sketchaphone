@@ -1,4 +1,5 @@
 import UIKit
+import Firebase
 
 class JoinGameViewController: LoadingViewController, JoinGameDelgate {
     
@@ -15,6 +16,7 @@ class JoinGameViewController: LoadingViewController, JoinGameDelgate {
             })
             return
         }
+        Analytics.logEvent("joiningGame", parameters: nil)
         
         gamesManager.joinGame(delegate: self)
     }

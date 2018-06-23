@@ -15,5 +15,7 @@ target 'sketchaphone' do
   pod 'Kingfisher'
   pod 'SQLite.swift'
   pod 'Google-Mobile-Ads-SDK'
+  
+  pod 'Firebase/Core'
 end
 

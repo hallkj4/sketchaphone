@@ -1,5 +1,6 @@
 import UIKit
 import Kingfisher
+import Firebase
 
 class GuessViewController: LoadingViewController, UIScrollViewDelegate, UITextFieldDelegate {
     
@@ -105,6 +106,7 @@ class GuessViewController: LoadingViewController, UIScrollViewDelegate, UITextFi
                         self.alert("Error: game was not set in response, but no errors were sent.")
                         return
                     }
+                    Analytics.logEvent("guessed", parameters: nil)
                     if (game.turns.count >= gamesManager.numRounds) {
                         self.navigateTo(completedGame: game.fragments.gameDetailed)
                         return

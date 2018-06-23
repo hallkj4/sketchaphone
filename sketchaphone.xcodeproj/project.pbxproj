@@ -11,6 +11,7 @@
 		4C0249DF20DC4EB200F338B7 /* NoNetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C0249DE20DC4EB200F338B7 /* NoNetworkError.swift */; };
 		4C0249E120DC5ABD00F338B7 /* BadgeCountManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C0249E020DC5ABD00F338B7 /* BadgeCountManager.swift */; };
 		4C0249E320DC689F00F338B7 /* NotificationsDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C0249E220DC689F00F338B7 /* NotificationsDelegate.swift */; };
+		4C0249E520DECE4000F338B7 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4C0249E420DECE3F00F338B7 /* GoogleService-Info.plist */; };
 		4C0A0812203FA19F009FED9F /* GameDetailed.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 4C0A0811203FA19F009FED9F /* GameDetailed.graphql */; };
 		4C0A08142040B84A009FED9F /* schema.json in Resources */ = {isa = PBXBuildFile; fileRef = 4C0A08132040B849009FED9F /* schema.json */; };
 		4C0A08182040B9AA009FED9F /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C0A08172040B9A9009FED9F /* API.swift */; };
@@ -82,6 +83,7 @@
 		4C0249DE20DC4EB200F338B7 /* NoNetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoNetworkError.swift; sourceTree = "<group>"; };
 		4C0249E020DC5ABD00F338B7 /* BadgeCountManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgeCountManager.swift; sourceTree = "<group>"; };
 		4C0249E220DC689F00F338B7 /* NotificationsDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsDelegate.swift; sourceTree = "<group>"; };
+		4C0249E420DECE3F00F338B7 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		4C0A0811203FA19F009FED9F /* GameDetailed.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = GameDetailed.graphql; sourceTree = "<group>"; };
 		4C0A08132040B849009FED9F /* schema.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = schema.json; sourceTree = "<group>"; };
 		4C0A08172040B9A9009FED9F /* API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
@@ -250,6 +252,7 @@
 				4C8C6C7D201E6F2600197CBB /* Assets.xcassets */,
 				4C8C6C7F201E6F2600197CBB /* LaunchScreen.storyboard */,
 				4C8C6C82201E6F2600197CBB /* Info.plist */,
+				4C0249E420DECE3F00F338B7 /* GoogleService-Info.plist */,
 				4CF33D55202E80BB00D311FF /* InAppPurchaseBase.swift */,
 				4CF33D57202EA7BE00D311FF /* InAppPurchaseModel.swift */,
 				4C0249E020DC5ABD00F338B7 /* BadgeCountManager.swift */,
@@ -430,6 +433,7 @@
 				4C0A0812203FA19F009FED9F /* GameDetailed.graphql in Resources */,
 				4C0249DD20D9C5DD00F338B7 /* SetDeviceToken.graphql in Resources */,
 				4C8C6C7E201E6F2600197CBB /* Assets.xcassets in Resources */,
+				4C0249E520DECE4000F338B7 /* GoogleService-Info.plist in Resources */,
 				4CC9B4512040DFC10079D202 /* TakeTurn.graphql in Resources */,
 				4C8C6C7C201E6F2600197CBB /* Main.storyboard in Resources */,
 				4CB8B04520217DF900D0DD95 /* logo.svg in Resources */,
@@ -491,9 +495,11 @@
 				"${BUILT_PRODUCTS_DIR}/FBSDKLoginKit/FBSDKLoginKit.framework",
 				"${BUILT_PRODUCTS_DIR}/FacebookCore/FacebookCore.framework",
 				"${BUILT_PRODUCTS_DIR}/FacebookLogin/FacebookLogin.framework",
+				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
 				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
 				"${BUILT_PRODUCTS_DIR}/ReachabilitySwift/Reachability.framework",
 				"${BUILT_PRODUCTS_DIR}/SQLite.swift/SQLite.framework",
+				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
@@ -507,9 +513,11 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKLoginKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FacebookCore.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FacebookLogin.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Reachability.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SQLite.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;

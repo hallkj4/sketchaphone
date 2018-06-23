@@ -1,6 +1,7 @@
 import AWSCognitoIdentityProvider
 import AWSAppSync
 import UserNotifications
+import Firebase
 
 class UserManager: NSObject {
     var identityPool: AWSCognitoIdentityUserPool?
@@ -46,6 +47,7 @@ class UserManager: NSObject {
                 return
             }
             self.currentUser = userRaw.fragments.userBasic
+            Analytics.setUserID(self.currentUser!.id)
             callback(nil)
         })
     }
@@ -238,11 +240,14 @@ class UserManager: NSObject {
         completedGameManager.handleSignOut()
         gamesManager.handleSignOut()
         flagManager.handleSignOut()
+        Analytics.logEvent("sign_out", parameters: nil)
+        Analytics.setUserID(nil)
         identityPool?.clearAll()
         credentialsProvider?.clearKeychain()
     }
     
     private func completeSignIn() {
+        Analytics.logEvent("sign_in", parameters: nil)
         completedGameManager.handleSignIn()
         flagManager.handleSignIn()
         getNotificationSettings()
@@ -256,10 +261,12 @@ class UserManager: NSObject {
     
     private func handleSignUp() {
         getNotificationSettings()
+        Analytics.logEvent("sign_up", parameters: nil)
         if (!pushEnabled) {
             self.shouldPromptForPush = true
             LocalSQLiteManager.sharedInstance.putMisc(key: "shouldPromptForPush", value: "true")
         }
+        
     }
     
     func conditionallyPromptForPush(_ callback: @escaping (String?) -> Void) {
@@ -400,6 +407,7 @@ extension UserManager: PushNotificationRegistrationDelegate {
             }
             self.pushEnabled = true
             LocalSQLiteManager.sharedInstance.putMisc(key: "pushEnabled", value: "true")
+            Analytics.logEvent("enabled_push", parameters: nil)
             self.enablePushCallback?(nil)
         }
     }

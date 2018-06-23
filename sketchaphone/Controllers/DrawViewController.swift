@@ -1,5 +1,6 @@
 import GoogleMobileAds
 import UIKit
+import Firebase
 
 class DrawViewController: LoadingViewController, UIScrollViewDelegate, GADInterstitialDelegate {
     @IBOutlet weak var scrollView: UIScrollView!
@@ -14,6 +15,7 @@ class DrawViewController: LoadingViewController, UIScrollViewDelegate, GADInters
     let limitedColors: [UIColor] = [.black, .white]
     let fullColors : [UIColor] = [.black, .white, .red, .orange, .yellow, .green, .blue, .cyan]
     var colorButtons = [UIButton]()
+    var adsToSkip = Int(LocalSQLiteManager.sharedInstance.getMisc(key: "adsToSkip") ?? "3") ?? 3
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -140,6 +142,12 @@ class DrawViewController: LoadingViewController, UIScrollViewDelegate, GADInters
                         self.doDone()
                         return
                     }
+                    if (self.adsToSkip > 0) {
+                        self.adsToSkip -= 1
+                        LocalSQLiteManager.sharedInstance.putMisc(key: "adsToSkip", value: String(self.adsToSkip))
+                        self.doDone()
+                        return
+                    }
                     if (self.interstitial.isReady) {
                         self.interstitial.present(fromRootViewController: self)
                         return
@@ -153,6 +161,7 @@ class DrawViewController: LoadingViewController, UIScrollViewDelegate, GADInters
     }
     
     private func doDone() {
+        Analytics.logEvent("drew", parameters: nil)
         guard let game = completedGame?.fragments.gameDetailed else {
             goHome()
             return

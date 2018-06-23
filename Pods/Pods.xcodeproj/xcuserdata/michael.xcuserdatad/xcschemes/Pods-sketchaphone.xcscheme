@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "5DB65B269571531E1CD7BE043875C25D"
+               BlueprintIdentifier = "AC12E80EBDC2113B89139251A3F928CF"
                BuildableName = "Pods_sketchaphone.framework"
                BlueprintName = "Pods-sketchaphone"
                ReferencedContainer = "container:Pods.xcodeproj">
@@ -45,7 +45,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "5DB65B269571531E1CD7BE043875C25D"
+            BlueprintIdentifier = "AC12E80EBDC2113B89139251A3F928CF"
             BuildableName = "Pods_sketchaphone.framework"
             BlueprintName = "Pods-sketchaphone"
             ReferencedContainer = "container:Pods.xcodeproj">

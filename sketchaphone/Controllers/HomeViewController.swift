@@ -1,4 +1,6 @@
 import UIKit
+import Firebase
+
 class HomeViewController: LoadingViewController {
     @IBOutlet weak var pencil: UIImageView!
     @IBOutlet weak var startButton: UIButton!
@@ -19,6 +21,7 @@ class HomeViewController: LoadingViewController {
         self.navigationController?.setNavigationBarHidden(true, animated: true)
         updateButtonsForSignIn()
         NotificationsDelegate.shared.pushNotifications()
+        Analytics.logEvent("homeScreen", parameters: nil)
     }
     
     func updateButtonsForSignIn() {
