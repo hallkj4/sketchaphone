@@ -94,9 +94,9 @@ class DrawViewController: LoadingViewController, UIScrollViewDelegate, GADInters
     func interstitialDidDismissScreen(_ ad: GADInterstitial) {
         doDone()
     }
+    
     func interstitial(_ ad: GADInterstitial, didFailToReceiveAdWithError error: GADRequestError) {
         NSLog("interstitial:didFailToReceiveAdWithError: \(error.localizedDescription)")
-        doDone()
     }
     
     func viewForZooming(in scrollView: UIScrollView) -> UIView? {
