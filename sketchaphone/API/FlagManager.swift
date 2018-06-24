@@ -46,6 +46,11 @@ class FlagManager {
                 self.loaded = false
                 return
             }
+            if let error = result?.errors?.first {
+                NSLog("could not fetch flags, encountered error: " + error.localizedDescription)
+                self.loaded = false
+                return
+            }
             guard let flags = result?.data?.myFlags.flags else {
                 NSLog("there were no flags")
                 return
@@ -86,7 +91,12 @@ class FlagManager {
     func flag(game: GameDetailed, reason: String, callback: @escaping (Error?) -> Void) {
         appSyncClient?.perform(mutation: FlagGameMutation(gameId: game.id, reason: reason), resultHandler: {(result, error) in
             if let error = error {
-                print("Error occurred: \(error.localizedDescription )")
+                NSLog("Error occurred: \(error.localizedDescription )")
+                callback(error)
+                return
+            }
+            if let error = result?.errors?.first {
+                NSLog("Error occurred: \(error.localizedDescription )")
                 callback(error)
                 return
             }

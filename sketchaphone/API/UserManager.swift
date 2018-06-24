@@ -39,6 +39,12 @@ class UserManager: NSObject {
     func fetchCurrentUser(_ callback: @escaping (String?) -> Void) {
         appSyncClient?.fetch(query: CurrentUserQuery(), cachePolicy: .fetchIgnoringCacheData, resultHandler: { (result, error) in
             if let error = error {
+                NSLog("Error occurred: \(error.localizedDescription )")
+                callback(error.localizedDescription)
+                return
+            }
+            if let error = result?.errors?.first {
+                NSLog("Error occurred: \(error.localizedDescription )")
                 callback(error.localizedDescription)
                 return
             }
@@ -89,6 +95,10 @@ class UserManager: NSObject {
                 callback(error)
                 return
             }
+            if let error = result?.errors?.first {
+                callback(error)
+                return
+            }
             guard let userRaw = result?.data?.setName else {
                 callback(NilDataError())
                 return
@@ -112,6 +122,10 @@ class UserManager: NSObject {
         #endif
         appSyncClient?.perform(mutation: SetDeviceTokenMutation(token: deviceToken, sandbox: sandbox), resultHandler: {(result, error) in
             if let error = error {
+                callback(error)
+                return
+            }
+            if let error = result?.errors?.first {
                 callback(error)
                 return
             }

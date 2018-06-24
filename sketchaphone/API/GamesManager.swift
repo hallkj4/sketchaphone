@@ -27,7 +27,10 @@ class GamesManager {
                 callback(error)
                 return
             }
-            
+            if let error = result?.errors?.first {
+                callback(error)
+                return
+            }
             guard let newGame = result?.data?.startGame.fragments.openGameDetailed else {
                 NSLog("game data was not sent")
                 callback(NilDataError())
@@ -99,6 +102,10 @@ class GamesManager {
             callback(error, nil)
             return
         }
+        if let error = result?.errors?.first {
+            callback(error, nil)
+            return
+        }
         
         guard let game = result?.data?.takeTurn else {
             NSLog("game data was not sent")
@@ -115,6 +122,12 @@ class GamesManager {
         NSLog("renewing lock")
         appSyncClient!.perform(mutation: RenewLockMutation(), resultHandler: {(result, error) in
             if let error = error {
+                NSLog("Error renewing lock on game: \(error.localizedDescription)")
+                self.renewLockTimer?.invalidate()
+                self.renewLockDelegate?.renewLockError(error.localizedDescription)
+                return
+            }
+            if let error = result?.errors?.first {
                 NSLog("Error renewing lock on game: \(error.localizedDescription)")
                 self.renewLockTimer?.invalidate()
                 self.renewLockDelegate?.renewLockError(error.localizedDescription)
@@ -143,7 +156,11 @@ class GamesManager {
         self.stopRenewing()
         appSyncClient?.perform(mutation: ReleaseGameMutation(), resultHandler: {(result, error) in
             if let error = error {
-                NSLog("Error occurred: \(error.localizedDescription )")
+                NSLog("Error occurred: \(error.localizedDescription)")
+                return
+            }
+            if let error = result?.errors?.first {
+                NSLog("Error occurred: \(error.localizedDescription)")
                 return
             }
             self.currentGame = nil
@@ -161,7 +178,10 @@ class GamesManager {
                 delegate.couldNotJoinGame(message: error.localizedDescription)
                 return
             }
-            
+            if let error = result?.errors?.first {
+                delegate.couldNotJoinGame(message: error.localizedDescription)
+                return
+            }
             guard let gameRaw = result?.data?.joinGame else {
                 NSLog("could not join game: no games were found")
                 delegate.couldNotJoinGame(message: "No games were found")

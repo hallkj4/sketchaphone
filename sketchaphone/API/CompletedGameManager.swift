@@ -126,6 +126,10 @@ class CompletedGameManager {
                 print("Error occurred: \(error.localizedDescription )")
                 return
             }
+            if let error = result?.errors?.first {
+                NSLog("Error occurred: \(error.localizedDescription)")
+                return
+            }
             guard let inProgressTurns = result?.data?.inProgressTurns else {
                 NSLog("inprogressTurns was null")
                 return
@@ -146,6 +150,11 @@ class CompletedGameManager {
         NSLog("fetching more completed games: \(nextPage)")
         appSyncClient!.fetch(query: MyCompletedTurnsQuery(nextToken: nextToken), cachePolicy: .fetchIgnoringCacheData, resultHandler: { (result, error) in
             if let error = error {
+                NSLog("Error occurred: \(error.localizedDescription )")
+                callback?()
+                return
+            }
+            if let error = result?.errors?.first {
                 NSLog("Error occurred: \(error.localizedDescription )")
                 callback?()
                 return
@@ -185,33 +194,6 @@ class CompletedGameManager {
             callback?()
         })
     }
-    
-    //    func fetchAllCompletedGames(nextPage: Bool = false) {
-    //        var nextToken: String? = nil
-    //        if (nextPage) {
-    //            nextToken = completedGamesNextToken
-    //        }
-    //        else {
-    //            completedGames.removeAll()
-    //        }
-    //        completedGamesNextToken = nil
-    //
-    //        appSyncClient!.fetch(query: CompletedGamesQuery(nextToken: nextToken), resultHandler: { (result, error) in
-    //            if let error = error {
-    //                print("Error occurred: \(error.localizedDescription )")
-    //                return
-    //            }
-    //            guard let gamesRaw = result?.data?.completedGames.games else {
-    //                NSLog("completed games was null")
-    //                return
-    //            }
-    //            self.completedGames = gamesRaw.map{$0.fragments.gameDetailed}
-    //            self.completedGamesNextToken = result?.data?.completedGames.nextToken
-    //
-    //            self.notifyWatchers()
-    //        })
-    //    }
-
     
     func handleStartUpSignedIn() {
         self.myCompletedGames = LocalSQLiteManager.sharedInstance.getCompletedGames().sorted(by: { g1, g2 -> Bool in
