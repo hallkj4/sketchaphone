@@ -305,8 +305,8 @@
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2Ya-9R-hdV">
                                                 <rect key="frame" x="0.0" y="319.5" width="300" height="243.5"/>
                                                 <subviews>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0A0-lP-Vwv">
-                                                        <rect key="frame" x="0.0" y="0.0" width="300" height="111"/>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0A0-lP-Vwv">
+                                                        <rect key="frame" x="0.0" y="0.0" width="300" height="243.5"/>
                                                         <string key="text">In the next few months I'll be adding social features to see your facebook friends - follow other players - and play games with your friends.  Stay tuned!</string>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -616,13 +616,13 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" maximumZoomScale="2" translatesAutoresizingMaskIntoConstraints="NO" id="G4z-31-Kzf">
-                                <rect key="frame" x="0.0" y="64" width="320" height="416"/>
+                                <rect key="frame" x="10" y="64" width="300" height="416"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="chs-zi-9nF">
-                                        <rect key="frame" x="0.0" y="10" width="320" height="20.5"/>
+                                        <rect key="frame" x="0.0" y="10" width="300" height="20.5"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wXd-2S-S99">
-                                                <rect key="frame" x="139" y="0.0" width="42" height="20.5"/>
+                                                <rect key="frame" x="129" y="0.0" width="42" height="20.5"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
@@ -632,9 +632,9 @@
                                 </subviews>
                                 <constraints>
                                     <constraint firstItem="chs-zi-9nF" firstAttribute="top" secondItem="G4z-31-Kzf" secondAttribute="top" constant="10" id="Sci-oq-6ka"/>
-                                    <constraint firstAttribute="bottom" secondItem="chs-zi-9nF" secondAttribute="bottom" constant="-10" id="YaO-Fn-tCo"/>
+                                    <constraint firstAttribute="bottom" secondItem="chs-zi-9nF" secondAttribute="bottom" constant="10" id="YaO-Fn-tCo"/>
                                     <constraint firstAttribute="trailing" secondItem="chs-zi-9nF" secondAttribute="trailing" id="cao-Ic-1Qk"/>
-                                    <constraint firstAttribute="width" relation="lessThanOrEqual" secondItem="chs-zi-9nF" secondAttribute="width" id="gHE-Nj-96j"/>
+                                    <constraint firstAttribute="width" secondItem="chs-zi-9nF" secondAttribute="width" id="gHE-Nj-96j"/>
                                     <constraint firstItem="chs-zi-9nF" firstAttribute="leading" secondItem="G4z-31-Kzf" secondAttribute="leading" id="okq-PT-vRU"/>
                                 </constraints>
                             </scrollView>
@@ -642,9 +642,9 @@
                         <color key="backgroundColor" red="0.51235103609999999" green="0.84975951910000003" blue="0.92168837790000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="G4z-31-Kzf" firstAttribute="top" secondItem="JOn-av-glK" secondAttribute="top" id="4W4-Ej-1qb"/>
-                            <constraint firstItem="G4z-31-Kzf" firstAttribute="leading" secondItem="JOn-av-glK" secondAttribute="leading" id="D1U-1U-3uK"/>
+                            <constraint firstItem="G4z-31-Kzf" firstAttribute="leading" secondItem="JOn-av-glK" secondAttribute="leading" constant="10" id="D1U-1U-3uK"/>
                             <constraint firstItem="JOn-av-glK" firstAttribute="bottom" secondItem="G4z-31-Kzf" secondAttribute="bottom" id="Uii-tP-pkL"/>
-                            <constraint firstItem="JOn-av-glK" firstAttribute="trailing" secondItem="G4z-31-Kzf" secondAttribute="trailing" id="df0-1U-bnj"/>
+                            <constraint firstItem="JOn-av-glK" firstAttribute="trailing" secondItem="G4z-31-Kzf" secondAttribute="trailing" constant="10" id="df0-1U-bnj"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="JOn-av-glK"/>
                     </view>

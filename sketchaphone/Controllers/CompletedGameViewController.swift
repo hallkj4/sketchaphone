@@ -23,20 +23,16 @@ class CompletedGameViewController: UIViewController {
         var first = true
         for turn in game.turns {
             if (turn.phrase != nil) {
-                let label = UILabel()
                 if (first) {
                     first = false
-                    label.text = "\(turn.user.name) started with clue: \(turn.phrase!)"
+                    addViewWithLabel("\(turn.user.name) started with clue: \(turn.phrase!)")
                 }
                 else {
-                    label.text = "\(turn.user.name) guessed: \(turn.phrase!)"
+                    addViewWithLabel("\(turn.user.name) guessed: \(turn.phrase!)")
                 }
-                stackView.addArrangedSubview(label)
             }
             else { // drawing
-                let label = UILabel()
-                label.text = "\(turn.user.name) drew"
-                stackView.addArrangedSubview(label)
+                addViewWithLabel("\(turn.user.name) drew")
                 
                 let imageView = UIImageView()
                 imageView.backgroundColor = .white
@@ -44,6 +40,23 @@ class CompletedGameViewController: UIViewController {
                 stackView.addArrangedSubview(imageView)
             }
         }
+    }
+    
+    private func addViewWithLabel(_ text: String) {
+        let label = UILabel()
+        label.textColor = .white
+        label.text = text
+        label.numberOfLines = 0
+        label.textAlignment = .center
+        let view = UIView()
+        view.addSubview(label)
+        stackView.addArrangedSubview(view)
+        
+        label.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint(item: label, attribute: .leading, relatedBy: .equal, toItem: view, attribute: .leading, multiplier: 1, constant: 0).isActive = true
+        NSLayoutConstraint(item: label, attribute: .trailing, relatedBy: .equal, toItem: view, attribute: .trailing, multiplier: 1, constant: 0).isActive = true
+        NSLayoutConstraint(item: label, attribute: .top, relatedBy: .equal, toItem: view, attribute: .top, multiplier: 1, constant: 20).isActive = true
+        NSLayoutConstraint(item: label, attribute: .bottom, relatedBy: .equal, toItem: view, attribute: .bottom, multiplier: 1, constant: 0).isActive = true
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
