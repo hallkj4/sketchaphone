@@ -8,11 +8,11 @@ protocol GameWatcher: AnyObject {
 
 class CompletedGameManager {
     
-    private var inProgressGames = [OpenGameDetailed]()
+    public private(set) var inProgressGames = [OpenGameDetailed]()
     
     //    var completedGames = [GameDetailed]()
     //    var completedGamesNextToken: String?
-    private var myCompletedGames = [GameDetailed]()
+    public private(set) var myCompletedGames = [GameDetailed]()
     
     var myNewlyCompletedGames = Set<String>()
     
@@ -81,17 +81,6 @@ class CompletedGameManager {
     func forceRefetch(_ callback: @escaping () -> Void) {
         self.lastTimeIFetchedGames = nil
         fetchMyCompletedGames(callback: callback)
-    }
-    
-    func completedGameCount() -> Int {
-        return inProgressGames.count + myCompletedGames.count
-    }
-    
-    func completedGameAt(_ i: Int) -> GameDetailed {
-        if (i < inProgressGames.count) {
-            return inProgressGames[i].fragments.gameDetailed
-        }
-        return myCompletedGames[i - inProgressGames.count]
     }
     
     func getCompletedGame(by gameId: String) -> GameDetailed? {

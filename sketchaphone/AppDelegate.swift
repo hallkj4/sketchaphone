@@ -61,7 +61,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             // Initialize the AWS AppSync configuration
             let appSyncConfig = try AWSAppSyncClientConfiguration(url: AppSyncEndpointURL, serviceRegion: AWSRegion, credentialsProvider: credentialsProvider)
             
-            
             // Initialize the AppSync client
             appSyncClient = try AWSAppSyncClient(appSyncConfig: appSyncConfig)
             

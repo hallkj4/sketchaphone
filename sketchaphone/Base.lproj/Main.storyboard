@@ -98,18 +98,42 @@
                                             <constraint firstItem="kTf-oa-qWc" firstAttribute="centerX" secondItem="NdV-rN-hzR" secondAttribute="centerX" id="Owh-uS-sXM"/>
                                         </constraints>
                                         <connections>
-                                            <outlet property="checkmark" destination="Qlm-iq-ze3" id="1bV-zu-oDB"/>
-                                            <outlet property="newLabel" destination="w0u-vf-qzz" id="5L3-jb-CbM"/>
-                                            <outlet property="phraseLabel" destination="kTf-oa-qWc" id="EeJ-TU-A8t"/>
-                                            <outlet property="startedByLabel" destination="v1n-zo-5PS" id="mL7-bc-daw"/>
-                                            <outlet property="turnsCount" destination="GMN-lf-ra4" id="aqN-eJ-T8r"/>
+                                            <outlet property="checkmark" destination="Qlm-iq-ze3" id="F2H-8v-c7b"/>
+                                            <outlet property="newLabel" destination="w0u-vf-qzz" id="hsd-fv-LyM"/>
+                                            <outlet property="phraseLabel" destination="kTf-oa-qWc" id="L4Q-C4-vcm"/>
+                                            <outlet property="startedByLabel" destination="v1n-zo-5PS" id="ePT-KU-euY"/>
+                                            <outlet property="turnsCount" destination="GMN-lf-ra4" id="bqU-Gy-38x"/>
                                             <segue destination="67R-YI-5RP" kind="show" identifier="details" id="UxJ-vx-zDj"/>
+                                        </connections>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="inProgressCell" rowHeight="60" id="nIj-z0-hRg" customClass="InProgressGamesTableViewCell" customModule="sketchaphone" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="88" width="320" height="60"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="nIj-z0-hRg" id="ywV-07-Sfq">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="59.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bSk-F2-K8C">
+                                                    <rect key="frame" x="135" y="5" width="50" height="23"/>
+                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="19"/>
+                                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                        <color key="backgroundColor" red="0.51235103609999999" green="0.84975951910000003" blue="0.92168837790000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <constraints>
+                                            <constraint firstItem="bSk-F2-K8C" firstAttribute="top" secondItem="nIj-z0-hRg" secondAttribute="top" constant="5" id="XHZ-qg-e2q"/>
+                                            <constraint firstItem="bSk-F2-K8C" firstAttribute="centerX" secondItem="nIj-z0-hRg" secondAttribute="centerX" id="guc-wP-o0T"/>
+                                        </constraints>
+                                        <connections>
+                                            <outlet property="label" destination="bSk-F2-K8C" id="haG-Iy-voj"/>
+                                            <segue destination="fLc-mZ-pXc" kind="show" identifier="inProgress" id="gDL-jv-Qd5"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
                                 <connections>
                                     <outlet property="dataSource" destination="heO-ie-tJR" id="95O-31-N0K"/>
-                                    <outlet property="delegate" destination="heO-ie-tJR" id="qV1-S7-K7Q"/>
                                 </connections>
                             </tableView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="5GX-zc-Iam">
@@ -441,7 +465,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tC4-RV-PCo" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1267.5" y="1532.5"/>
+            <point key="canvasLocation" x="1268" y="1945"/>
         </scene>
         <!--Shop-->
         <scene sceneID="7oM-6w-T13">
@@ -661,7 +685,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Cm3-j5-7ia" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2423" y="1158"/>
+            <point key="canvasLocation" x="2423" y="1033"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="BWK-gL-LXi">
@@ -1781,6 +1805,102 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PoV-QV-U81" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3276" y="-2509"/>
+        </scene>
+        <!--In Progress Games-->
+        <scene sceneID="pR8-iB-6zh">
+            <objects>
+                <viewController title="In Progress Games" id="fLc-mZ-pXc" customClass="InProgressGamesViewController" customModule="sketchaphone" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="yQ1-eU-mn8">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="64" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="kIB-yO-eZs">
+                                <rect key="frame" x="0.0" y="64" width="320" height="416"/>
+                                <color key="backgroundColor" red="0.66019021190000005" green="0.87573785559999995" blue="0.92168837790000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" rowHeight="60" id="c3f-y4-Zlj" customClass="InProgressTableViewCell" customModule="sketchaphone" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="320" height="60"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="c3f-y4-Zlj" id="P5N-Fl-gGY">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="59.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="&quot;Snake pit&quot;" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dmY-hx-WMQ">
+                                                    <rect key="frame" x="109" y="5" width="102.5" height="23"/>
+                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="19"/>
+                                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Started by Michael" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tDe-xh-VlZ">
+                                                    <rect key="frame" x="10" y="33.5" width="144" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="4/8" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cKe-XU-G8k">
+                                                    <rect key="frame" x="283" y="33.5" width="27" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="dmY-hx-WMQ" firstAttribute="top" secondItem="P5N-Fl-gGY" secondAttribute="top" constant="5" id="1GM-3C-nNX"/>
+                                                <constraint firstAttribute="bottom" secondItem="cKe-XU-G8k" secondAttribute="bottom" constant="5" id="5lh-7V-yDj"/>
+                                                <constraint firstAttribute="bottom" secondItem="tDe-xh-VlZ" secondAttribute="bottom" constant="5" id="SGX-Jt-2n4"/>
+                                                <constraint firstItem="tDe-xh-VlZ" firstAttribute="leading" secondItem="P5N-Fl-gGY" secondAttribute="leading" constant="10" id="dwF-TB-Cs8"/>
+                                                <constraint firstAttribute="trailing" secondItem="cKe-XU-G8k" secondAttribute="trailing" constant="10" id="g07-3o-X7p"/>
+                                                <constraint firstItem="cKe-XU-G8k" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="tDe-xh-VlZ" secondAttribute="trailing" constant="50" id="nsj-zx-FKS"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <color key="backgroundColor" red="0.51235103609999999" green="0.84975951910000003" blue="0.92168837790000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <constraints>
+                                            <constraint firstItem="dmY-hx-WMQ" firstAttribute="centerX" secondItem="c3f-y4-Zlj" secondAttribute="centerX" id="UlJ-7y-lgk"/>
+                                        </constraints>
+                                        <connections>
+                                            <outlet property="phraseLabel" destination="dmY-hx-WMQ" id="jhT-hy-QrO"/>
+                                            <outlet property="startedByLabel" destination="tDe-xh-VlZ" id="2eH-yf-VLb"/>
+                                            <outlet property="turnsCount" destination="cKe-XU-G8k" id="Kfq-un-U8c"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="fLc-mZ-pXc" id="dvv-dj-AM9"/>
+                                </connections>
+                            </tableView>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="Q1Q-3u-Zxc">
+                                <rect key="frame" x="0.0" y="74" width="320" height="20.5"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You have no in progress games." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LYN-yg-z93">
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="20.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <color key="backgroundColor" red="0.51235103609999999" green="0.84975951910000003" blue="0.92168837790000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="kIB-yO-eZs" firstAttribute="top" secondItem="iMT-Ew-2EY" secondAttribute="top" id="8rZ-xf-ZEI"/>
+                            <constraint firstItem="Q1Q-3u-Zxc" firstAttribute="top" secondItem="iMT-Ew-2EY" secondAttribute="top" constant="10" id="9ug-Ga-DQ9"/>
+                            <constraint firstItem="iMT-Ew-2EY" firstAttribute="bottom" secondItem="kIB-yO-eZs" secondAttribute="bottom" id="LSr-m8-Wb2"/>
+                            <constraint firstItem="Q1Q-3u-Zxc" firstAttribute="leading" secondItem="iMT-Ew-2EY" secondAttribute="leading" id="OYS-KJ-lhV"/>
+                            <constraint firstItem="kIB-yO-eZs" firstAttribute="leading" secondItem="iMT-Ew-2EY" secondAttribute="leading" id="XDG-JR-sTZ"/>
+                            <constraint firstItem="iMT-Ew-2EY" firstAttribute="trailing" secondItem="Q1Q-3u-Zxc" secondAttribute="trailing" id="b1e-JA-9B4"/>
+                            <constraint firstItem="kIB-yO-eZs" firstAttribute="trailing" secondItem="iMT-Ew-2EY" secondAttribute="trailing" id="efg-IT-xfR"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="iMT-Ew-2EY"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Completed" image="medal" id="Ixp-KC-l00"/>
+                    <connections>
+                        <outlet property="noGamesLabel" destination="LYN-yg-z93" id="1iB-os-3VG"/>
+                        <outlet property="tableView" destination="kIB-yO-eZs" id="ed5-Dv-JSA"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Ndx-pw-FYT" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2423" y="2074"/>
         </scene>
     </scenes>
     <resources>
