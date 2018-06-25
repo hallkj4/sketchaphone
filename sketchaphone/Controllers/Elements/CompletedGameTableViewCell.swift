@@ -22,7 +22,7 @@ class CompletedGameTableViewCell: UITableViewCell {
         else {
             checkmark.isHidden = true
             turnsCount.isHidden = false
-            turnsCount.text = String(game.turns.count) + "/" + String(gamesManager.numRounds)
+            turnsCount.text = String(gamesManager.numRounds - game.turns.count) + " turns left"
         }
         
         newLabel.isHidden = !completedGameManager.isNew(gameId: game.id)
