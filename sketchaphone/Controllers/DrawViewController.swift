@@ -16,40 +16,7 @@ class DrawViewController: LoadingViewController, UIScrollViewDelegate, GADInters
     let fullColors : [UIColor] = [.black, .white, .red, .orange, .yellow, .green, .blue, .cyan]
     var colorButtons = [UIButton]()
     var adsToSkip = Int(LocalSQLiteManager.sharedInstance.getMisc(key: "adsToSkip") ?? "3") ?? 3
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-    }
-    
-    private func setUpColors() {
-        let correctColors = inAppPurchaseModel.hasPurchasedColors() ? fullColors : limitedColors
-        
-        if (colors != nil && colors! == correctColors) {
-            return
-        }
-        colors = correctColors
-        while let button = colorButtons.popLast() {
-            button.removeFromSuperview()
-        }
-        
-        for color in colors! {
-            let button = UIButton()
-            button.backgroundColor = color
-            button.setTitleColor(color.shifted(), for: .normal)
-            button.borderColor = .black
-            button.borderWidth = 1.0
-            if (imageView.color == color) {
-                button.setTitle("\u{2713}", for: .normal)
-            }
-            else {
-                button.setTitle(" ", for: .normal)
-            }
-            button.addTarget(self, action: #selector(colorTouch(sender:)), for: .touchUpInside)
-            colorButtons.append(button)
-            editBar.insertArrangedSubview(button, at: 0)
-        }
-    }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.setNavigationBarHidden(false, animated: true)
@@ -81,7 +48,7 @@ class DrawViewController: LoadingViewController, UIScrollViewDelegate, GADInters
     }
     
     func createAndLoadInterstitial() {
-        if (inAppPurchaseModel.hasPurchasedNoAds()) {
+        if (inAppPurchaseModel.hasPurchasedNoAds() || self.adsToSkip > 0) {
             return
         }
         interstitial = GADInterstitial(adUnitID: "ca-app-pub-6287206061979264/9009711661")
@@ -191,6 +158,35 @@ class DrawViewController: LoadingViewController, UIScrollViewDelegate, GADInters
             controller.game = gamesManager.currentGame?.fragments.gameDetailed
         default:
             NSLog("draw View: unhandled segue identifier: \(segue.identifier!)")
+        }
+    }
+    
+    private func setUpColors() {
+        let correctColors = inAppPurchaseModel.hasPurchasedColors() ? fullColors : limitedColors
+        
+        if (colors != nil && colors! == correctColors) {
+            return
+        }
+        colors = correctColors
+        while let button = colorButtons.popLast() {
+            button.removeFromSuperview()
+        }
+        
+        for color in colors! {
+            let button = UIButton()
+            button.backgroundColor = color
+            button.setTitleColor(color.shifted(), for: .normal)
+            button.borderColor = .black
+            button.borderWidth = 1.0
+            if (imageView.color == color) {
+                button.setTitle("\u{2713}", for: .normal)
+            }
+            else {
+                button.setTitle(" ", for: .normal)
+            }
+            button.addTarget(self, action: #selector(colorTouch(sender:)), for: .touchUpInside)
+            colorButtons.append(button)
+            editBar.insertArrangedSubview(button, at: 0)
         }
     }
 }
