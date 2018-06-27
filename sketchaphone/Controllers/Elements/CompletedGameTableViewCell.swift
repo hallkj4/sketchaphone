@@ -13,17 +13,8 @@ class CompletedGameTableViewCell: UITableViewCell {
         startedByLabel.text = "Started by: \(firstTurn?.user.name ?? "unknown")"
         phraseLabel.text = "\"" + getPhraseToShow(game: game) + "\""
         
-        let completed = game.turns.count >= gamesManager.numRounds
-        
-        if (completed) {
-            checkmark.isHidden = false
-            turnsCount.isHidden = true
-        }
-        else {
-            checkmark.isHidden = true
-            turnsCount.isHidden = false
-            turnsCount.text = String(gamesManager.numRounds - game.turns.count) + " turns left"
-        }
+        checkmark.isHidden = false
+        turnsCount.isHidden = true
         
         newLabel.isHidden = !completedGameManager.isNew(gameId: game.id)
     }
