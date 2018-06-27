@@ -1861,6 +1861,7 @@
                                             <outlet property="phraseLabel" destination="dmY-hx-WMQ" id="jhT-hy-QrO"/>
                                             <outlet property="startedByLabel" destination="tDe-xh-VlZ" id="2eH-yf-VLb"/>
                                             <outlet property="turnsCount" destination="cKe-XU-G8k" id="Kfq-un-U8c"/>
+                                            <segue destination="BrL-rF-5b6" kind="presentation" id="TfC-9b-vOq"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -1901,6 +1902,80 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ndx-pw-FYT" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2423" y="2074"/>
+        </scene>
+        <!--Cant View In Progress View Controller-->
+        <scene sceneID="NBG-Ar-6kR">
+            <objects>
+                <viewController modalPresentationStyle="overCurrentContext" id="BrL-rF-5b6" customClass="CantViewInProgressViewController" customModule="sketchaphone" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="wWL-gL-zzX">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jlj-Sm-Ai2">
+                                <rect key="frame" x="40" y="130" width="240" height="240"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AOV-LB-aJp">
+                                        <rect key="frame" x="10" y="10" width="220" height="101.5"/>
+                                        <string key="text">You can't view this game until it has completed. Check back later, or enable push notifications in your settings to be notified.</string>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8iO-Z6-hHG">
+                                        <rect key="frame" x="105" y="200" width="30" height="30"/>
+                                        <color key="backgroundColor" red="0.92549318079999998" green="0.8048755527" blue="0.51112228630000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <state key="normal" title="OK">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                                <color key="value" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                                <real key="value" value="2"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                <real key="value" value="5"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                        <connections>
+                                            <action selector="okTouch" destination="BrL-rF-5b6" eventType="touchUpInside" id="Qgn-2w-X4e"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" red="0.51235103609999999" green="0.84975951910000003" blue="0.92168837790000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstItem="AOV-LB-aJp" firstAttribute="leading" secondItem="jlj-Sm-Ai2" secondAttribute="leading" constant="10" id="69I-lH-WBc"/>
+                                    <constraint firstAttribute="width" constant="240" id="9AW-N7-CgQ"/>
+                                    <constraint firstAttribute="trailing" secondItem="AOV-LB-aJp" secondAttribute="trailing" constant="10" id="G81-7y-I7o"/>
+                                    <constraint firstItem="8iO-Z6-hHG" firstAttribute="centerX" secondItem="jlj-Sm-Ai2" secondAttribute="centerX" id="PUB-YA-HOo"/>
+                                    <constraint firstAttribute="height" constant="240" id="bYo-gZ-wAe"/>
+                                    <constraint firstItem="AOV-LB-aJp" firstAttribute="top" secondItem="jlj-Sm-Ai2" secondAttribute="top" constant="10" id="fYj-84-0er"/>
+                                    <constraint firstAttribute="bottom" secondItem="8iO-Z6-hHG" secondAttribute="bottom" constant="10" id="xwl-Ib-Rml"/>
+                                </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <real key="value" value="10"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                        <real key="value" value="2"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                        <color key="value" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </view>
+                        </subviews>
+                        <constraints>
+                            <constraint firstItem="jlj-Sm-Ai2" firstAttribute="centerY" secondItem="fvQ-wD-7KW" secondAttribute="centerY" id="Rmz-nT-3Xr"/>
+                            <constraint firstItem="jlj-Sm-Ai2" firstAttribute="centerX" secondItem="fvQ-wD-7KW" secondAttribute="centerX" id="owZ-OF-qGv"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="fvQ-wD-7KW"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="WQI-G7-cGe" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3780" y="2073.75"/>
         </scene>
     </scenes>
     <resources>

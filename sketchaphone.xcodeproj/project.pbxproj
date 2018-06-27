@@ -15,6 +15,7 @@
 		4C0249E720E157AF00F338B7 /* InProgressTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C0249E620E157AF00F338B7 /* InProgressTableViewCell.swift */; };
 		4C0249E920E1588100F338B7 /* InProgressGamesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C0249E820E1588100F338B7 /* InProgressGamesTableViewCell.swift */; };
 		4C0249EB20E15BD800F338B7 /* InProgressGamesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C0249EA20E15BD800F338B7 /* InProgressGamesViewController.swift */; };
+		4C0249ED20E40B1700F338B7 /* CantViewInProgressViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C0249EC20E40B1700F338B7 /* CantViewInProgressViewController.swift */; };
 		4C0A0812203FA19F009FED9F /* GameDetailed.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 4C0A0811203FA19F009FED9F /* GameDetailed.graphql */; };
 		4C0A08142040B84A009FED9F /* schema.json in Resources */ = {isa = PBXBuildFile; fileRef = 4C0A08132040B849009FED9F /* schema.json */; };
 		4C0A08182040B9AA009FED9F /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C0A08172040B9A9009FED9F /* API.swift */; };
@@ -90,6 +91,7 @@
 		4C0249E620E157AF00F338B7 /* InProgressTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InProgressTableViewCell.swift; sourceTree = "<group>"; };
 		4C0249E820E1588100F338B7 /* InProgressGamesTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InProgressGamesTableViewCell.swift; sourceTree = "<group>"; };
 		4C0249EA20E15BD800F338B7 /* InProgressGamesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InProgressGamesViewController.swift; sourceTree = "<group>"; };
+		4C0249EC20E40B1700F338B7 /* CantViewInProgressViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CantViewInProgressViewController.swift; sourceTree = "<group>"; };
 		4C0A0811203FA19F009FED9F /* GameDetailed.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = GameDetailed.graphql; sourceTree = "<group>"; };
 		4C0A08132040B849009FED9F /* schema.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = schema.json; sourceTree = "<group>"; };
 		4C0A08172040B9A9009FED9F /* API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
@@ -311,6 +313,7 @@
 				4C7EBF7420C9BB26006AE5C0 /* ResetPasswordViewController.swift */,
 				4C7EBF7820C9FF30006AE5C0 /* ResetPasswordConfirmViewController.swift */,
 				4C7EBF7620C9F8EB006AE5C0 /* ConfirmAccountViewController.swift */,
+				4C0249EC20E40B1700F338B7 /* CantViewInProgressViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -549,6 +552,7 @@
 				4CC9B45D2040F77F0079D202 /* NilDataError.swift in Sources */,
 				4C7EBF7920C9FF30006AE5C0 /* ResetPasswordConfirmViewController.swift in Sources */,
 				4CB8B04A20218CD700D0DD95 /* UIColor.swift in Sources */,
+				4C0249ED20E40B1700F338B7 /* CantViewInProgressViewController.swift in Sources */,
 				4C0249E320DC689F00F338B7 /* NotificationsDelegate.swift in Sources */,
 				4C0249E120DC5ABD00F338B7 /* BadgeCountManager.swift in Sources */,
 				4CF33D4E202A657E00D311FF /* FlagViewController.swift in Sources */,
