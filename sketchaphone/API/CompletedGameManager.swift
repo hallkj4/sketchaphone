@@ -137,7 +137,7 @@ class CompletedGameManager {
         }
         self.myCompletedGamesNextToken = nil
         NSLog("fetching more completed games: \(nextPage)")
-        appSyncClient!.fetch(query: MyCompletedTurnsQuery(nextToken: nextToken), cachePolicy: .fetchIgnoringCacheData, resultHandler: { (result, error) in
+        appSyncClient!.fetch(query: MyCompletedTurnsQuery(limit: 5, nextToken: nextToken), cachePolicy: .fetchIgnoringCacheData, resultHandler: { (result, error) in
             if let error = error {
                 NSLog("Error occurred: \(error.localizedDescription )")
                 callback?()
