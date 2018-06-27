@@ -24,26 +24,21 @@ class CompletedViewController: LoadingViewController, UITableViewDataSource {
     
     private func updateUI() {
         tableView.reloadData()
-        noGamesLabel.isHidden = 
-            !completedGameManager.myCompletedGames.isEmpty || !completedGameManager.inProgressGames.isEmpty
+        noGamesLabel.isHidden = !completedGameManager.myCompletedGames.isEmpty
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if (completedGameManager.hasMore() && completedGameManager.myCompletedGames.count == 0) {
             completedGameManager.getMore()
         }
-        var count = completedGameManager.myCompletedGames.count
-        if (!completedGameManager.inProgressGames.isEmpty) {
-            count += 1
-        }
-        return count
+        return completedGameManager.myCompletedGames.count + 1
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if (completedGameManager.hasMore() && indexPath.row >= completedGameManager.myCompletedGames.count) {
             completedGameManager.getMore()
         }
-        if (indexPath.row == 0 && !completedGameManager.inProgressGames.isEmpty) {
+        if (indexPath.row == 0) {
             let cell = tableView.dequeueReusableCell(withIdentifier: "inProgressCell", for: indexPath)
             guard let gamesCell = cell as? InProgressGamesTableViewCell else {
                 NSLog("cell was not type: InProgressGamesTableViewCell")
@@ -52,10 +47,7 @@ class CompletedViewController: LoadingViewController, UITableViewDataSource {
             gamesCell.draw()
             return gamesCell
         }
-        var index = indexPath.row
-        if (!completedGameManager.inProgressGames.isEmpty) {
-            index -= 1
-        }
+        let index = indexPath.row - 1
         
         let game = completedGameManager.myCompletedGames[index]
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
@@ -81,11 +73,7 @@ class CompletedViewController: LoadingViewController, UITableViewDataSource {
             }
             let controller = segue.destination as! CompletedGameViewController
             
-            var index = indexPath.row
-            if (!completedGameManager.inProgressGames.isEmpty) {
-                index -= 1
-            }
-            
+            let index = indexPath.row - 1
             controller.game = completedGameManager.myCompletedGames[index]
         default:
             NSLog("completed games controller: unhandled segue identifier: \(segue.identifier!)")
