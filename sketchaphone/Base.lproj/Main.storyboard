@@ -1827,7 +1827,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="&quot;Snake pit&quot;" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dmY-hx-WMQ">
-                                                    <rect key="frame" x="109" y="5" width="102.5" height="23"/>
+                                                    <rect key="frame" x="109.5" y="5" width="102.5" height="23"/>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="19"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
@@ -1851,6 +1851,7 @@
                                                 <constraint firstAttribute="bottom" secondItem="tDe-xh-VlZ" secondAttribute="bottom" constant="5" id="SGX-Jt-2n4"/>
                                                 <constraint firstItem="tDe-xh-VlZ" firstAttribute="leading" secondItem="P5N-Fl-gGY" secondAttribute="leading" constant="10" id="dwF-TB-Cs8"/>
                                                 <constraint firstAttribute="trailing" secondItem="cKe-XU-G8k" secondAttribute="trailing" constant="10" id="g07-3o-X7p"/>
+                                                <constraint firstItem="dmY-hx-WMQ" firstAttribute="width" relation="lessThanOrEqual" secondItem="P5N-Fl-gGY" secondAttribute="width" id="k8N-ou-m8d"/>
                                                 <constraint firstItem="cKe-XU-G8k" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="tDe-xh-VlZ" secondAttribute="trailing" constant="50" id="nsj-zx-FKS"/>
                                             </constraints>
                                         </tableViewCellContentView>
