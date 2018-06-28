@@ -850,10 +850,10 @@
                                 </connections>
                             </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XmJ-Ul-8Bi">
-                                <rect key="frame" x="288" y="295.5" width="22" height="22"/>
+                                <rect key="frame" x="286" y="295.5" width="24" height="22"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="5" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hhy-4K-Gfx">
-                                        <rect key="frame" x="5" y="0.0" width="10.5" height="20.5"/>
+                                        <rect key="frame" x="6" y="0.0" width="10.5" height="20.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
@@ -863,7 +863,7 @@
                                 <constraints>
                                     <constraint firstItem="Hhy-4K-Gfx" firstAttribute="top" secondItem="XmJ-Ul-8Bi" secondAttribute="top" id="Hfk-JP-Nz4"/>
                                     <constraint firstItem="Hhy-4K-Gfx" firstAttribute="centerX" secondItem="XmJ-Ul-8Bi" secondAttribute="centerX" id="Kml-1Z-1NW"/>
-                                    <constraint firstItem="Hhy-4K-Gfx" firstAttribute="leading" secondItem="XmJ-Ul-8Bi" secondAttribute="leading" constant="5" id="Vur-d9-1dE"/>
+                                    <constraint firstItem="Hhy-4K-Gfx" firstAttribute="leading" secondItem="XmJ-Ul-8Bi" secondAttribute="leading" constant="6" id="Vur-d9-1dE"/>
                                     <constraint firstItem="Hhy-4K-Gfx" firstAttribute="centerY" secondItem="XmJ-Ul-8Bi" secondAttribute="centerY" id="sNz-D5-Vey"/>
                                 </constraints>
                                 <userDefinedRuntimeAttributes>
