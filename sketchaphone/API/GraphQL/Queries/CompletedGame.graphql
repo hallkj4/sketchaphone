@@ -1,0 +1,5 @@
+query completedGame($id: ID!) {
+    completedGame(id: $id) {
+        ...GameDetailed
+    }
+}

@@ -12,15 +12,19 @@ extension UIViewController: NavigateToCompletedGame {
             return
         }
         NSLog("game was not found - refetching")
-        completedGameManager.forceRefetch({
-            if let completedGame = completedGameManager.getCompletedGame(by: completedGameId) {
-                self.navigateTo(completedGame: completedGame)
-                return
+        completedGameManager.fetchCompletedGame(id: completedGameId) { (error, game) in
+            DispatchQueue.main.async {
+                if let error = error {
+                    self.alert("Error fetching game: " + error)
+                    return
+                }
+                if let game = game {
+                    self.navigateTo(completedGame: game)
+                    return
+                }
+                self.alert("Game could not be found.  Sorry!")
             }
-            NSLog("game " + completedGameId + " was not found")
-            self.alert("Could not find game, sorry.")
-        })
-        
+        }
     }
     
     func navigateTo(completedGame: GameDetailed) {

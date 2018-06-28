@@ -2762,6 +2762,385 @@ public final class TakeTurnMutation: GraphQLMutation {
   }
 }
 
+public final class CompletedGameQuery: GraphQLQuery {
+  public static let operationString =
+    "query completedGame($id: ID!) {\n  completedGame(id: $id) {\n    __typename\n    ...GameDetailed\n  }\n}"
+
+  public static var requestString: String { return operationString.appending(GameDetailed.fragmentString).appending(UserBasic.fragmentString) }
+
+  public var id: GraphQLID
+
+  public init(id: GraphQLID) {
+    self.id = id
+  }
+
+  public var variables: GraphQLMap? {
+    return ["id": id]
+  }
+
+  public struct Data: GraphQLSelectionSet {
+    public static let possibleTypes = ["Query"]
+
+    public static let selections: [GraphQLSelection] = [
+      GraphQLField("completedGame", arguments: ["id": GraphQLVariable("id")], type: .object(CompletedGame.selections)),
+    ]
+
+    public var snapshot: Snapshot
+
+    public init(snapshot: Snapshot) {
+      self.snapshot = snapshot
+    }
+
+    public init(completedGame: CompletedGame? = nil) {
+      self.init(snapshot: ["__typename": "Query", "completedGame": completedGame.flatMap { $0.snapshot }])
+    }
+
+    public var completedGame: CompletedGame? {
+      get {
+        return (snapshot["completedGame"] as? Snapshot).flatMap { CompletedGame(snapshot: $0) }
+      }
+      set {
+        snapshot.updateValue(newValue?.snapshot, forKey: "completedGame")
+      }
+    }
+
+    public struct CompletedGame: GraphQLSelectionSet {
+      public static let possibleTypes = ["CompletedGame"]
+
+      public static let selections: [GraphQLSelection] = [
+        GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+        GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+        GraphQLField("id", type: .nonNull(.scalar(GraphQLID.self))),
+        GraphQLField("turns", type: .nonNull(.list(.nonNull(.object(Turn.selections))))),
+        GraphQLField("flags", type: .nonNull(.list(.nonNull(.object(Flag.selections))))),
+      ]
+
+      public var snapshot: Snapshot
+
+      public init(snapshot: Snapshot) {
+        self.snapshot = snapshot
+      }
+
+      public init(id: GraphQLID, turns: [Turn], flags: [Flag]) {
+        self.init(snapshot: ["__typename": "CompletedGame", "id": id, "turns": turns.map { $0.snapshot }, "flags": flags.map { $0.snapshot }])
+      }
+
+      public var __typename: String {
+        get {
+          return snapshot["__typename"]! as! String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "__typename")
+        }
+      }
+
+      public var id: GraphQLID {
+        get {
+          return snapshot["id"]! as! GraphQLID
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "id")
+        }
+      }
+
+      public var turns: [Turn] {
+        get {
+          return (snapshot["turns"] as! [Snapshot]).map { Turn(snapshot: $0) }
+        }
+        set {
+          snapshot.updateValue(newValue.map { $0.snapshot }, forKey: "turns")
+        }
+      }
+
+      public var flags: [Flag] {
+        get {
+          return (snapshot["flags"] as! [Snapshot]).map { Flag(snapshot: $0) }
+        }
+        set {
+          snapshot.updateValue(newValue.map { $0.snapshot }, forKey: "flags")
+        }
+      }
+
+      public var fragments: Fragments {
+        get {
+          return Fragments(snapshot: snapshot)
+        }
+        set {
+          snapshot += newValue.snapshot
+        }
+      }
+
+      public struct Fragments {
+        public var snapshot: Snapshot
+
+        public var gameDetailed: GameDetailed {
+          get {
+            return GameDetailed(snapshot: snapshot)
+          }
+          set {
+            snapshot += newValue.snapshot
+          }
+        }
+      }
+
+      public struct Turn: GraphQLSelectionSet {
+        public static let possibleTypes = ["OpenTurn", "CompletedTurn"]
+
+        public static let selections: [GraphQLSelection] = [
+          GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+          GraphQLField("order", type: .nonNull(.scalar(Int.self))),
+          GraphQLField("user", type: .nonNull(.object(User.selections))),
+          GraphQLField("phrase", type: .scalar(String.self)),
+          GraphQLField("drawing", type: .object(Drawing.selections)),
+          GraphQLField("createdAt", type: .nonNull(.scalar(String.self))),
+        ]
+
+        public var snapshot: Snapshot
+
+        public init(snapshot: Snapshot) {
+          self.snapshot = snapshot
+        }
+
+        public static func makeOpenTurn(order: Int, user: User, phrase: String? = nil, drawing: Drawing? = nil, createdAt: String) -> Turn {
+          return Turn(snapshot: ["__typename": "OpenTurn", "order": order, "user": user.snapshot, "phrase": phrase, "drawing": drawing.flatMap { $0.snapshot }, "createdAt": createdAt])
+        }
+
+        public static func makeCompletedTurn(order: Int, user: User, phrase: String? = nil, drawing: Drawing? = nil, createdAt: String) -> Turn {
+          return Turn(snapshot: ["__typename": "CompletedTurn", "order": order, "user": user.snapshot, "phrase": phrase, "drawing": drawing.flatMap { $0.snapshot }, "createdAt": createdAt])
+        }
+
+        public var __typename: String {
+          get {
+            return snapshot["__typename"]! as! String
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "__typename")
+          }
+        }
+
+        public var order: Int {
+          get {
+            return snapshot["order"]! as! Int
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "order")
+          }
+        }
+
+        public var user: User {
+          get {
+            return User(snapshot: snapshot["user"]! as! Snapshot)
+          }
+          set {
+            snapshot.updateValue(newValue.snapshot, forKey: "user")
+          }
+        }
+
+        public var phrase: String? {
+          get {
+            return snapshot["phrase"] as? String
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "phrase")
+          }
+        }
+
+        public var drawing: Drawing? {
+          get {
+            return (snapshot["drawing"] as? Snapshot).flatMap { Drawing(snapshot: $0) }
+          }
+          set {
+            snapshot.updateValue(newValue?.snapshot, forKey: "drawing")
+          }
+        }
+
+        public var createdAt: String {
+          get {
+            return snapshot["createdAt"]! as! String
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "createdAt")
+          }
+        }
+
+        public struct User: GraphQLSelectionSet {
+          public static let possibleTypes = ["User"]
+
+          public static let selections: [GraphQLSelection] = [
+            GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+            GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+            GraphQLField("id", type: .nonNull(.scalar(GraphQLID.self))),
+            GraphQLField("name", type: .nonNull(.scalar(String.self))),
+          ]
+
+          public var snapshot: Snapshot
+
+          public init(snapshot: Snapshot) {
+            self.snapshot = snapshot
+          }
+
+          public init(id: GraphQLID, name: String) {
+            self.init(snapshot: ["__typename": "User", "id": id, "name": name])
+          }
+
+          public var __typename: String {
+            get {
+              return snapshot["__typename"]! as! String
+            }
+            set {
+              snapshot.updateValue(newValue, forKey: "__typename")
+            }
+          }
+
+          public var id: GraphQLID {
+            get {
+              return snapshot["id"]! as! GraphQLID
+            }
+            set {
+              snapshot.updateValue(newValue, forKey: "id")
+            }
+          }
+
+          public var name: String {
+            get {
+              return snapshot["name"]! as! String
+            }
+            set {
+              snapshot.updateValue(newValue, forKey: "name")
+            }
+          }
+
+          public var fragments: Fragments {
+            get {
+              return Fragments(snapshot: snapshot)
+            }
+            set {
+              snapshot += newValue.snapshot
+            }
+          }
+
+          public struct Fragments {
+            public var snapshot: Snapshot
+
+            public var userBasic: UserBasic {
+              get {
+                return UserBasic(snapshot: snapshot)
+              }
+              set {
+                snapshot += newValue.snapshot
+              }
+            }
+          }
+        }
+
+        public struct Drawing: GraphQLSelectionSet {
+          public static let possibleTypes = ["S3Object"]
+
+          public static let selections: [GraphQLSelection] = [
+            GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+            GraphQLField("key", type: .nonNull(.scalar(String.self))),
+            GraphQLField("bucket", type: .nonNull(.scalar(String.self))),
+            GraphQLField("region", type: .nonNull(.scalar(String.self))),
+          ]
+
+          public var snapshot: Snapshot
+
+          public init(snapshot: Snapshot) {
+            self.snapshot = snapshot
+          }
+
+          public init(key: String, bucket: String, region: String) {
+            self.init(snapshot: ["__typename": "S3Object", "key": key, "bucket": bucket, "region": region])
+          }
+
+          public var __typename: String {
+            get {
+              return snapshot["__typename"]! as! String
+            }
+            set {
+              snapshot.updateValue(newValue, forKey: "__typename")
+            }
+          }
+
+          public var key: String {
+            get {
+              return snapshot["key"]! as! String
+            }
+            set {
+              snapshot.updateValue(newValue, forKey: "key")
+            }
+          }
+
+          public var bucket: String {
+            get {
+              return snapshot["bucket"]! as! String
+            }
+            set {
+              snapshot.updateValue(newValue, forKey: "bucket")
+            }
+          }
+
+          public var region: String {
+            get {
+              return snapshot["region"]! as! String
+            }
+            set {
+              snapshot.updateValue(newValue, forKey: "region")
+            }
+          }
+        }
+      }
+
+      public struct Flag: GraphQLSelectionSet {
+        public static let possibleTypes = ["Flag"]
+
+        public static let selections: [GraphQLSelection] = [
+          GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+          GraphQLField("userId", type: .nonNull(.scalar(GraphQLID.self))),
+          GraphQLField("reason", type: .nonNull(.scalar(String.self))),
+        ]
+
+        public var snapshot: Snapshot
+
+        public init(snapshot: Snapshot) {
+          self.snapshot = snapshot
+        }
+
+        public init(userId: GraphQLID, reason: String) {
+          self.init(snapshot: ["__typename": "Flag", "userId": userId, "reason": reason])
+        }
+
+        public var __typename: String {
+          get {
+            return snapshot["__typename"]! as! String
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "__typename")
+          }
+        }
+
+        public var userId: GraphQLID {
+          get {
+            return snapshot["userId"]! as! GraphQLID
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "userId")
+          }
+        }
+
+        public var reason: String {
+          get {
+            return snapshot["reason"]! as! String
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "reason")
+          }
+        }
+      }
+    }
+  }
+}
+
 public final class CompletedGamesQuery: GraphQLQuery {
   public static let operationString =
     "query completedGames($limit: Int, $nextToken: String) {\n  completedGames(limit: $limit, nextToken: $nextToken) {\n    __typename\n    games {\n      __typename\n      ...GameDetailed\n    }\n    nextToken\n  }\n}"

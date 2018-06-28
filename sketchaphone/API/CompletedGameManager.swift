@@ -41,13 +41,7 @@ class CompletedGameManager {
     }
     
     func removeFlagged(gameId: String) {
-        var removed = false
-        if let index = inProgressGames.index(where: {$0.id == gameId}) {
-            inProgressGames.remove(at: index)
-            inProgressGamesCount -= 1
-            LocalSQLiteManager.sharedInstance.putMisc(key: "inProgressGamesCount", value: String(inProgressGamesCount))
-            removed = true
-        }
+        var removed = removeInProgress(gameId: gameId)
         if let index = myCompletedGames.index(where: {$0.id == gameId}) {
             myCompletedGames.remove(at: index)
             LocalSQLiteManager.sharedInstance.delete(completedGameId: gameId)
@@ -73,6 +67,16 @@ class CompletedGameManager {
             LocalSQLiteManager.sharedInstance.putMisc(key: "inProgressGamesCount", value: String(inProgressGamesCount))
         }
         notifyWatchers()
+    }
+    
+    private func removeInProgress(gameId: String) -> Bool {
+        if let index = inProgressGames.index(where: {$0.id == gameId}) {
+            inProgressGames.remove(at: index)
+            inProgressGamesCount -= 1
+            LocalSQLiteManager.sharedInstance.putMisc(key: "inProgressGamesCount", value: String(inProgressGamesCount))
+            return true
+        }
+        return false
     }
     
     func refetchCompletedIfOld(timer: Timer? = nil) {
@@ -188,6 +192,7 @@ class CompletedGameManager {
                         else {
                             self.myCompletedGames.append(newGame)
                         }
+                        let _ = self.removeInProgress(gameId: newGame.id)
                         LocalSQLiteManager.sharedInstance.persist(completedGame: newGame)
                     }
                 }
@@ -227,6 +232,31 @@ class CompletedGameManager {
         notifyWatchers()
     }
     
+    func fetchCompletedGame(id: String, callback: @escaping (String?, GameDetailed?) -> Void) {
+        DispatchQueue.global(qos: .userInitiated).async {
+            appSyncClient?.fetch(query: CompletedGameQuery(id: id), queue: DispatchQueue.global(qos: .userInitiated), resultHandler: { (result, error) in
+                if let error = error {
+                    NSLog("Error occurred: \(error.localizedDescription )")
+                    callback(error.localizedDescription, nil)
+                    return
+                }
+                if let error = result?.errors?.first {
+                    NSLog("Error occurred: \(error.localizedDescription )")
+                    callback(error.localizedDescription, nil)
+                    return
+                }
+                guard let gameRaw = result?.data?.completedGame else {
+                    callback(nil, nil)
+                    return
+                }
+                let game = gameRaw.fragments.gameDetailed
+                self.myCompletedGames.insert(game, at: 0)
+                let _ = self.removeInProgress(gameId: game.id)
+                LocalSQLiteManager.sharedInstance.persist(completedGame: game)
+                callback(nil, game)
+            })
+        }
+    }
     
     private func startPeriodicChecks() {
         self.refetchCompletedIfOld()

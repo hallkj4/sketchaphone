@@ -46,6 +46,7 @@
 		4C8C6C7C201E6F2600197CBB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4C8C6C7A201E6F2600197CBB /* Main.storyboard */; };
 		4C8C6C7E201E6F2600197CBB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4C8C6C7D201E6F2600197CBB /* Assets.xcassets */; };
 		4C8C6C81201E6F2600197CBB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4C8C6C7F201E6F2600197CBB /* LaunchScreen.storyboard */; };
+		4CB03F2A20E551F800D7BBD0 /* CompletedGame.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 4CB03F2920E551F800D7BBD0 /* CompletedGame.graphql */; };
 		4CB8B03E20202E3A00D0DD95 /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB8B03D20202E3A00D0DD95 /* UIView.swift */; };
 		4CB8B0402020DEB600D0DD95 /* UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB8B03F2020DEB600D0DD95 /* UIViewController.swift */; };
 		4CB8B0422020FB3800D0DD95 /* CGPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB8B0412020FB3800D0DD95 /* CGPoint.swift */; };
@@ -124,6 +125,7 @@
 		4C8C6C7D201E6F2600197CBB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4C8C6C80201E6F2600197CBB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		4C8C6C82201E6F2600197CBB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4CB03F2920E551F800D7BBD0 /* CompletedGame.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = CompletedGame.graphql; sourceTree = "<group>"; };
 		4CB8B03D20202E3A00D0DD95 /* UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIView.swift; sourceTree = "<group>"; };
 		4CB8B03F2020DEB600D0DD95 /* UIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewController.swift; sourceTree = "<group>"; };
 		4CB8B0412020FB3800D0DD95 /* CGPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGPoint.swift; sourceTree = "<group>"; };
@@ -192,6 +194,7 @@
 				4C7EBF7A20D02C1E006AE5C0 /* CurrentUser.graphql */,
 				4C7EBF7C20D05119006AE5C0 /* MyCompletedTurns.graphql */,
 				4C53F62120D33D080064BDD1 /* MyFlags.graphql */,
+				4CB03F2920E551F800D7BBD0 /* CompletedGame.graphql */,
 			);
 			path = Queries;
 			sourceTree = "<group>";
@@ -430,6 +433,7 @@
 			files = (
 				4CC9B4532040E0740079D202 /* RenewLock.graphql in Resources */,
 				4CC9B4592040E1210079D202 /* FlagGame.graphql in Resources */,
+				4CB03F2A20E551F800D7BBD0 /* CompletedGame.graphql in Resources */,
 				4C0A08142040B84A009FED9F /* schema.json in Resources */,
 				4CC9B44D2040DEFC0079D202 /* UserCompletedTurns.graphql in Resources */,
 				4CC9B44F2040DF890079D202 /* StartGame.graphql in Resources */,
