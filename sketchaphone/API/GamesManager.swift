@@ -20,38 +20,42 @@ class GamesManager {
     let numRounds = 9
     
     func new(phrase: String, callback: @escaping (Error?) -> Void) {
-        NSLog("attempting to create game: " + phrase)
-        appSyncClient?.perform(mutation: StartGameMutation(phrase: phrase), resultHandler: { (result, error) in
-            if let error = error {
-                NSLog("unexpected error type" + error.localizedDescription)
-                callback(error)
-                return
-            }
-            if let error = result?.errors?.first {
-                callback(error)
-                return
-            }
-            guard let newGame = result?.data?.startGame.fragments.openGameDetailed else {
-                NSLog("game data was not sent")
-                callback(NilDataError())
-                return
-            }
-            NSLog("game created: " + phrase)
-            completedGameManager.appendCompleted(game: newGame)
-            callback(nil)
-        })
+        DispatchQueue.global(qos: .userInitiated).async {
+            NSLog("attempting to create game: " + phrase)
+            appSyncClient?.perform(mutation: StartGameMutation(phrase: phrase), queue: DispatchQueue.global(qos: .userInitiated), resultHandler: { (result, error) in
+                if let error = error {
+                    NSLog("unexpected error type" + error.localizedDescription)
+                    callback(error)
+                    return
+                }
+                if let error = result?.errors?.first {
+                    callback(error)
+                    return
+                }
+                guard let newGame = result?.data?.startGame.fragments.openGameDetailed else {
+                    NSLog("game data was not sent")
+                    callback(NilDataError())
+                    return
+                }
+                NSLog("game created: " + phrase)
+                completedGameManager.appendCompleted(game: newGame)
+                callback(nil)
+            })
+        }
     }
     
     func draw(image: UIImage, callback: @escaping (Error?, OpenGameDetailed?) -> Void) {
-        uploadDrawing(image: image, callback: {(drawing, error) in
-            if let error = error {
-                callback(error, nil)
-                return
-            }
-            appSyncClient!.perform(mutation: TakeTurnMutation(drawing: drawing), resultHandler: {(result, error) in
-                self.takeTurnCallback(result: result, error: error, callback: callback)
+        DispatchQueue.global(qos: .userInitiated).async {
+            self.uploadDrawing(image: image, callback: {(drawing, error) in
+                if let error = error {
+                    callback(error, nil)
+                    return
+                }
+                appSyncClient!.perform(mutation: TakeTurnMutation(drawing: drawing), queue: DispatchQueue.global(qos: .userInitiated), resultHandler: {(result, error) in
+                    self.takeTurnCallback(result: result, error: error, callback: callback)
+                })
             })
-        })
+        }
     }
     
     private func uploadDrawing(image: UIImage, callback: @escaping (S3ObjectInput?, Error?) -> Void) {
@@ -91,9 +95,11 @@ class GamesManager {
     }
     
     func guess(phrase: String, callback: @escaping (Error?, OpenGameDetailed?) -> Void) {
-        appSyncClient!.perform(mutation: TakeTurnMutation(phrase: phrase), resultHandler: {(result, error) in
-            self.takeTurnCallback(result: result, error: error, callback: callback)
-        })
+        DispatchQueue.global(qos: .userInitiated).async {
+            appSyncClient!.perform(mutation: TakeTurnMutation(phrase: phrase), queue: DispatchQueue.global(qos: .userInitiated), resultHandler: {(result, error) in
+                self.takeTurnCallback(result: result, error: error, callback: callback)
+            })
+        }
     }
     
     private func takeTurnCallback(result: GraphQLResult<TakeTurnMutation.Data>?, error: Error?, callback: @escaping (Error?, OpenGameDetailed?) -> Void) {
@@ -119,32 +125,34 @@ class GamesManager {
     }
     
     private func renewLock(timer: Timer) {
-        NSLog("renewing lock")
-        appSyncClient!.perform(mutation: RenewLockMutation(), resultHandler: {(result, error) in
-            if let error = error {
-                NSLog("Error renewing lock on game: \(error.localizedDescription)")
-                self.renewLockTimer?.invalidate()
-                self.renewLockDelegate?.renewLockError(error.localizedDescription)
-                return
-            }
-            if let error = result?.errors?.first {
-                NSLog("Error renewing lock on game: \(error.localizedDescription)")
-                self.renewLockTimer?.invalidate()
-                self.renewLockDelegate?.renewLockError(error.localizedDescription)
-                return
-            }
-            guard let game = result?.data?.renewLock.fragments.openGameDetailed else {
-                self.stopRenewing()
-                self.renewLockDelegate?.renewLockError("Renew did not return the locked game.")
-                return
-            }
-            if (game.id != self.currentGame?.id) {
-                self.stopRenewing()
-                self.renewLockDelegate?.renewLockError("Renew returned a different locked game!?")
-                return
-            }
-            NSLog("lock renewed")
-        })
+        DispatchQueue.global(qos: .userInitiated).async {
+            NSLog("renewing lock")
+            appSyncClient!.perform(mutation: RenewLockMutation(), queue: DispatchQueue.global(qos: .userInitiated), resultHandler: {(result, error) in
+                if let error = error {
+                    NSLog("Error renewing lock on game: \(error.localizedDescription)")
+                    self.renewLockTimer?.invalidate()
+                    self.renewLockDelegate?.renewLockError(error.localizedDescription)
+                    return
+                }
+                if let error = result?.errors?.first {
+                    NSLog("Error renewing lock on game: \(error.localizedDescription)")
+                    self.renewLockTimer?.invalidate()
+                    self.renewLockDelegate?.renewLockError(error.localizedDescription)
+                    return
+                }
+                guard let game = result?.data?.renewLock.fragments.openGameDetailed else {
+                    self.stopRenewing()
+                    self.renewLockDelegate?.renewLockError("Renew did not return the locked game.")
+                    return
+                }
+                if (game.id != self.currentGame?.id) {
+                    self.stopRenewing()
+                    self.renewLockDelegate?.renewLockError("Renew returned a different locked game!?")
+                    return
+                }
+                NSLog("lock renewed")
+            })
+        }
     }
     
     private func stopRenewing() {
@@ -153,46 +161,50 @@ class GamesManager {
     }
     
     func release() {
-        self.stopRenewing()
-        appSyncClient?.perform(mutation: ReleaseGameMutation(), resultHandler: {(result, error) in
-            if let error = error {
-                NSLog("Error occurred: \(error.localizedDescription)")
-                return
-            }
-            if let error = result?.errors?.first {
-                NSLog("Error occurred: \(error.localizedDescription)")
-                return
-            }
-            self.currentGame = nil
-            
-            NSLog("lock released successfully")
-        })
+        DispatchQueue.global(qos: .userInitiated).async {
+            self.stopRenewing()
+            appSyncClient?.perform(mutation: ReleaseGameMutation(), queue: DispatchQueue.global(qos: .userInitiated), resultHandler: {(result, error) in
+                if let error = error {
+                    NSLog("Error occurred: \(error.localizedDescription)")
+                    return
+                }
+                if let error = result?.errors?.first {
+                    NSLog("Error occurred: \(error.localizedDescription)")
+                    return
+                }
+                self.currentGame = nil
+                
+                NSLog("lock released successfully")
+            })
+        }
     }
     
     func joinGame(delegate: JoinGameDelgate) {
-        NSLog("attempting to join a game")
-        appSyncClient!.perform(mutation: JoinGameMutation(), resultHandler: { (result, error) in
-            NSLog("joinGame responded, handling response")
-            if let error = error {
-                NSLog("could not join game, encountered error: " + error.localizedDescription)
-                delegate.couldNotJoinGame(message: error.localizedDescription)
-                return
-            }
-            if let error = result?.errors?.first {
-                delegate.couldNotJoinGame(message: error.localizedDescription)
-                return
-            }
-            guard let gameRaw = result?.data?.joinGame else {
-                NSLog("could not join game: no games were found")
-                delegate.couldNotJoinGame(message: "No games were found")
-                return
-            }
-            let game = gameRaw.fragments.openGameDetailed
-            NSLog("Joined a game: " + game.id)
-            self.currentGame = game
-            delegate.gameJoined()
-            self.renewLockTimer = Timer.scheduledTimer(withTimeInterval: 60.0, repeats: true, block: self.renewLock)
-        })
+        DispatchQueue.global(qos: .userInitiated).async {
+            NSLog("attempting to join a game")
+            appSyncClient!.perform(mutation: JoinGameMutation(), queue: DispatchQueue.global(qos: .userInitiated), resultHandler: { (result, error) in
+                NSLog("joinGame responded, handling response")
+                if let error = error {
+                    NSLog("could not join game, encountered error: " + error.localizedDescription)
+                    delegate.couldNotJoinGame(message: error.localizedDescription)
+                    return
+                }
+                if let error = result?.errors?.first {
+                    delegate.couldNotJoinGame(message: error.localizedDescription)
+                    return
+                }
+                guard let gameRaw = result?.data?.joinGame else {
+                    NSLog("could not join game: no games were found")
+                    delegate.couldNotJoinGame(message: "No games were found")
+                    return
+                }
+                let game = gameRaw.fragments.openGameDetailed
+                NSLog("Joined a game: " + game.id)
+                self.currentGame = game
+                delegate.gameJoined()
+                self.renewLockTimer = Timer.scheduledTimer(withTimeInterval: 60.0, repeats: true, block: self.renewLock)
+            })
+        }
     }
     
     func handleSignOut() {

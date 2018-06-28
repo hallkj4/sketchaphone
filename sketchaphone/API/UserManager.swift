@@ -37,25 +37,27 @@ class UserManager: NSObject {
     }
     
     func fetchCurrentUser(_ callback: @escaping (String?) -> Void) {
-        appSyncClient?.fetch(query: CurrentUserQuery(), cachePolicy: .fetchIgnoringCacheData, resultHandler: { (result, error) in
-            if let error = error {
-                NSLog("Error occurred: \(error.localizedDescription )")
-                callback(error.localizedDescription)
-                return
-            }
-            if let error = result?.errors?.first {
-                NSLog("Error occurred: \(error.localizedDescription )")
-                callback(error.localizedDescription)
-                return
-            }
-            guard let userRaw = result?.data?.currentUser else {
-                callback("Current user was not returned.")
-                return
-            }
-            self.currentUser = userRaw.fragments.userBasic
-            Analytics.setUserID(self.currentUser!.id)
-            callback(nil)
-        })
+        DispatchQueue.global(qos: .userInitiated).async {
+            appSyncClient?.fetch(query: CurrentUserQuery(), cachePolicy: .fetchIgnoringCacheData, queue: DispatchQueue.global(qos: .userInitiated), resultHandler: { (result, error) in
+                if let error = error {
+                    NSLog("Error occurred: \(error.localizedDescription )")
+                    callback(error.localizedDescription)
+                    return
+                }
+                if let error = result?.errors?.first {
+                    NSLog("Error occurred: \(error.localizedDescription )")
+                    callback(error.localizedDescription)
+                    return
+                }
+                guard let userRaw = result?.data?.currentUser else {
+                    callback("Current user was not returned.")
+                    return
+                }
+                self.currentUser = userRaw.fragments.userBasic
+                Analytics.setUserID(self.currentUser!.id)
+                callback(nil)
+            })
+        }
     }
     
     func promptSignIn() {
@@ -90,52 +92,56 @@ class UserManager: NSObject {
     }
     
     func set(name: String, callback: @escaping (Error?) -> Void) {
-        appSyncClient?.perform(mutation: SetNameMutation(name: name), resultHandler: {(result, error) in
-            if let error = error {
-                callback(error)
-                return
-            }
-            if let error = result?.errors?.first {
-                callback(error)
-                return
-            }
-            guard let userRaw = result?.data?.setName else {
-                callback(NilDataError())
-                return
-            }
-            
-            self.currentUser = userRaw.fragments.userBasic
-            callback(nil)
-        })
+        DispatchQueue.global(qos: .userInitiated).async {
+            appSyncClient?.perform(mutation: SetNameMutation(name: name), queue: DispatchQueue.global(qos: .userInitiated), resultHandler: {(result, error) in
+                if let error = error {
+                    callback(error)
+                    return
+                }
+                if let error = result?.errors?.first {
+                    callback(error)
+                    return
+                }
+                guard let userRaw = result?.data?.setName else {
+                    callback(NilDataError())
+                    return
+                }
+                
+                self.currentUser = userRaw.fragments.userBasic
+                callback(nil)
+            })
+        }
     }
     
     
     func set(deviceToken: String?, callback: @escaping (Error?) -> Void) {
-        if (networkOffline()) {
-            callback(NoNetworkError())
-            return
+        DispatchQueue.global(qos: .userInitiated).async {
+            if (networkOffline()) {
+                callback(NoNetworkError())
+                return
+            }
+            #if DEBUG
+            let sandbox = true
+            #else
+            let sandbox = false
+            #endif
+            appSyncClient?.perform(mutation: SetDeviceTokenMutation(token: deviceToken, sandbox: sandbox), queue: DispatchQueue.global(qos: .userInitiated), resultHandler: {(result, error) in
+                if let error = error {
+                    callback(error)
+                    return
+                }
+                if let error = result?.errors?.first {
+                    callback(error)
+                    return
+                }
+                if (result?.data?.setDeviceToken != true) {
+                    callback(NilDataError())
+                    return
+                }
+                
+                callback(nil)
+            })
         }
-        #if DEBUG
-        let sandbox = true
-        #else
-        let sandbox = false
-        #endif
-        appSyncClient?.perform(mutation: SetDeviceTokenMutation(token: deviceToken, sandbox: sandbox), resultHandler: {(result, error) in
-            if let error = error {
-                callback(error)
-                return
-            }
-            if let error = result?.errors?.first {
-                callback(error)
-                return
-            }
-            if (result?.data?.setDeviceToken != true) {
-                callback(NilDataError())
-                return
-            }
-            
-            callback(nil)
-        })
     }
     
     func setNameExisting(callback: @escaping (Error?) -> Void) {

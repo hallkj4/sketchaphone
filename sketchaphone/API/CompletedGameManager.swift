@@ -8,6 +8,7 @@ protocol GameWatcher: AnyObject {
 
 class CompletedGameManager {
     
+    public private(set) var inProgressGamesCount = 0
     public private(set) var inProgressGames = [OpenGameDetailed]()
     
     //    var completedGames = [GameDetailed]()
@@ -19,7 +20,7 @@ class CompletedGameManager {
     private var refetchTimer: Timer?
     private var myCompletedGamesNextToken: String?
     private var lastTimeIFetchedGames: Date?
-    
+    private var lastTimeIFetchedInProgress: Date?
     
     
     private var watchers = [GameWatcher]()
@@ -43,6 +44,8 @@ class CompletedGameManager {
         var removed = false
         if let index = inProgressGames.index(where: {$0.id == gameId}) {
             inProgressGames.remove(at: index)
+            inProgressGamesCount -= 1
+            LocalSQLiteManager.sharedInstance.putMisc(key: "inProgressGamesCount", value: String(inProgressGamesCount))
             removed = true
         }
         if let index = myCompletedGames.index(where: {$0.id == gameId}) {
@@ -66,6 +69,8 @@ class CompletedGameManager {
         }
         else {
             inProgressGames.append(game)
+            inProgressGamesCount += 1
+            LocalSQLiteManager.sharedInstance.putMisc(key: "inProgressGamesCount", value: String(inProgressGamesCount))
         }
         notifyWatchers()
     }
@@ -73,8 +78,14 @@ class CompletedGameManager {
     func refetchCompletedIfOld(timer: Timer? = nil) {
         if (lastTimeIFetchedGames == nil || lastTimeIFetchedGames! < Date(timeIntervalSinceNow: -60)) {
             self.lastTimeIFetchedGames = Date()
-            fetchInProgressGames()
             fetchMyCompletedGames()
+        }
+    }
+    
+    func refetchInProgressIfOld() {
+        if (lastTimeIFetchedInProgress == nil || lastTimeIFetchedInProgress! < Date(timeIntervalSinceNow: -60)) {
+            self.lastTimeIFetchedInProgress = Date()
+            fetchInProgressGames()
         }
     }
     
@@ -109,79 +120,85 @@ class CompletedGameManager {
     }
     
     private func fetchInProgressGames() {
-        NSLog("fetching inprogress games")
-        appSyncClient!.fetch(query: InProgressTurnsQuery(), cachePolicy: .fetchIgnoringCacheData, resultHandler: { (result, error) in
-            if let error = error {
-                print("Error occurred: \(error.localizedDescription )")
-                return
-            }
-            if let error = result?.errors?.first {
-                NSLog("Error occurred: \(error.localizedDescription)")
-                return
-            }
-            guard let inProgressTurns = result?.data?.inProgressTurns else {
-                NSLog("inprogressTurns was null")
-                return
-            }
-            let games = inProgressTurns.map({$0.game.fragments.openGameDetailed})
-            self.inProgressGames = games
-            NSLog("got \(self.inProgressGames.count) inProgress games")
-            self.notifyWatchers()
-        })
+        DispatchQueue.global(qos: .userInitiated).async {
+            NSLog("fetching inprogress games")
+            appSyncClient!.fetch(query: InProgressTurnsQuery(), cachePolicy: .fetchIgnoringCacheData, queue: DispatchQueue.global(qos: .userInitiated), resultHandler: { (result, error) in
+                if let error = error {
+                    print("Error occurred: \(error.localizedDescription )")
+                    return
+                }
+                if let error = result?.errors?.first {
+                    NSLog("Error occurred: \(error.localizedDescription)")
+                    return
+                }
+                guard let inProgressTurns = result?.data?.inProgressTurns else {
+                    NSLog("inprogressTurns was null")
+                    return
+                }
+                let games = inProgressTurns.map({$0.game.fragments.openGameDetailed})
+                self.inProgressGames = games
+                self.inProgressGamesCount = games.count
+                LocalSQLiteManager.sharedInstance.putMisc(key: "inProgressGamesCount", value: String(self.inProgressGamesCount))
+                NSLog("got \(self.inProgressGames.count) inProgress games")
+                self.notifyWatchers()
+            })
+        }
     }
     
     private func fetchMyCompletedGames(nextPage: Bool = false, callback: (() -> Void)? = nil) {
-        var nextToken: String? = nil
-        if (nextPage) {
-            nextToken = myCompletedGamesNextToken
+        DispatchQueue.global(qos: .userInitiated).async {
+            var nextToken: String? = nil
+            if (nextPage) {
+                nextToken = self.myCompletedGamesNextToken
+            }
+            self.myCompletedGamesNextToken = nil
+            NSLog("fetching more completed games: \(nextPage)")
+            appSyncClient!.fetch(query: MyCompletedTurnsQuery(limit: 5, nextToken: nextToken), cachePolicy: .fetchIgnoringCacheData, queue: DispatchQueue.global(qos: .userInitiated), resultHandler: { (result, error) in
+                if let error = error {
+                    NSLog("Error occurred: \(error.localizedDescription )")
+                    callback?()
+                    return
+                }
+                if let error = result?.errors?.first {
+                    NSLog("Error occurred: \(error.localizedDescription )")
+                    callback?()
+                    return
+                }
+                guard let turnsRaw = result?.data?.myCompletedTurns.turns else {
+                    NSLog("completed turns was null")
+                    callback?()
+                    return
+                }
+                var newFound = false
+                NSLog("got " + String(turnsRaw.count) + " completed turns")
+                
+                let games = turnsRaw.map{$0.game.fragments.gameDetailed}
+                for newGame in games {
+                    if (flagManager.isFlagged(gameId: newGame.id)) {
+                        continue
+                    }
+                    let new = !self.myCompletedGames.contains(where: { $0.id == newGame.id })
+                    if (new) {
+                        newFound = true
+                        if (!nextPage) {
+                            self.myNewlyCompletedGames.insert(newGame.id)
+                            LocalSQLiteManager.sharedInstance.persist(newlyCompletedGameId: newGame.id)
+                            self.myCompletedGames.insert(newGame, at: 0)
+                        }
+                        else {
+                            self.myCompletedGames.append(newGame)
+                        }
+                        LocalSQLiteManager.sharedInstance.persist(completedGame: newGame)
+                    }
+                }
+                self.myCompletedGamesNextToken = result?.data?.myCompletedTurns.nextToken
+                
+                if (newFound) {
+                    self.notifyWatchers()
+                }
+                callback?()
+            })
         }
-        self.myCompletedGamesNextToken = nil
-        NSLog("fetching more completed games: \(nextPage)")
-        appSyncClient!.fetch(query: MyCompletedTurnsQuery(limit: 5, nextToken: nextToken), cachePolicy: .fetchIgnoringCacheData, resultHandler: { (result, error) in
-            if let error = error {
-                NSLog("Error occurred: \(error.localizedDescription )")
-                callback?()
-                return
-            }
-            if let error = result?.errors?.first {
-                NSLog("Error occurred: \(error.localizedDescription )")
-                callback?()
-                return
-            }
-            guard let turnsRaw = result?.data?.myCompletedTurns.turns else {
-                NSLog("completed turns was null")
-                callback?()
-                return
-            }
-            var newFound = false
-            NSLog("got " + String(turnsRaw.count) + " completed turns")
-            
-            let games = turnsRaw.map{$0.game.fragments.gameDetailed}
-            for newGame in games {
-                if (flagManager.isFlagged(gameId: newGame.id)) {
-                    continue
-                }
-                let new = !self.myCompletedGames.contains(where: { $0.id == newGame.id })
-                if (new) {
-                    newFound = true
-                    if (!nextPage) {
-                        self.myNewlyCompletedGames.insert(newGame.id)
-                        LocalSQLiteManager.sharedInstance.persist(newlyCompletedGameId: newGame.id)
-                        self.myCompletedGames.insert(newGame, at: 0)
-                    }
-                    else {
-                        self.myCompletedGames.append(newGame)
-                    }
-                    LocalSQLiteManager.sharedInstance.persist(completedGame: newGame)
-                }
-            }
-            self.myCompletedGamesNextToken = result?.data?.myCompletedTurns.nextToken
-            
-            if (newFound) {
-                self.notifyWatchers()
-            }
-            callback?()
-        })
     }
     
     func handleStartUpSignedIn() {
@@ -189,6 +206,7 @@ class CompletedGameManager {
             return Int(g1.turns.last?.createdAt ?? "0") ?? 0 > Int(g2.turns.last?.createdAt ?? "0") ?? 0
         })
         self.myNewlyCompletedGames = LocalSQLiteManager.sharedInstance.getNewlyCompletedGameIds()
+        self.inProgressGamesCount = Int(LocalSQLiteManager.sharedInstance.getMisc(key: "inProgressGamesCount") ?? "0") ?? 0
         startPeriodicChecks()
     }
     
@@ -200,17 +218,19 @@ class CompletedGameManager {
         stopPeriodicChecks()
         self.lastTimeIFetchedGames = nil
         inProgressGames.removeAll()
+        self.inProgressGamesCount = 0
         myCompletedGames.removeAll()
         myNewlyCompletedGames.removeAll()
         LocalSQLiteManager.sharedInstance.clearCompletedGames()
         LocalSQLiteManager.sharedInstance.clearNewlyCompletedGames()
+        LocalSQLiteManager.sharedInstance.deleteMisc(key: "inProgressGamesCount")
         notifyWatchers()
     }
     
     
     private func startPeriodicChecks() {
         self.refetchCompletedIfOld()
-        self.refetchTimer = Timer.scheduledTimer(withTimeInterval: 60.0, repeats: true, block: self.refetchCompletedIfOld)
+        self.refetchTimer = Timer.scheduledTimer(withTimeInterval: 60.0 * 5, repeats: true, block: self.refetchCompletedIfOld)
     }
     
     private func stopPeriodicChecks() {

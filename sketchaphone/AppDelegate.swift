@@ -29,29 +29,30 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         inAppPurchaseModel.ready()
         
 
-        AWSDDLog.sharedInstance.logLevel = .verbose
+//        AWSDDLog.sharedInstance.logLevel = .verbose
         AWSDDLog.add(AWSDDTTYLogger.sharedInstance)
         let configuration = AWSServiceConfiguration(region: CognitoAWSRegion, credentialsProvider: nil)
-        NSLog("configuration: %@", configuration ?? "nil")
+        
 
         let poolConfiguration = AWSCognitoIdentityUserPoolConfiguration(clientId: CognitoAppId, clientSecret: nil, poolId: CognitoPoolId)
-        NSLog("poolConfiguration: %@", poolConfiguration)
 
         AWSCognitoIdentityUserPool.register(with: configuration, userPoolConfiguration: poolConfiguration, forKey: "UserPool")
         
         let pool = AWSCognitoIdentityUserPool(forKey: "UserPool")
         userManager.setPool(pool)
-        NSLog("pool: %@", pool)
-        NSLog("pool.identityProviderName: %@", pool.identityProviderName)
         
-        NSLog("pool?.logins(): %@", pool.logins())
-        
-        NSLog("cognito pool username: \(pool.currentUser()?.username ?? "unknown")")
         pool.delegate = self
         
         let credentialsProvider = AWSCognitoCredentialsProvider(regionType: CognitoAWSRegion, identityPoolId: CognitoIdentityPoolId, identityProviderManager: pool)
         userManager.setCredentialsProvider(credentialsProvider)
-        NSLog("credentialsProvider: %@", credentialsProvider)
+        
+//        NSLog("configuration: %@", configuration ?? "nil")
+//        NSLog("poolConfiguration: %@", poolConfiguration)
+//        NSLog("pool: %@", pool)
+//        NSLog("pool.identityProviderName: %@", pool.identityProviderName)
+//        NSLog("pool?.logins(): %@", pool.logins())
+//        NSLog("cognito pool username: \(pool.currentUser()?.username ?? "unknown")")
+//        NSLog("credentialsProvider: %@", credentialsProvider)
         
         let updatedConfiguration = AWSServiceConfiguration(region: AWSRegion, credentialsProvider: credentialsProvider)
         
