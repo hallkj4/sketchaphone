@@ -125,18 +125,18 @@ class GamesManager {
     }
     
     private func renewLock(timer: Timer) {
+        NSLog("renewing lock")
         DispatchQueue.global(qos: .userInitiated).async {
-            NSLog("renewing lock")
-            appSyncClient!.perform(mutation: RenewLockMutation(), queue: DispatchQueue.global(qos: .userInitiated), resultHandler: {(result, error) in
+            appSyncClient?.perform(mutation: RenewLockMutation(), queue: DispatchQueue.global(qos: .userInitiated), resultHandler: {(result, error) in
                 if let error = error {
                     NSLog("Error renewing lock on game: \(error.localizedDescription)")
-                    self.renewLockTimer?.invalidate()
+                    self.stopRenewing()
                     self.renewLockDelegate?.renewLockError(error.localizedDescription)
                     return
                 }
                 if let error = result?.errors?.first {
                     NSLog("Error renewing lock on game: \(error.localizedDescription)")
-                    self.renewLockTimer?.invalidate()
+                    self.stopRenewing()
                     self.renewLockDelegate?.renewLockError(error.localizedDescription)
                     return
                 }
@@ -156,8 +156,10 @@ class GamesManager {
     }
     
     private func stopRenewing() {
-        self.renewLockTimer?.invalidate()
-        self.renewLockTimer = nil
+        DispatchQueue.main.async {
+            self.renewLockTimer?.invalidate()
+            self.renewLockTimer = nil
+        }
     }
     
     func release() {
@@ -202,7 +204,9 @@ class GamesManager {
                 NSLog("Joined a game: " + game.id)
                 self.currentGame = game
                 delegate.gameJoined()
-                self.renewLockTimer = Timer.scheduledTimer(withTimeInterval: 60.0, repeats: true, block: self.renewLock)
+                DispatchQueue.main.async {
+                    self.renewLockTimer = Timer.scheduledTimer(withTimeInterval: 60.0, repeats: true, block: self.renewLock)
+                }
             })
         }
     }

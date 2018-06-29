@@ -1,7 +1,7 @@
 import UIKit
 import Firebase
 
-class JoinGameViewController: LoadingViewController, JoinGameDelgate {
+class JoinGameViewController: LoadingViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -20,7 +20,9 @@ class JoinGameViewController: LoadingViewController, JoinGameDelgate {
         
         gamesManager.joinGame(delegate: self)
     }
-    
+}
+
+extension JoinGameViewController: JoinGameDelgate {
     
     func gameJoined() {
         guard let game = gamesManager.currentGame else {
