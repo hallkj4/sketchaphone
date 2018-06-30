@@ -374,6 +374,7 @@
 				4C8C6C70201E6F2600197CBB /* Frameworks */,
 				4C8C6C71201E6F2600197CBB /* Resources */,
 				FBDE888948831C83614E1321 /* [CP] Embed Pods Frameworks */,
+				4CB03F2B20E7E26400D7BBD0 /* fabric (crashalytics) */,
 			);
 			buildRules = (
 			);
@@ -462,6 +463,20 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		4CB03F2B20E7E26400D7BBD0 /* fabric (crashalytics) */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "fabric (crashalytics)";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Fabric/run\"";
+		};
 		4CC9B45A2040E2290079D202 /* Generate AWS Apollo GraphQL API */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -731,6 +746,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = sketchaphone/sketchaphone.entitlements;
 				CODE_SIGN_STYLE = Automatic;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = NTDFC8PLCC;
 				INFOPLIST_FILE = sketchaphone/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;

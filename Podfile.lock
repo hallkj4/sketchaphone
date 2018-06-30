@@ -16,6 +16,9 @@ PODS:
   - Bolts/AppLinks (1.9.0):
     - Bolts/Tasks
   - Bolts/Tasks (1.9.0)
+  - Crashlytics (3.10.2):
+    - Fabric (~> 1.7.7)
+  - Fabric (1.7.7)
   - FacebookCore (0.3.0):
     - Bolts (~> 1.8)
     - FBSDKCoreKit (~> 4.27)
@@ -61,6 +64,8 @@ DEPENDENCIES:
   - AWSAppSync
   - AWSCognitoIdentityProvider
   - AWSS3
+  - Crashlytics (~> 3.10.2)
+  - Fabric (~> 1.7.7)
   - FacebookCore
   - FacebookLogin
   - Firebase/Core
@@ -76,6 +81,8 @@ SPEC REPOS:
     - AWSCore
     - AWSS3
     - Bolts
+    - Crashlytics
+    - Fabric
     - FacebookCore
     - FacebookLogin
     - FBSDKCoreKit
@@ -98,6 +105,8 @@ SPEC CHECKSUMS:
   AWSCore: a1ff1d32ea7af235fe64be301c204b34cb1f9f83
   AWSS3: e6b042fdbf092ffd49bf7998b3fd5be729949ee7
   Bolts: ac6567323eac61e203f6a9763667d0f711be34c8
+  Crashlytics: 0360624eea1c978a743feddb2fb1ef8b37fb7a0d
+  Fabric: bda89e242bce1b7b8ab264248cf3407774ce0095
   FacebookCore: 3ffa190a3f1f96cec0e44d3fc221bc322c595ffa
   FacebookLogin: 0af839ea858faef99550d16596b87b4a8e8906e6
   FBSDKCoreKit: 572b047a7e029bc44542bcf8a59414e7ff2b543e
@@ -113,6 +122,6 @@ SPEC CHECKSUMS:
   ReachabilitySwift: e67b2cab4d5386053673d8a7421b5981e5f08259
   SQLite.swift: 3e3bee21da701b5b9f87c4a672cb54f233505692
 
-PODFILE CHECKSUM: 161badb1a3df459b9c8c62c0da210f1a2ca25252
+PODFILE CHECKSUM: 4d5b94e5ccace07399f65d1a3342473310bfd99d
 
 COCOAPODS: 1.5.0

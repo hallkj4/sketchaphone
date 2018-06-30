@@ -17,5 +17,7 @@ target 'sketchaphone' do
   pod 'Google-Mobile-Ads-SDK'
   
   pod 'Firebase/Core'
+  pod 'Fabric', '~> 1.7.7'
+  pod 'Crashlytics', '~> 3.10.2'
 end
 
