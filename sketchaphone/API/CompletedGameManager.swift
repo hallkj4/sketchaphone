@@ -86,13 +86,6 @@ class CompletedGameManager {
         }
     }
     
-    func refetchInProgressIfOld() {
-        if (lastTimeIFetchedInProgress == nil || lastTimeIFetchedInProgress! < Date(timeIntervalSinceNow: -60)) {
-            self.lastTimeIFetchedInProgress = Date()
-            fetchInProgressGames()
-        }
-    }
-    
     func forceRefetch(_ callback: @escaping () -> Void) {
         self.lastTimeIFetchedGames = nil
         fetchMyCompletedGames(callback: callback)
@@ -123,20 +116,29 @@ class CompletedGameManager {
         fetchMyCompletedGames(nextPage: true)
     }
     
-    private func fetchInProgressGames() {
+    func refetchInProgressIfOld(_ callback: @escaping (String?) -> Void) {
+        if (lastTimeIFetchedInProgress == nil || lastTimeIFetchedInProgress! < Date(timeIntervalSinceNow: -60)) {
+            self.lastTimeIFetchedInProgress = Date()
+            fetchInProgressGames(callback)
+            return
+        }
+        callback(nil)
+    }
+    
+    private func fetchInProgressGames(_ callback: @escaping (String?) -> Void) {
         DispatchQueue.global(qos: .userInitiated).async {
             NSLog("fetching inprogress games")
             appSyncClient!.fetch(query: InProgressTurnsQuery(), cachePolicy: .fetchIgnoringCacheData, queue: DispatchQueue.global(qos: .userInitiated), resultHandler: { (result, error) in
                 if let error = error {
-                    print("Error occurred: \(error.localizedDescription )")
+                    callback("Error occurred: \(error.localizedDescription )")
                     return
                 }
                 if let error = result?.errors?.first {
-                    NSLog("Error occurred: \(error.localizedDescription)")
+                    callback("Error occurred: \(error.localizedDescription)")
                     return
                 }
                 guard let inProgressTurns = result?.data?.inProgressTurns else {
-                    NSLog("inprogressTurns was null")
+                    callback("InprogressTurns was null")
                     return
                 }
                 let games = inProgressTurns.map({$0.game.fragments.openGameDetailed})
@@ -144,7 +146,7 @@ class CompletedGameManager {
                 self.inProgressGamesCount = games.count
                 LocalSQLiteManager.sharedInstance.putMisc(key: "inProgressGamesCount", value: String(self.inProgressGamesCount))
                 NSLog("got \(self.inProgressGames.count) inProgress games")
-                self.notifyWatchers()
+                callback(nil)
             })
         }
     }

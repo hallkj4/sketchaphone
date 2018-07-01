@@ -9,7 +9,17 @@ class InProgressGamesViewController: LoadingViewController, UITableViewDataSourc
         super.viewWillAppear(animated)
         updateUI()
         completedGameManager.add(watcher: self)
-        completedGameManager.refetchInProgressIfOld()
+        startLoading()
+        completedGameManager.refetchInProgressIfOld({err in
+            DispatchQueue.main.async {
+                self.stopLoading()
+                if let err = err {
+                    self.alert(err)
+                    return
+                }
+                self.updateUI()
+            }
+        })
     }
     
     override func viewWillDisappear(_ animated: Bool) {
