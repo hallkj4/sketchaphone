@@ -16,3 +16,9 @@ build 4:
 - broke and then fixed game completion
 - added support for client changes above
 
+
+build3:
+- cleaner error messages
+
+build2:
+- first beta
