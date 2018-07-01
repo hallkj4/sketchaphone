@@ -1,0 +1,18 @@
+build 4:
+- cleaner display of completed games (less truncation, more whitespace(or bluespace i guess))
+- crashlytics: if your app crashes - i will now know about it and can fix.
+- cleaner presentation of how many turns are remaining on in progress games
+- some performance improvements to minimize hosting costs
+- de-emphasized in progress games on the completed game list
+- message why you can't view an in progress game
+- don't load ads I'm not planning to show
+- updated copy on rules/info page
+- fixed all known text truncation issues
+- fixed bug where a push notification to a newly completed game would not load the newly completed game
+- better use of background threading for improved client performance
+
+(backend stuff)
+- fixed race conditions for locking games (less error messages around 'you do not have the lock')
+- broke and then fixed game completion
+- added support for client changes above
+
