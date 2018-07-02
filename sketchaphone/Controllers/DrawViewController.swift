@@ -193,6 +193,8 @@ class DrawViewController: LoadingViewController, UIScrollViewDelegate, GADInters
 
 extension DrawViewController: RenewLockDelegate {
     func renewLockError(_ error: String) {
-        alert(error)
+        DispatchQueue.main.async {
+            self.alert(error)
+        }
     }
 }

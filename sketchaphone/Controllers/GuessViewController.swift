@@ -150,6 +150,8 @@ class GuessViewController: LoadingViewController, UIScrollViewDelegate, UITextFi
 
 extension GuessViewController: RenewLockDelegate {
     func renewLockError(_ error: String) {
-        alert(error)
+        DispatchQueue.main.async {
+            self.alert(error)
+        }
     }
 }
