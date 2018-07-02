@@ -1,5 +1,5 @@
-mutation joinGame {
-    joinGame {
+mutation joinGame($skipGameIds: [ID!]) {
+joinGame(skipGameIds: $skipGameIds) {
         ...OpenGameDetailed
     }
 }

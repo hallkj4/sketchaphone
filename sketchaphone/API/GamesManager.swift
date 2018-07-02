@@ -16,6 +16,8 @@ class GamesManager {
     var currentGame: OpenGameDetailed?
     private var renewLockTimer: Timer?
     var renewLockDelegate: RenewLockDelegate?
+    private var skipGameIds = [String]()
+    private let maxGamesToSkip = 5
     
     let numRounds = 9
     
@@ -56,6 +58,17 @@ class GamesManager {
                 })
             })
         }
+    }
+    
+    private func skipGame(id: String) {
+        if let index = skipGameIds.index(of: id) {
+            skipGameIds.remove(at: index)
+        }
+        
+        while (skipGameIds.count >= maxGamesToSkip) {
+            var _ = skipGameIds.popLast()
+        }
+        skipGameIds.insert(id, at: 0)
     }
     
     private func uploadDrawing(image: UIImage, callback: @escaping (S3ObjectInput?, Error?) -> Void) {
@@ -163,6 +176,9 @@ class GamesManager {
     }
     
     func release() {
+        if let id = currentGame?.id {
+            skipGame(id: id)
+        }
         DispatchQueue.global(qos: .userInitiated).async {
             self.stopRenewing()
             appSyncClient?.perform(mutation: ReleaseGameMutation(), queue: DispatchQueue.global(qos: .userInitiated), resultHandler: {(result, error) in
@@ -184,7 +200,7 @@ class GamesManager {
     func joinGame(delegate: JoinGameDelgate) {
         DispatchQueue.global(qos: .userInitiated).async {
             NSLog("attempting to join a game")
-            appSyncClient!.perform(mutation: JoinGameMutation(), queue: DispatchQueue.global(qos: .userInitiated), resultHandler: { (result, error) in
+            appSyncClient!.perform(mutation: JoinGameMutation(skipGameIds: self.skipGameIds), queue: DispatchQueue.global(qos: .userInitiated), resultHandler: { (result, error) in
                 NSLog("joinGame responded, handling response")
                 if let error = error {
                     NSLog("could not join game, encountered error: " + error.localizedDescription)

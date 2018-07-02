@@ -138,18 +138,25 @@ public final class FlagGameMutation: GraphQLMutation {
 
 public final class JoinGameMutation: GraphQLMutation {
   public static let operationString =
-    "mutation joinGame {\n  joinGame {\n    __typename\n    ...OpenGameDetailed\n  }\n}"
+    "mutation joinGame($skipGameIds: [ID!]) {\n  joinGame(skipGameIds: $skipGameIds) {\n    __typename\n    ...OpenGameDetailed\n  }\n}"
 
   public static var requestString: String { return operationString.appending(OpenGameDetailed.fragmentString).appending(GameDetailed.fragmentString).appending(UserBasic.fragmentString) }
 
-  public init() {
+  public var skipGameIds: [GraphQLID]?
+
+  public init(skipGameIds: [GraphQLID]?) {
+    self.skipGameIds = skipGameIds
+  }
+
+  public var variables: GraphQLMap? {
+    return ["skipGameIds": skipGameIds]
   }
 
   public struct Data: GraphQLSelectionSet {
     public static let possibleTypes = ["Mutation"]
 
     public static let selections: [GraphQLSelection] = [
-      GraphQLField("joinGame", type: .object(JoinGame.selections)),
+      GraphQLField("joinGame", arguments: ["skipGameIds": GraphQLVariable("skipGameIds")], type: .object(JoinGame.selections)),
     ]
 
     public var snapshot: Snapshot
