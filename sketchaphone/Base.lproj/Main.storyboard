@@ -288,14 +288,14 @@
             <objects>
                 <viewController title="Rules &amp; Info" id="JPY-2g-Pkk" customClass="RulesInfoViewController" customModule="sketchaphone" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="pAz-db-rXa">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="1080"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="1680"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lu6-jW-VHu">
-                                <rect key="frame" x="10" y="64" width="300" height="1006"/>
+                                <rect key="frame" x="10" y="64" width="300" height="1606"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="NhS-Fo-hCm">
-                                        <rect key="frame" x="0.0" y="0.0" width="300" height="1296"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="300" height="1372"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="How Doodle Game Works" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Uvt-zL-cM6">
                                                 <rect key="frame" x="35.5" y="0.0" width="229" height="23"/>
@@ -308,7 +308,7 @@
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NIO-BP-VFh">
                                                         <rect key="frame" x="0.0" y="0.0" width="300" height="243.5"/>
-                                                        <string key="text">In Doodle Game players take turns passing messages, but every alternating player must either draw a picture of a phrase or guess a phrase based on a picture, after everyone has finished, players can view the resulting (and often hilarious) chain of pictures and guesses.   You do not need to be a competent/able/capable artist to enjoy Doodle Game, misinterpretations are the best part!</string>
+                                                        <string key="text">In Doodle Game players take turns passing messages, but every alternating player must either draw a picture of a phrase or guess a phrase based on a picture, after everyone has finished, players can view the resulting (and often hilarious) chain of pictures and guesses.   You do not need to be a competent/capable artist to enjoy Doodle Game, misinterpretations are the best part!</string>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <nil key="highlightedColor"/>
@@ -321,41 +321,17 @@
                                                     <constraint firstAttribute="trailing" secondItem="NIO-BP-VFh" secondAttribute="trailing" id="rEP-8s-PP6"/>
                                                 </constraints>
                                             </view>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Coming soon / News" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pNm-ML-Ofd">
-                                                <rect key="frame" x="57.5" y="286.5" width="185.5" height="23"/>
-                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="19"/>
-                                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2Ya-9R-hdV">
-                                                <rect key="frame" x="0.0" y="319.5" width="300" height="243.5"/>
-                                                <subviews>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0A0-lP-Vwv">
-                                                        <rect key="frame" x="0.0" y="0.0" width="300" height="243.5"/>
-                                                        <string key="text">In the next few months I'll be adding social features to see your facebook friends - follow other players - and play games with your friends.  Stay tuned!</string>
-                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                        <nil key="highlightedColor"/>
-                                                    </label>
-                                                </subviews>
-                                                <constraints>
-                                                    <constraint firstAttribute="bottom" secondItem="0A0-lP-Vwv" secondAttribute="bottom" id="0Yg-52-qzP"/>
-                                                    <constraint firstItem="0A0-lP-Vwv" firstAttribute="leading" secondItem="2Ya-9R-hdV" secondAttribute="leading" id="60q-r5-HmF"/>
-                                                    <constraint firstAttribute="trailing" secondItem="0A0-lP-Vwv" secondAttribute="trailing" id="GsY-nc-Ikp"/>
-                                                    <constraint firstItem="0A0-lP-Vwv" firstAttribute="top" secondItem="2Ya-9R-hdV" secondAttribute="top" id="kWH-ez-OvB"/>
-                                                </constraints>
-                                            </view>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Getting Started" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Nv0-Wb-21v">
-                                                <rect key="frame" x="79.5" y="573" width="141.5" height="23"/>
+                                                <rect key="frame" x="79.5" y="286.5" width="141.5" height="23"/>
                                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="19"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sw3-vU-Hhz">
-                                                <rect key="frame" x="0.0" y="606" width="300" height="128"/>
+                                                <rect key="frame" x="0.0" y="319.5" width="300" height="98"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="To start playing Doodle Game, choose &quot;Join a Game&quot;  from the home screen. If there are no games, you can also start a new game." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VAk-1V-gs8">
-                                                        <rect key="frame" x="0.0" y="0.0" width="300" height="128"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="300" height="98"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <nil key="highlightedColor"/>
@@ -369,13 +345,13 @@
                                                 </constraints>
                                             </view>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Taking your turn" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ydL-Ue-ZC1">
-                                                <rect key="frame" x="76" y="744" width="148.5" height="23"/>
+                                                <rect key="frame" x="76" y="427.5" width="148.5" height="23"/>
                                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="19"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Tc0-Lz-Fip">
-                                                <rect key="frame" x="0.0" y="777" width="300" height="143"/>
+                                                <rect key="frame" x="0.0" y="460.5" width="300" height="143"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xVp-bN-mEF">
                                                         <rect key="frame" x="0.0" y="0.0" width="300" height="143"/>
@@ -393,17 +369,17 @@
                                                 </constraints>
                                             </view>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Drawing Tips" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Nvk-vx-f3v">
-                                                <rect key="frame" x="90.5" y="930" width="119" height="23"/>
+                                                <rect key="frame" x="90.5" y="613.5" width="119" height="23"/>
                                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="19"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="h6N-Cy-9Dw">
-                                                <rect key="frame" x="0.0" y="963" width="300" height="128"/>
+                                                <rect key="frame" x="0.0" y="646.5" width="300" height="183"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jQo-d8-U4E">
-                                                        <rect key="frame" x="0.0" y="0.0" width="300" height="128"/>
-                                                        <string key="text">You can zoom in by using too fingers and moving them apart.  While zoomed use two fingers to scroll.  Don't be afraid to clear and undo, but don't try and be Rembrandt here, the game revolves around misinterpretations.</string>
+                                                        <rect key="frame" x="0.0" y="0.0" width="300" height="183"/>
+                                                        <string key="text">You can zoom in by using too fingers and moving them apart.  While zoomed use two fingers to scroll.  Don't be afraid to clear and undo, but don't try and be Rembrandt here, the game revolves around misinterpretations.  Drawing should not include letters or numbers - that defeats the point of the game.</string>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <nil key="highlightedColor"/>
@@ -416,14 +392,62 @@
                                                     <constraint firstItem="jQo-d8-U4E" firstAttribute="top" secondItem="h6N-Cy-9Dw" secondAttribute="top" id="dUi-gQ-ka6"/>
                                                 </constraints>
                                             </view>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Rules" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mrt-Fk-2rz">
+                                                <rect key="frame" x="125" y="839.5" width="50.5" height="23"/>
+                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="19"/>
+                                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tWw-Rx-6H9">
+                                                <rect key="frame" x="0.0" y="872.5" width="300" height="128"/>
+                                                <subviews>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nmn-on-knW">
+                                                        <rect key="frame" x="0.0" y="0.0" width="300" height="128"/>
+                                                        <string key="text">The following is not allowed in doodle game: Profanity, nudity, vulgar content, hate speech, threats, spam, and impersonating other people.  If you see content that is against policy - please use the flag icon to report it.</string>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                </subviews>
+                                                <constraints>
+                                                    <constraint firstItem="nmn-on-knW" firstAttribute="top" secondItem="tWw-Rx-6H9" secondAttribute="top" id="7I6-U6-S4c"/>
+                                                    <constraint firstItem="nmn-on-knW" firstAttribute="leading" secondItem="tWw-Rx-6H9" secondAttribute="leading" id="JB5-oa-Vfu"/>
+                                                    <constraint firstAttribute="bottom" secondItem="nmn-on-knW" secondAttribute="bottom" id="XMz-IZ-cfV"/>
+                                                    <constraint firstAttribute="trailing" secondItem="nmn-on-knW" secondAttribute="trailing" id="ifM-0m-uj6"/>
+                                                </constraints>
+                                            </view>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Coming soon / News" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pNm-ML-Ofd">
+                                                <rect key="frame" x="57.5" y="1010.5" width="185.5" height="23"/>
+                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="19"/>
+                                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2Ya-9R-hdV">
+                                                <rect key="frame" x="0.0" y="1043.5" width="300" height="123.5"/>
+                                                <subviews>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0A0-lP-Vwv">
+                                                        <rect key="frame" x="0.0" y="0.0" width="300" height="123.5"/>
+                                                        <string key="text">In the next few months I'll be adding social features to see your facebook friends - follow other players - and play games with your friends.  Stay tuned!</string>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                </subviews>
+                                                <constraints>
+                                                    <constraint firstAttribute="bottom" secondItem="0A0-lP-Vwv" secondAttribute="bottom" id="0Yg-52-qzP"/>
+                                                    <constraint firstItem="0A0-lP-Vwv" firstAttribute="leading" secondItem="2Ya-9R-hdV" secondAttribute="leading" id="60q-r5-HmF"/>
+                                                    <constraint firstAttribute="trailing" secondItem="0A0-lP-Vwv" secondAttribute="trailing" id="GsY-nc-Ikp"/>
+                                                    <constraint firstItem="0A0-lP-Vwv" firstAttribute="top" secondItem="2Ya-9R-hdV" secondAttribute="top" id="kWH-ez-OvB"/>
+                                                </constraints>
+                                            </view>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Credits" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OBF-LR-IEs">
-                                                <rect key="frame" x="117" y="1101" width="66.5" height="23"/>
+                                                <rect key="frame" x="117" y="1177" width="66.5" height="23"/>
                                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="19"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8Oh-lb-ycZ">
-                                                <rect key="frame" x="0.0" y="1134" width="300" height="162"/>
+                                                <rect key="frame" x="0.0" y="1210" width="300" height="162"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dk5-hf-7Q4">
                                                         <rect key="frame" x="0.0" y="0.0" width="300" height="162"/>
@@ -462,11 +486,11 @@
                         <viewLayoutGuide key="safeArea" id="gGD-az-fzU"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="How to Play" image="rules" id="gK4-Y6-0lo"/>
-                    <size key="freeformSize" width="320" height="1080"/>
+                    <size key="freeformSize" width="320" height="1680"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tC4-RV-PCo" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1268" y="1945"/>
+            <point key="canvasLocation" x="1268" y="2119"/>
         </scene>
         <!--Shop-->
         <scene sceneID="7oM-6w-T13">
@@ -923,17 +947,27 @@
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="This is a test tip." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CWd-fz-tyY">
+                                <rect key="frame" x="97.5" y="334" width="125" height="20.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="0.51235103609999999" green="0.84975951910000003" blue="0.92168837790000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="2DD-UV-vrj" firstAttribute="centerX" secondItem="zl0-av-evl" secondAttribute="centerX" id="BPJ-qa-JwT"/>
                             <constraint firstItem="Axg-HL-HLe" firstAttribute="top" secondItem="2DD-UV-vrj" secondAttribute="bottom" constant="50" id="UjH-nE-E10"/>
+                            <constraint firstItem="CWd-fz-tyY" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="zl0-av-evl" secondAttribute="leading" constant="20" id="fIH-yL-tpZ"/>
                             <constraint firstItem="Axg-HL-HLe" firstAttribute="centerX" secondItem="zl0-av-evl" secondAttribute="centerX" id="h0e-pB-ExB"/>
+                            <constraint firstItem="CWd-fz-tyY" firstAttribute="top" secondItem="Axg-HL-HLe" secondAttribute="bottom" constant="82.5" id="qbj-K6-lQD"/>
                             <constraint firstItem="2DD-UV-vrj" firstAttribute="top" secondItem="zl0-av-evl" secondAttribute="top" constant="57" id="u8A-ar-Ood"/>
+                            <constraint firstItem="CWd-fz-tyY" firstAttribute="centerX" secondItem="zl0-av-evl" secondAttribute="centerX" id="xdM-U6-y0K"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="zl0-av-evl"/>
                     </view>
                     <connections>
+                        <outlet property="tipLabel" destination="CWd-fz-tyY" id="Rpi-fK-esF"/>
                         <segue destination="ctr-Tf-51d" kind="show" identifier="guess" id="war-7C-juH"/>
                         <segue destination="tMs-YS-sER" kind="show" identifier="draw" id="Ajh-gM-ZUk"/>
                     </connections>
