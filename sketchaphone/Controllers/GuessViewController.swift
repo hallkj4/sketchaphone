@@ -3,8 +3,6 @@ import Kingfisher
 import Firebase
 
 class GuessViewController: LoadingViewController, UIScrollViewDelegate, UITextFieldDelegate {
-    
-    
     let defaultText = "Describe the picture..."
     
     @IBOutlet weak var scrollView: UIScrollView!
@@ -107,25 +105,37 @@ class GuessViewController: LoadingViewController, UIScrollViewDelegate, UITextFi
                         return
                     }
                     Analytics.logEvent(AnalyticsEventViewItem, parameters: [AnalyticsParameterItemName: "guessed"])
-                    if (game.turns.count >= gamesManager.numRounds) {
-                        self.navigateTo(completedGame: game.fragments.gameDetailed)
-                        return
-                    }
-                    userManager.conditionallyPromptForPush({ err in
-                        DispatchQueue.main.async {
-                            if let err = err {
-                                self.alert(err, handler: {_ in
-                                    self.goHome()
-                                })
-                                return
-                            }
-                            self.goHome()
-                        }
-                    })
+                    self.handleTurnComplete(game)
                 }
             })
         })
         
+    }
+    
+    private func handleTurnComplete(_ game: OpenGameDetailed) {
+        if (game.turns.count >= gamesManager.numRounds) {
+            navigateTo(completedGame: game.fragments.gameDetailed)
+            return
+        }
+        userManager.conditionallyPromptForPush({ err in
+            DispatchQueue.main.async {
+                if let err = err {
+                    self.alert(err, handler: {_ in
+                        self.goHome()
+                    })
+                    return
+                }
+                if (LocalSQLiteManager.sharedInstance.getMisc(key: "dontShowTurnSaved") == nil) {
+                    let turnSavedModal = self.storyboard?.instantiateViewController(withIdentifier: "TurnSaved") as! TurnSavedViewController
+                    turnSavedModal.completion = {
+                        self.goHome()
+                    }
+                    self.present(turnSavedModal, animated: true)
+                    return
+                }
+                self.goHome()
+            }
+        })
     }
     
     @IBAction func cancelTouch(_ sender: UIBarButtonItem) {

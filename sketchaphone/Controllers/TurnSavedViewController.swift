@@ -1,9 +1,18 @@
-//
-//  TurnSavedViewController.swift
-//  sketchaphone
-//
-//  Created by Michael on 7/3/18.
-//  Copyright © 2018 Michael. All rights reserved.
-//
+import UIKit
 
-import Foundation
+class TurnSavedViewController: LoadingViewController {
+    
+    var completion: (() -> Void)?
+    
+    @IBAction func okTouch() {
+        dismiss(animated: true)
+        completion?()
+    }
+    
+    
+    @IBAction func dontShowTouch() {
+        LocalSQLiteManager.sharedInstance.putMisc(key: "dontShowTurnSaved", value: "true")
+        dismiss(animated: true)
+        completion?()
+    }
+}

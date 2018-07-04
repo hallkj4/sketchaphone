@@ -127,12 +127,21 @@ class DrawViewController: LoadingViewController, UIScrollViewDelegate, GADInters
         })
     }
     
-    private func doDone() {Analytics.logEvent(AnalyticsEventViewItem, parameters: [AnalyticsParameterItemName: "drew"])
+    private func doDone() {
+        Analytics.logEvent(AnalyticsEventViewItem, parameters: [AnalyticsParameterItemName: "drew"])
         guard let game = completedGame?.fragments.gameDetailed else {
             goHome()
             return
         }
         if (game.turns.count < gamesManager.numRounds) {
+            if (LocalSQLiteManager.sharedInstance.getMisc(key: "dontShowTurnSaved") == nil) {
+                let turnSavedModal = storyboard?.instantiateViewController(withIdentifier: "TurnSaved") as! TurnSavedViewController
+                turnSavedModal.completion = {
+                    self.goHome()
+                }
+                present(turnSavedModal, animated: true)
+                return
+            }
             goHome()
             return
         }
