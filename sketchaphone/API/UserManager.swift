@@ -330,7 +330,9 @@ class UserManager: NSObject {
                 callback?(err.localizedDescription)
                 return
             }
-            UIApplication.shared.unregisterForRemoteNotifications()
+            DispatchQueue.main.async {
+                UIApplication.shared.unregisterForRemoteNotifications()
+            }
             LocalSQLiteManager.sharedInstance.deleteMisc(key: "pushEnabled")
             self.pushEnabled = false
             callback?(nil)

@@ -62,22 +62,26 @@ class SettingsViewController: LoadingViewController, UITextFieldDelegate {
             confirm("Are you sure you want to disable push notifications for doodle game?", confirmedHandler: {
                 self.startLoading()
                 userManager.disablePushNotifications({ (err) in
-                    self.stopLoading()
-                    if let err = err {
-                        self.alert(err)
-                        return
+                    DispatchQueue.main.async {
+                        self.stopLoading()
+                        if let err = err {
+                            self.alert(err)
+                            return
+                        }
+                        self.updateUi()
                     }
-                    self.updateUi()
                 })
             })
             return
         }
         userManager.enablePushNotifications { err in
-            if let err = err {
-                self.alert(err)
-                return
+            DispatchQueue.main.async {
+                if let err = err {
+                    self.alert(err)
+                    return
+                }
+                self.updateUi()
             }
-            self.updateUi()
         }
     }
     
