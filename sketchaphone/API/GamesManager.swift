@@ -49,6 +49,7 @@ class GamesManager {
     func draw(image: UIImage, callback: @escaping (Error?, OpenGameDetailed?) -> Void) {
         NSLog("submitting drawing")
         DispatchQueue.global(qos: .userInitiated).async {
+            self.stopRenewing()
             self.uploadDrawing(image: image, callback: {(drawing, error) in
                 if let error = error {
                     callback(error, nil)
@@ -111,6 +112,8 @@ class GamesManager {
     func guess(phrase: String, callback: @escaping (Error?, OpenGameDetailed?) -> Void) {
         NSLog("making a guess")
         DispatchQueue.global(qos: .userInitiated).async {
+            
+            self.stopRenewing()
             appSyncClient!.perform(mutation: TakeTurnMutation(phrase: phrase), queue: DispatchQueue.global(qos: .userInitiated), resultHandler: {(result, error) in
                 self.takeTurnCallback(result: result, error: error, callback: callback)
             })
@@ -134,8 +137,6 @@ class GamesManager {
             return
         }
         NSLog("turn submitted successfully")
-        
-        stopRenewing()
         completedGameManager.appendCompleted(game: game.fragments.openGameDetailed)
         callback(nil, game.fragments.openGameDetailed)
     }
