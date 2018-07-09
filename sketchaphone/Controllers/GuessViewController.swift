@@ -3,7 +3,7 @@ import Kingfisher
 import Firebase
 
 class GuessViewController: LoadingViewController, UIScrollViewDelegate, UITextFieldDelegate {
-    let defaultText = "Describe the picture..."
+    let defaultText = "Type your description here"
     
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var imageView: UIImageView!
