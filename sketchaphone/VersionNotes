@@ -1,3 +1,13 @@
+build 6 (rc1):
+- updated all dependencies
+- skip games - hitting cancel after joining a game will skip over this game if there are other games availible
+- more help text for new users - Attempting to better explain the game
+- fixed issue where keyboard would cover up the textField while guessing if you had typing suggestions on
+- fixed a couple of crashes
+- fixed error when you guess or draw that would tell you your lock had expired when it really hadn't
+- tips and quotes on the join game page
+- fix issue where app badge would not clear when you view a completed game
+
 build 4:
 - cleaner display of completed games (less truncation, more whitespace(or bluespace i guess))
 - crashlytics: if your app crashes - i will now know about it and can fix.

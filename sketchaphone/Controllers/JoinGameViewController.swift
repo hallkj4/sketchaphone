@@ -12,6 +12,7 @@ class JoinGameViewController: LoadingViewController {
                 "Turn on push notifications so you can see when your games are complete.",
                 "Doodle Game was created by Michael Economy",
                 "Enjoy doodle game? Leave a review in the app store!",
+                "If you cancel out of a game - the server will try and skip that game when you join the next one",
                 "Life is the art of drawing without an eraser -John W. Gardner",
                 "Drawing is the honesty of the art. There is no possibility of cheating. It is either good or bad. -Salvador Dali",
                 "A drawing is simply a line going for a walk -Paul Klee",
