@@ -54,7 +54,7 @@ class GuessViewController: LoadingViewController, UIScrollViewDelegate, UITextFi
     
     @objc func keyboardWillShow(notification: NSNotification) {
         var info = notification.userInfo!
-        let keyboardSize = (info[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue.size
+        let keyboardSize = (info[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue.size
         scrollView.contentInset = UIEdgeInsets(top: 0.0, left: 0.0, bottom: keyboardSize!.height + 10, right: 0.0)
         scrollView.zoomScale = 1.0
         scrollView.scrollRectToVisible(textField.frame, animated: false)

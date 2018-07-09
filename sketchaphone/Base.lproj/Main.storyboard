@@ -1454,7 +1454,7 @@
                                                     </userDefinedRuntimeAttribute>
                                                 </userDefinedRuntimeAttributes>
                                             </imageView>
-                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="EAC-CP-Qtp">
+                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Describe the picture..." borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="EAC-CP-Qtp">
                                                 <rect key="frame" x="16" y="370" width="288" height="30"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="30" id="HJp-7s-Oel"/>
@@ -2226,6 +2226,6 @@
         <image name="rules" width="33" height="33"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="bYq-59-xeO"/>
+        <segue reference="j0Q-fi-y9w"/>
     </inferredMetricsTieBreakers>
 </document>
