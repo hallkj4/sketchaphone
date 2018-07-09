@@ -79,10 +79,22 @@ class ConfirmAccountViewController: LoadingViewController {
                     })
                     return
                 }
-                self.alert("You're ready to play. Thanks!", title: "Account Confirmed", handler: { _ in
-                    self.goHome()
-                })
+                
+                self.doDone()
             }
         })
+    }
+    
+    private func doDone() {
+        guard let welcomeModal = storyboard?.instantiateViewController(withIdentifier: "Welcome") as? WelcomeViewController else {
+            alert("could not present welcome modal", handler: {_ in
+                self.goHome()
+            })
+            return
+        }
+        welcomeModal.completion = {
+            self.goHome()
+        }
+        present(welcomeModal, animated: true)
     }
 }

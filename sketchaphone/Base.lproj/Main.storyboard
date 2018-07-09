@@ -1682,6 +1682,91 @@
             </objects>
             <point key="canvasLocation" x="2424" y="-1758"/>
         </scene>
+        <!--Welcome View Controller-->
+        <scene sceneID="3mu-ZN-dg1">
+            <objects>
+                <viewController storyboardIdentifier="Welcome" modalPresentationStyle="overCurrentContext" useStoryboardIdentifierAsRestorationIdentifier="YES" id="w3J-hZ-0MA" customClass="WelcomeViewController" customModule="sketchaphone" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="mmN-jE-gQw">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fkM-66-cOx">
+                                <rect key="frame" x="20" y="82" width="280" height="337.5"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Welcome" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iNo-hr-6hK">
+                                        <rect key="frame" x="98.5" y="10" width="84" height="23"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="19"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rmu-ik-kNB">
+                                        <rect key="frame" x="10" y="43" width="260" height="243.5"/>
+                                        <string key="text">Doodle game is a social drawing game where players take turns drawing a phrase or guessing what a drawing is. Each game has 9 players and every player may only participate once. After the game is finished, all players can view the resulting communication chain. There is no winner - the objective is to have fun! To get started: click on join game or create a new game.</string>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ahe-Xj-wen">
+                                        <rect key="frame" x="124" y="296.5" width="32" height="31"/>
+                                        <color key="backgroundColor" red="0.92549318079999998" green="0.8048755527" blue="0.51112228630000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <inset key="contentEdgeInsets" minX="5" minY="5" maxX="5" maxY="5"/>
+                                        <state key="normal" title="Ok">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                                <color key="value" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                                <real key="value" value="3"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                <real key="value" value="5"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                        <connections>
+                                            <action selector="okTouch" destination="w3J-hZ-0MA" eventType="touchUpInside" id="RWd-tw-5BX"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" red="0.51235103609999999" green="0.84975951910000003" blue="0.92168837790000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstItem="rmu-ik-kNB" firstAttribute="width" secondItem="fkM-66-cOx" secondAttribute="width" constant="-20" id="0Gu-eq-6Vs"/>
+                                    <constraint firstItem="Ahe-Xj-wen" firstAttribute="top" secondItem="rmu-ik-kNB" secondAttribute="bottom" constant="10" id="1ob-Yn-lgZ"/>
+                                    <constraint firstItem="rmu-ik-kNB" firstAttribute="centerX" secondItem="fkM-66-cOx" secondAttribute="centerX" id="8H5-ZE-QlR"/>
+                                    <constraint firstItem="rmu-ik-kNB" firstAttribute="top" secondItem="iNo-hr-6hK" secondAttribute="bottom" constant="10" id="Jmc-MZ-uaH"/>
+                                    <constraint firstItem="Ahe-Xj-wen" firstAttribute="centerX" secondItem="fkM-66-cOx" secondAttribute="centerX" id="Ye8-gm-Wwe"/>
+                                    <constraint firstAttribute="bottom" secondItem="Ahe-Xj-wen" secondAttribute="bottom" constant="10" id="hE5-ok-HOh"/>
+                                    <constraint firstItem="iNo-hr-6hK" firstAttribute="top" secondItem="fkM-66-cOx" secondAttribute="top" constant="10" id="mEr-bR-rYG"/>
+                                    <constraint firstItem="iNo-hr-6hK" firstAttribute="centerX" secondItem="fkM-66-cOx" secondAttribute="centerX" id="qfb-QD-PIY"/>
+                                </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                        <color key="value" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                        <real key="value" value="2"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <real key="value" value="10"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="0.75219392119999995" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="fkM-66-cOx" firstAttribute="centerY" secondItem="1UX-E7-DU9" secondAttribute="centerY" id="7I0-qf-MAe"/>
+                            <constraint firstItem="fkM-66-cOx" firstAttribute="centerX" secondItem="1UX-E7-DU9" secondAttribute="centerX" id="WmK-Yh-bfI"/>
+                            <constraint firstItem="fkM-66-cOx" firstAttribute="leading" secondItem="1UX-E7-DU9" secondAttribute="leading" constant="20" id="zmN-7E-85r"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="1UX-E7-DU9"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="T53-K1-vJH" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3780" y="-1720"/>
+        </scene>
         <!--Turn Saved View Controller-->
         <scene sceneID="Y9J-FU-QmU">
             <objects>
@@ -1793,7 +1878,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LWS-ct-cel" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3780" y="-975"/>
+            <point key="canvasLocation" x="3780" y="-931"/>
         </scene>
         <!--Reset Password Confirm-->
         <scene sceneID="dfc-Lq-2Ff">

@@ -25,6 +25,7 @@
 		4C27A03420C706A800449704 /* JoinGame.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 4C27A03320C706A800449704 /* JoinGame.graphql */; };
 		4C27A03620C7196000449704 /* RulesInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C27A03520C7196000449704 /* RulesInfoViewController.swift */; };
 		4C377D2620EC2AC600A3C4D8 /* TurnSavedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C377D2520EC2AC600A3C4D8 /* TurnSavedViewController.swift */; };
+		4C377D2820F3E37600A3C4D8 /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C377D2720F3E37600A3C4D8 /* WelcomeViewController.swift */; };
 		4C4E7B2B20D16FEE006848A3 /* CompletedGameTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C4E7B2A20D16FEE006848A3 /* CompletedGameTableViewCell.swift */; };
 		4C53F61C20D2F9E80064BDD1 /* NavigateToCompletedGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C53F61B20D2F9E80064BDD1 /* NavigateToCompletedGame.swift */; };
 		4C53F62020D339A50064BDD1 /* FlagManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C53F61F20D339A50064BDD1 /* FlagManager.swift */; };
@@ -104,6 +105,7 @@
 		4C27A03320C706A800449704 /* JoinGame.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = JoinGame.graphql; sourceTree = "<group>"; };
 		4C27A03520C7196000449704 /* RulesInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RulesInfoViewController.swift; sourceTree = "<group>"; };
 		4C377D2520EC2AC600A3C4D8 /* TurnSavedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TurnSavedViewController.swift; sourceTree = "<group>"; };
+		4C377D2720F3E37600A3C4D8 /* WelcomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeViewController.swift; sourceTree = "<group>"; };
 		4C4E7B2A20D16FEE006848A3 /* CompletedGameTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompletedGameTableViewCell.swift; sourceTree = "<group>"; };
 		4C53F61B20D2F9E80064BDD1 /* NavigateToCompletedGame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigateToCompletedGame.swift; sourceTree = "<group>"; };
 		4C53F61F20D339A50064BDD1 /* FlagManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlagManager.swift; sourceTree = "<group>"; };
@@ -323,6 +325,7 @@
 				4C7EBF7620C9F8EB006AE5C0 /* ConfirmAccountViewController.swift */,
 				4C0249EC20E40B1700F338B7 /* CantViewInProgressViewController.swift */,
 				4C377D2520EC2AC600A3C4D8 /* TurnSavedViewController.swift */,
+				4C377D2720F3E37600A3C4D8 /* WelcomeViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -597,6 +600,7 @@
 				4CB8B0402020DEB600D0DD95 /* UIViewController.swift in Sources */,
 				4CF33D50202A6B2900D311FF /* LoadingViewController.swift in Sources */,
 				4C8C6C77201E6F2600197CBB /* AppDelegate.swift in Sources */,
+				4C377D2820F3E37600A3C4D8 /* WelcomeViewController.swift in Sources */,
 				4C0A08182040B9AA009FED9F /* API.swift in Sources */,
 				4C6C961E201E7F8300A059E9 /* DrawableImageView.swift in Sources */,
 				4C0249E920E1588100F338B7 /* InProgressGamesTableViewCell.swift in Sources */,
