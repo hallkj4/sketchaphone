@@ -253,9 +253,11 @@ class CompletedGameManager {
                 }
                 let game = gameRaw.fragments.gameDetailed
                 self.myCompletedGames.insert(game, at: 0)
+                self.myNewlyCompletedGames.insert(game.id)
                 let _ = self.removeInProgress(gameId: game.id)
                 LocalSQLiteManager.sharedInstance.persist(completedGame: game)
                 callback(nil, game)
+                self.notifyWatchers()
             })
         }
     }
