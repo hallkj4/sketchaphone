@@ -6,6 +6,5 @@ class BadgeCountManager: GameWatcher {
         DispatchQueue.main.async {
             UIApplication.shared.applicationIconBadgeNumber = completedGameManager.myNewlyCompletedGames.count
         }
-        
     }
 }
